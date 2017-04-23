@@ -2,10 +2,16 @@
   "name": "iguess-api-guess",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "app.js",
   "author": "{{Lucas Alves L.A.}}",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "boom": "^4.2.0",
+    "consign": "^0.1.2",
+    "hapi": "16.1.0",
+    "joi": "^10.1.0",
+    "lab": "^12.1.0",
+    "mongoose": "^4.7.6"
+  }
 }
