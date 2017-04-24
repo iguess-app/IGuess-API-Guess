@@ -7,26 +7,6 @@ module.exports = (app) => {
   const server = app.configServer;
 
   server.route({
-    path: '/guess/laucher',
-    method: 'GET',
-    config: {
-      handler: () => {
-        app.src.cron.guessLineInterpreter.yoo();
-      },
-      validate: {
-        query: Joi.object({})
-      },
-      response: {
-        schema: Joi.object().unknown()
-          .meta({
-            className: 'Response'
-          })
-      }
-    }
-  })
-
-
-  server.route({
     path: '/guessleague/create',
     method: 'POST',
     config: {

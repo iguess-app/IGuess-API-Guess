@@ -14,7 +14,7 @@ module.exports = (app) => {
   const Round = app.coincidents.Schemas.roundSchema;
   const QueryUtils = app.coincidents.Utils.queryUtils;
 
-  const yoo = () => {
+  const runInterpreter = () => {
 
     //TODO Pass be reference the championship and the fixture 
     const championshipFixture = {
@@ -185,6 +185,6 @@ module.exports = (app) => {
     )
 
   return {
-    yoo
+    runInterpreter
   };
 }
