@@ -10,9 +10,8 @@ module.exports = (app) => {
     path: '/guess/laucher',
     method: 'GET',
     config: {
-      handler: (request, reply) => {
-
-        guessController.laucher(request, reply)
+      handler: () => {
+        app.src.cron.guessLineInterpreter.yoo();
       },
       validate: {
         query: Joi.object({})

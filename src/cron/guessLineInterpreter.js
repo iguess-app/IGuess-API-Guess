@@ -55,12 +55,27 @@ module.exports = (app) => {
             userGuessLine.totalPontuation = totalPontuation;
 
             _updateUserGuessLine(userGuessLine, championshipFixture);
-            //TODO: update user GuessLine championship Pontuation (_updateUserProfile) 
+            _updateUserProfile(userGuessLine, championshipFixture);
           })
         }
 
         return guessesLine;
       })
+  }
+
+  const _updateUserProfile = (userGuessLine, championshipFixture) => {
+    const searchQuery = {
+      '_id': userGuessLine.userID,
+      'guessesLines.championship': championshipFixture.championship
+    }
+    const updateQuery = {
+      '$inc': {
+        'guessesLines.$.pontuation': userGuessLine.totalPontuation
+      }
+    }
+
+    Profile.update(searchQuery, updateQuery)
+      .catch((err) => console.log(err))
   }
 
   const _findGuessLineByUser = (reqBody) => {
@@ -105,15 +120,8 @@ module.exports = (app) => {
       }
     }
 
-    GuessesLines
-      .update(searchQuery, updateQuery)
-      .then((queryResult) => {
-        if (queryResult.nModified) {
-          return true;
-        }
-
-        return false;
-      })
+    GuessesLines.update(searchQuery, updateQuery)
+      .catch((err) => console.log(err))
   }
 
   const _getPontuation = (guessProperties, resultProperties) => {
