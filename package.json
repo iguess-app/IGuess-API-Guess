@@ -3,15 +3,24 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "6.9.1"
+  },
   "author": "{{Lucas Alves L.A.}}",
-  "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "boom": "^4.2.0",
-    "consign": "^0.1.2",
+    "bluebird": "3.5.0",
+    "boom": "4.2.0",
+    "consign": "0.1.2",
     "hapi": "16.1.0",
-    "joi": "^10.1.0",
-    "lab": "^12.1.0",
-    "mongoose": "^4.7.6"
+    "joi": "10.1.0",
+    "lab": "12.1.0",
+    "mongoose": "4.7.6",
+    "bcrypt": "1.0.2",
+    "jsonwebtoken": "7.2.1",
+    "redis": "2.6.3",
+    "md5": "2.2.1"
   }
 }
