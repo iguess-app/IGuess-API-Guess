@@ -5,8 +5,8 @@ const Hapi = require('hapi');
 module.exports = () => {
   const server = new Hapi.Server();
   server.connection({
-    host: 'localhost',
-    port: 9003
+    host: '0.0.0.0',
+    port: 8080
   });
 
   return server;
