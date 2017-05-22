@@ -1,10 +1,10 @@
 'use Strict';
 
 module.exports = (app) => {
-  const createGLRepository = app.src.repositories.createGLRepository;
+  const createGuessLeagueRepository = app.src.repositories.createGuessLeagueRepository;
 
-  const createLeague = (payload, headers) =>
-    createGLRepository.createLeague(payload, headers)
+  const createGuessLeague = (payload, headers) =>
+    createGuessLeagueRepository.createGuessLeague(payload, headers)
     .then((createdLeague) =>
       //TODO Add on profile.notifications the invite (createdLeague.players)
       createdLeague)
@@ -13,6 +13,6 @@ module.exports = (app) => {
       err)
 
   return {
-    createLeague
+    createGuessLeague
   }
 };

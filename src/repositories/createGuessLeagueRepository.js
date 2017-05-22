@@ -7,7 +7,7 @@ module.exports = (app) => {
   const status = app.coincidents.Utils.guessLeagueStatus;
   const GuessLeague = app.coincidents.Schemas.guessesLeaguesSchema;
 
-  const createLeague = (request) => {
+  const createGuessLeague = (request) => {
     //TODO Check if the championshipID exists
     //TODO Check if all over the users exists
 
@@ -34,6 +34,6 @@ module.exports = (app) => {
   }
 
   return {
-    createLeague
+    createGuessLeague
   }
 }
