@@ -50,7 +50,11 @@ module.exports = (app) => {
         schema: Joi.object({
           guessLeagueName: Joi.string().required(),
           championship: Joi.string().required(),
-          userID: Joi.string().required(),
+          administrator: Joi.string().required(),
+          members: {
+            userName: Joi.array().required(),
+            pontuation: Joi.array().required()
+          },
           inviteads: Joi.array().required()
         }).meta({
             className: 'Response'
