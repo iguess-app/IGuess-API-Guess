@@ -43,19 +43,18 @@ module.exports = (app) => {
       },
       validate: {
         payload: Joi.object({
-          guessLeagueId: Joi.string().required()
+          guessLeagueName: Joi.string().required()
         })
       },
       response: {
         schema: Joi.object({
+          administrator: Joi.string().required(),
           guessLeagueName: Joi.string().required(),
           championship: Joi.string().required(),
-          administrator: Joi.string().required(),
-          members: {
+          players: {
             userName: Joi.array().required(),
             pontuation: Joi.array().required()
-          },
-          inviteads: Joi.array().required()
+          }
         }).meta({
             className: 'Response'
           })
