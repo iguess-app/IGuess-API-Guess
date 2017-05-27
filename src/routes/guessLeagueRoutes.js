@@ -24,8 +24,8 @@ module.exports = (app) => {
       },
       response: {
         schema: Joi.object({
-          guessLeagueCreated: Joi.bool().required()
-        })
+            guessLeagueCreated: Joi.bool().required()
+          })
           .meta({
             className: 'Response'
           })
@@ -42,7 +42,7 @@ module.exports = (app) => {
         guessLeagueController.getGuessLeague(request, reply)
       },
       validate: {
-        payload: Joi.object({
+        query: Joi.object({
           guessLeagueName: Joi.string().required()
         })
       },
@@ -51,13 +51,16 @@ module.exports = (app) => {
           administrator: Joi.string().required(),
           guessLeagueName: Joi.string().required(),
           championship: Joi.string().required(),
-          players: {
-            userName: Joi.array().required(),
-            pontuation: Joi.array().required()
-          }
-        }).meta({
-            className: 'Response'
+          players: Joi.array().items({
+            userName: Joi.string().required(),
+            pontuation: Joi.array()
+          }),
+          inviteads: Joi.array().items({
+            userName: Joi.string()
           })
+        }).meta({
+          className: 'Response'
+        })
       }
     }
   })
@@ -79,7 +82,7 @@ module.exports = (app) => {
       }
     }
   })
-  
+
   server.route({
     path: '/guessleague/inviteResponse',
     method: 'PUT',

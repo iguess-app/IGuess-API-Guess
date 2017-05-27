@@ -12,9 +12,18 @@ module.exports = (app) => {
 
     return GuessLeague.findOne(searchQuery)
       .then((guessLeague) =>
-        QueryUtils.makeObject(guessLeague)
+        _structureGuessLeagueObj(QueryUtils.makeObject(guessLeague))
       )
-      .catch((err) => err)
+      .catch((err) =>
+        err
+      )
+  }
+
+  const _structureGuessLeagueObj = (guessLeague) => {
+    Reflect.deleteProperty(guessLeague, '__v');
+    Reflect.deleteProperty(guessLeague, '_id');
+
+    return guessLeague
   }
 
   return {
