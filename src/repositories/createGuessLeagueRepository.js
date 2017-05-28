@@ -14,7 +14,7 @@ module.exports = (app) => {
       players: [{
         userName: request.userID
       }],
-      championship: request.championshipID
+      championship: request.championship
     }
 
     return GuessLeague

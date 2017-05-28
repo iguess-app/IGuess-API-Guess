@@ -17,7 +17,13 @@ module.exports = (app) => {
       validate: {
         payload: Joi.object({
           guessLeagueName: Joi.string().required(),
-          championshipID: Joi.string().required(),
+          championshipId: Joi.string(),
+          championship: Joi.object({
+            _id: Joi.string().required(),
+            championship: Joi.string().required(),
+            league: Joi.string().required(),
+            season: Joi.string().required()
+          }).required(),
           userID: Joi.string().required(),
           inviteads: Joi.array().required()
         })
