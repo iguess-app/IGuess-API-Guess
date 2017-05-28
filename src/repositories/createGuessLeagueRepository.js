@@ -11,26 +11,29 @@ module.exports = (app) => {
     //TODO Check if the championshipID exists
     //TODO Check if all over the users exists
 
-    const invitedPlayers = request.invited.map((invited) => ({
-      userID: invited,
-      status: status.INVITED
-    }))
-
     const GuessLeagueObj = {
-      _id: request.guessLeagueName,
+      guessLeagueName: request.guessLeagueName,
       administrator: request.userID,
-      players: invitedPlayers
+      inviteads: request.inviteads,
+      players: [{
+        userName: request.userID
+      }],
+      championship: request.championshipID
     }
 
-    return Promise.resolve(GuessLeague
+    return GuessLeague
       .create(GuessLeagueObj)
-      .then((DBResponse) =>
-        QueryUtils.makeObject(DBResponse)
-      )
+      .then((guessLeague) => {
+        const guessLeagueCreated = true;
+
+        return {
+          guessLeagueCreated,
+          guessLeague
+        };
+      })
       .catch((err) =>
-        QueryUtils.makeJSON(err)
+        err
       )
-    )
   }
 
   return {

@@ -17,14 +17,15 @@ module.exports = (app) => {
       validate: {
         payload: Joi.object({
           guessLeagueName: Joi.string().required(),
-          championship: Joi.string().required(),
+          championshipID: Joi.string().required(),
           userID: Joi.string().required(),
           inviteads: Joi.array().required()
         })
       },
       response: {
         schema: Joi.object({
-            guessLeagueCreated: Joi.bool().required()
+            guessLeagueCreated: Joi.bool().required(),
+            guessLeague: Joi.object().required()
           })
           .meta({
             className: 'Response'
@@ -55,9 +56,7 @@ module.exports = (app) => {
             userName: Joi.string().required(),
             pontuation: Joi.array()
           }),
-          inviteads: Joi.array().items({
-            userName: Joi.string()
-          })
+          inviteads: Joi.array().items()
         }).meta({
           className: 'Response'
         })
