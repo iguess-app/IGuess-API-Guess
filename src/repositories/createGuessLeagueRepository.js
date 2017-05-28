@@ -1,10 +1,6 @@
 'use Strict';
 
-const Promise = require('bluebird');
-
 module.exports = (app) => {
-  const QueryUtils = app.coincidents.Utils.queryUtils;
-  const status = app.coincidents.Utils.guessLeagueStatus;
   const GuessLeague = app.coincidents.Schemas.guessesLeaguesSchema;
 
   const createGuessLeague = (request) => {
