@@ -57,7 +57,12 @@ module.exports = (app) => {
         schema: Joi.object({
           administrator: Joi.string().required(),
           guessLeagueName: Joi.string().required(),
-          championship: Joi.string().required(),
+          championship: Joi.object({
+            _id: Joi.string().required(),
+            championship: Joi.string().required(),
+            league: Joi.string().required(),
+            season: Joi.string().required()
+          }).required(),
           players: Joi.array().items({
             userName: Joi.string().required(),
             pontuation: Joi.array()
