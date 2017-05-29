@@ -21,6 +21,7 @@
     "bcrypt": "1.0.2",
     "jsonwebtoken": "7.2.1",
     "redis": "2.6.3",
-    "md5": "2.2.1"
+    "md5": "2.2.1",
+    "request-promise": "4.2.1"
   }
 }
