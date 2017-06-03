@@ -20,7 +20,6 @@ module.exports = (app) => {
   }
 
   const _structureGuessLeagueObj = (guessLeague) => {
-    Reflect.deleteProperty(guessLeague, '__v');
     Reflect.deleteProperty(guessLeague, '_id');
 
     return guessLeague
