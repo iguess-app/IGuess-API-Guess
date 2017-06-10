@@ -12,6 +12,27 @@ module.exports = (app) => {
   const ID_SIZE = Config.mongo.idStringSize
 
   server.route({
+    path: '/guessline/addGuessLine',
+    method: 'POST',
+    config: {
+      handler: (request, reply) => {
+        guessLineController.addGuessLine(request, reply)
+      },
+      validate: {
+        payload: Joi.object({
+          championshipId: Joi.string().length(ID_SIZE)
+        })
+      },
+      response: {
+        schema: Joi.string()
+          .meta({
+            className: 'Response'
+          })
+      }
+    }
+  })
+
+  server.route({
     path: '/guessline/laucher',
     method: 'GET',
     config: {
