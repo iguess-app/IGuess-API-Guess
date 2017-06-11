@@ -1,15 +1,15 @@
 'use strict';
 
 module.exports = (app) => {
-  const setPredictionsRepository = app.src.repositories.guessLines.setPredictionsRepository
+  const addGuessLineRepository = app.src.repositories.guessLines.addGuessLineRepository
 
-  const setPredictions = (request, headers) => {
+  const addGuessLine = (request, headers) => {
     const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language);
 
-    return setPredictionsRepository.setPredictions(request, dictionary)
+    return addGuessLineRepository.addGuessLine(request, dictionary)
   }
 
   return {
-    setPredictions
+    addGuessLine
   }
 }

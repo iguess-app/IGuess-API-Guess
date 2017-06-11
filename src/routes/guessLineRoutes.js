@@ -20,14 +20,22 @@ module.exports = (app) => {
       },
       validate: {
         payload: Joi.object({
-          championshipId: Joi.string().length(ID_SIZE)
+          championshipId: Joi.string().length(ID_SIZE).required()
         })
       },
       response: {
-        schema: Joi.string()
-          .meta({
-            className: 'Response'
-          })
+        schema: Joi.object({
+          _id: Joi.object().required(),
+          championshipRef: Joi.string().length(ID_SIZE).required(),
+          championship: Joi.object({
+            season: Joi.string().required(),
+            league: Joi.string().required(),
+            championship: Joi.string().required()
+          }),
+          fixtures: Joi.array()
+        }).meta({
+          className: 'Response'
+        })
       }
     }
   })

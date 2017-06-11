@@ -11,7 +11,6 @@ module.exports = (app) => {
 
     return GuessLines
       .find(searchQuery)
-      .then(() => )
       .catch((err) => err)
   }
 
