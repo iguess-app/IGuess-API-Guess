@@ -19,12 +19,8 @@ module.exports = (app) => {
     const headers = request.headers;
 
     addGuessLineService.addGuessLine(payload, headers)
-      .then((response) =>
-        reply(response)
-      )
-      .catch((err) =>
-        reply(err)
-      )
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
   }
 
   return {
