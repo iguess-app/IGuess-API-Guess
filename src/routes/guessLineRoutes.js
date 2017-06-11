@@ -10,6 +10,10 @@ module.exports = (app) => {
   const profileLimits = Config.profile
   const NAME_MAX_SIZE = profileLimits.userNameMaxSize
   const ID_SIZE = Config.mongo.idStringSize
+  const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
+  const MAX_ROUND_ROBIN_FIXTURES = Config.holi.maxRoundRobinFixtures
+  const MIN_ROUND_ROBIN_FIXTURES = Config.holi.minRoundRobinFixtures
+  const KNOCKOUT_TOURNAMENT_ROUND_NAMES = Config.holi.knockoutTournamentRoundNames
 
   server.route({
     path: '/guessline/addGuessLine',
@@ -62,30 +66,33 @@ module.exports = (app) => {
 
   server.route({
     path: '/guessline/setPredictions',
-    method: 'POST',
+    method: 'PUT',
     config: {
       handler: (request, reply) => {
         guessLineController.setPredictions(request, reply)
       },
       validate: {
         payload: Joi.object({
-          userName: Joi.string().max(NAME_MAX_SIZE),
-          championshipId: Joi.string().length(ID_SIZE),
-          fixtureNumber: Joi.number(),
-          predictions: Joi.array().items({
-            homeTeam: Joi.string().length(ID_SIZE),
-            awayTeam: Joi.string().length(ID_SIZE),
-            finalScore: Joi.string()
-          })
+          championshipId: Joi.string().length(ID_SIZE).required(),
+          fixtureNumber: Joi.alternatives().try(
+            Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
+            Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')
+          ).required(),
+          userId: Joi.string().max(ID_SIZE).required(),
+          guesses: Joi.array().items({
+            homeTeam: Joi.string().length(ID_SIZE).required(),
+            awayTeam: Joi.string().length(ID_SIZE).required(),
+            homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required(),
+            awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required()
+          }).required()
         }),
         headers: Joi.object({
           language: Joi.string().default('en-us')
         }).unknown()
       },
       response: {
-        schema: Joi.object({
-          guessLineSetted: Joi.bool().required()
-        }).meta({
+        //TODO put here a object with a key called guessesSetted with a bool value
+        schema: Joi.object().meta({
           className: 'Response'
         })
       }
