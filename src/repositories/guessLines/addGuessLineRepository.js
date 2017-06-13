@@ -31,11 +31,19 @@ module.exports = (app) => {
 
         return GuessLines
           .create(guessLineObj)
-          .then((doc) => QueryUtils.makeObject(doc))
+          .then((doc) => _buildGuessLineObj(doc))
           .catch((err) =>
             ErrorUtils.treatErrors(err, dictionary)
           )
       })
+  }
+
+  const _buildGuessLineObj = (doc) => {
+    const guessLineCreated = QueryUtils.makeObject(doc)
+    guessLineCreated.id = guessLineCreated._id.toString()
+    Reflect.deleteProperty(guessLineCreated, '_id')
+
+    return guessLineCreated
   }
 
   return {
