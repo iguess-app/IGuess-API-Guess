@@ -13,6 +13,10 @@ module.exports = (app) => {
   const MIN_ROUND_ROBIN_FIXTURES = Config.holi.minRoundRobinFixtures
   const KNOCKOUT_TOURNAMENT_ROUND_NAMES = Config.holi.knockoutTournamentRoundNames
 
+  const fixtureNumberSchema = Joi.alternatives().try(
+    Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
+    Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')).required()
+
   server.route({
     path: '/guessline/addGuessLine',
     method: 'POST',
@@ -64,10 +68,7 @@ module.exports = (app) => {
           }),
           fixtures: Joi.array().items(
             Joi.object({
-              fixtureNumber: Joi.alternatives().try(
-                Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
-                Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')
-              ).required(),
+              fixtureNumber: fixtureNumberSchema,
               fixturesPredictions: Joi.array().items(
                 Joi.object({
                   matchRef: Joi.string().length(ID_SIZE).required(),
@@ -116,10 +117,7 @@ module.exports = (app) => {
       validate: {
         payload: Joi.object({
           championshipId: Joi.string().length(ID_SIZE).required(),
-          fixtureNumber: Joi.alternatives().try(
-            Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
-            Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')
-          ).required(),
+          fixtureNumber: fixtureNumberSchema,
           userId: Joi.string().max(ID_SIZE).required(),
           guesses: Joi.array().items({
             id: Joi.string().required(),
