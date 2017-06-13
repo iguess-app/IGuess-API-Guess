@@ -7,8 +7,6 @@ module.exports = (app) => {
   const guessLineInterpreter = app.src.cron.guessLineInterpreter
   const guessLineController = app.src.controllers.guessLineController
   const Config = app.coincidents.Config
-  const profileLimits = Config.profile
-  const NAME_MAX_SIZE = profileLimits.userNameMaxSize
   const ID_SIZE = Config.mongo.idStringSize
   const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
   const MAX_ROUND_ROBIN_FIXTURES = Config.holi.maxRoundRobinFixtures
@@ -29,7 +27,7 @@ module.exports = (app) => {
       },
       response: {
         schema: Joi.object({
-          _id: Joi.object().required(),
+          id: Joi.string().required(),
           championshipRef: Joi.string().length(ID_SIZE).required(),
           championship: Joi.object({
             season: Joi.string().required(),
@@ -37,6 +35,50 @@ module.exports = (app) => {
             championship: Joi.string().required()
           }),
           fixtures: Joi.array()
+        }).meta({
+          className: 'Response'
+        })
+      }
+    }
+  })
+
+  server.route({
+    path: '/guessline/addUserToGuessLine',
+    method: 'PUT',
+    config: {
+      handler: (request, reply) => {
+        guessLineController.addGuessLine(request, reply)
+      },
+      validate: {
+        payload: Joi.object({
+          championshipId: Joi.string().length(ID_SIZE).required(),
+          userId: Joi.string().length(ID_SIZE).required()
+        })
+      },
+      response: {
+        schema: Joi.object({
+          championship: Joi.object({
+            season: Joi.string().required(),
+            league: Joi.string().required(),
+            championship: Joi.string().required()
+          }),
+          fixtures: Joi.array().items(
+            Joi.object({
+              fixtureNumber: Joi.alternatives().try(
+                Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
+                Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')
+              ).required(),
+              fixturesPredictions: Joi.array().items(
+                Joi.object({
+                  matchRef: Joi.string().length(ID_SIZE).required(),
+                  homeTeam: Joi.string().length(ID_SIZE).required(),
+                  awayTeam: Joi.string().length(ID_SIZE).required(),
+                  homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required(),
+                  awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required()
+                }).required()
+              ).required()
+            })
+          )
         }).meta({
           className: 'Response'
         })
@@ -80,6 +122,7 @@ module.exports = (app) => {
           ).required(),
           userId: Joi.string().max(ID_SIZE).required(),
           guesses: Joi.array().items({
+            id: Joi.string().required(),
             homeTeam: Joi.string().length(ID_SIZE).required(),
             awayTeam: Joi.string().length(ID_SIZE).required(),
             homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required(),
