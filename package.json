@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "set MONGO_DB=guessDB&& node app.js"
   },
   "engines": {
     "node": "6.9.1"
