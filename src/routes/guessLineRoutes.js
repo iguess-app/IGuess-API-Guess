@@ -1,6 +1,6 @@
-'use strict';
-
-const Joi = require('joi');
+/* eslint-disable */
+'use strict'
+const Joi = require('joi')
 
 module.exports = (app) => {
   const server = app.configServer
@@ -13,7 +13,7 @@ module.exports = (app) => {
   const MIN_ROUND_ROBIN_FIXTURES = Config.holi.minRoundRobinFixtures
   const KNOCKOUT_TOURNAMENT_ROUND_NAMES = Config.holi.knockoutTournamentRoundNames
 
-  const fixtureNumberSchema = Joi.alternatives().try(
+  const fixtureSchema = Joi.alternatives().try(
     Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
     Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')).required()
 
@@ -38,7 +38,8 @@ module.exports = (app) => {
             league: Joi.string().required(),
             championship: Joi.string().required()
           }),
-          fixtures: Joi.array()
+          fixtures: Joi.array(),
+          users: Joi.array()
         }).meta({
           className: 'Response'
         })
@@ -51,7 +52,7 @@ module.exports = (app) => {
     method: 'PUT',
     config: {
       handler: (request, reply) => {
-        guessLineController.addGuessLine(request, reply)
+        guessLineController.addUserToGuessLine(request, reply)
       },
       validate: {
         payload: Joi.object({
@@ -68,7 +69,7 @@ module.exports = (app) => {
           }),
           fixtures: Joi.array().items(
             Joi.object({
-              fixtureNumber: fixtureNumberSchema,
+              fixture: fixtureSchema,
               fixturesPredictions: Joi.array().items(
                 Joi.object({
                   matchRef: Joi.string().length(ID_SIZE).required(),
@@ -116,13 +117,11 @@ module.exports = (app) => {
       },
       validate: {
         payload: Joi.object({
-          championshipId: Joi.string().length(ID_SIZE).required(),
-          fixtureNumber: fixtureNumberSchema,
-          userId: Joi.string().max(ID_SIZE).required(),
+          championshipRef: Joi.string().length(ID_SIZE).required(),
+          fixture: fixtureSchema,
+          userRef: Joi.string().max(ID_SIZE).required(),
           guesses: Joi.array().items({
-            id: Joi.string().required(),
-            homeTeam: Joi.string().length(ID_SIZE).required(),
-            awayTeam: Joi.string().length(ID_SIZE).required(),
+            matchRef: Joi.string().length(ID_SIZE).required(),
             homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required(),
             awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required()
           }).required()
