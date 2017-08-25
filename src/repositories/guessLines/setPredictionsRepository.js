@@ -1,35 +1,77 @@
-/* eslint-disable */
 'use Strict';
 
 const Boom = require('boom')
 
 module.exports = (app) => {
   const GuessLines = app.coincidents.Schemas.guessesLinesSchema
+  const Predictions = app.coincidents.Schemas.predictionsSchema
+  const Log = app.coincidents.Managers.logManager
 
   const setPredictions = (request, dictionary) => {
-
     const searchQuery = {
       'championship.championshipRef': request.championshipRef
     }
-    
-    return GuessLines.findOne(searchQuery)
-    .then((guessLine) => {
-      _checkIfExists(guessLine, dictionary)
-        const userChampionshipFixtureKey = `${request.championshipRef}_${request.fixture}_${request.userRef}`
-        const requestFixture = guessLine.fixtures[request.fixture]
-        /* 
-          TODO HERE
-          Se não existir a userChampionshipFixtureKey na guessLine.fixtures[request.fixture]: 
-            settar userChampionshipFixtureKey no guessLine.fixtures[request.fixture],
-            e inserir o array prediction do usuário no collection de prediction (Usar a userChampionshipFixtureKey como chave)
-          Se existir a userChampionshipFixtureKey na guessLine.fixtures[request.fixture]: 
-            usar a userChampionshipFixtureKey para buscar os predictions já setados na collection, filter por matchId e atualizar novas predictions
-        */
 
+    return GuessLines.findOne(searchQuery)
+      .then((guessLine) => {
+        _checkIfExists(guessLine, dictionary)
+        const championshipFixtureUserKey = `${request.championshipRef}_${request.fixture}_${request.userRef}`
+        const requestFixtureIndex = guessLine.fixtures.findIndex((fixtureObj) => fixtureObj.fixture === request.fixture)
+
+        if (guessLine.fixtures[requestFixtureIndex].usersWhoAlreadySentGuesses.includes(championshipFixtureUserKey)) {
+          return _findAndUpdateUserPredictions(guessLine, request, championshipFixtureUserKey, requestFixtureIndex)
+        }
+
+        return _setNewUserPredictions(guessLine, request, championshipFixtureUserKey, requestFixtureIndex)
       })
-      .catch((err) => 
-        err
-    )
+      .catch((err) => Log.error(err))
+  }
+
+  const _findAndUpdateUserPredictions = (request, championshipFixtureUserKey) => {
+    const searchQuery = {
+      championshipFixtureUserKey
+    }
+
+    return Predictions.findOne(searchQuery)
+      .then((oldPredictions) => {
+        const oldPredictionsMatchRefsDictionary = _makeAMatchRefsDictionary(oldPredictions)
+        
+        return _filterAndUpdatePredictionsOneByOne(oldPredictionsMatchRefsDictionary, oldPredictions, request.guesses)
+      })
+  }
+
+  const _makeAMatchRefsDictionary = (oldPredictions) => {
+    const oldPredictionsMatchRefsDictionary = {}
+    oldPredictions.guesses.forEach((oldSinglePrediction, index) => {
+      oldPredictionsMatchRefsDictionary[oldSinglePrediction.matchRef] = index
+    })
+
+    return oldPredictionsMatchRefsDictionary
+  }
+
+  const _filterAndUpdatePredictionsOneByOne = (oldPredictionsMatchRefsDictionary, oldPredictions, newPredictions) => {
+    newPredictions.forEach((newSinglePrediction) => {
+      if (Number.isInteger(oldPredictionsMatchRefsDictionary[newSinglePrediction.matchRef])) {
+        const index = oldPredictionsMatchRefsDictionary[newSinglePrediction.matchRef]
+        oldPredictions.guesses[index] = newSinglePrediction
+
+        return
+      }
+      oldPredictions.guesses.push(newSinglePrediction)
+    })
+    
+    return oldPredictions.save()
+  }
+
+  const _setNewUserPredictions = (guessLine, request, championshipFixtureUserKey, requestFixtureIndex) => {
+    const newPredictions = {
+      championshipFixtureUserKey,
+      guesses: request.guesses
+    }
+    guessLine.fixtures[requestFixtureIndex].usersWhoAlreadySentGuesses.push(championshipFixtureUserKey)
+
+    return guessLine.save()
+      .then(() => Predictions.create(newPredictions))
   }
 
   const _checkIfExists = (guessLine, dictionary) => {
@@ -38,46 +80,10 @@ module.exports = (app) => {
     }
   }
 
-  const _returnFixtureObject = (guessLine, request, reqFixtureIndex) => {
-    if (!guessLine.fixtures[reqFixtureIndex]) {
-      const reqFixture = {};
-      reqFixture.fixture = request.fixture
-      reqFixture.users = []
-
-      return reqFixture
-    }
-
-    return guessLine.fixtures[reqFixtureIndex]
-  }
-
-  const _getFixtureArrayIndex = (guessLine, request) =>
-    guessLine.fixtures.findIndex((fixture) => fixture.fixture === request.fixture)
-
-  const _userPredictionsAlreadySetted = (usersPredictions, request) => {
-    const userPredictionsFound = usersPredictions.find((userPredictions) => userPredictions.userRef === request.userRef)
-
-    return userPredictionsFound
-  }
-
-  const _overwriteDuplicatedMatches = (oldPredictions, newPredictions) => {
-    oldPredictions.map((oldPrediction) => {
-
-    })
-  }
-
-  const _buildUserPredictionObject = (guessLine, request) => {
-
-    /*Should check if the teams exists on championship?
-    TODO ? Maybe I should use REDIS to get the teams Info quickly
-    TODO Be sure the the userRef is the same in the user Session*/
-    const userPrediction = {}
-    userPrediction.userRef = request.userRef
-    userPrediction.guesses = request.guesses
-
-    return userPrediction
-  }
-
   return {
     setPredictions
   }
 }
+
+
+/*eslint max-params: [2, 4]*/
