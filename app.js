@@ -17,6 +17,7 @@ app.configServer.start((err) => {
   if (err) {
     throw err;
   }
-  
-  app.coincidents.Managers.logManager.info(`Server running at ${app.configServer.info.uri}`);
+  app.configServer.logger().info(`Server running at ${app.configServer.info.uri}`)
 })
+
+module.exports = app

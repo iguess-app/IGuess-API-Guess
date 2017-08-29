@@ -9,6 +9,7 @@ automatic_scaling:
     target_utilization: 0.7
 env_variables:
   ENV: production
+  SERVER_PORT: 9003
   REDIS_KEY: wAMK4Hig
   REDIS_HOST: 130.211.171.212
   REDIS_PORT: 6379

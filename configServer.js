@@ -1,21 +1,19 @@
 'use strict';
 
 const Hapi = require('hapi');
-const PORT_LOCAL = 9003;
-let port = 8080;
+
+const plugins = require('./src/plugins/serverPlugins')
 
 module.exports = (app) => {
   const config = app.coincidents.Config;
 
-  if (config.env === 'local') {
-    port = PORT_LOCAL;
-  }
-
   const server = new Hapi.Server();
   server.connection({
     host: '0.0.0.0',
-    port
+    port: config.serverPort
   });
+
+  server.register(plugins);
 
   return server;
 }
