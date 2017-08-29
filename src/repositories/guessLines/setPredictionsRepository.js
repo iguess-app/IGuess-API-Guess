@@ -5,7 +5,6 @@ const Boom = require('boom')
 module.exports = (app) => {
   const GuessLines = app.coincidents.Schemas.guessesLinesSchema
   const Predictions = app.coincidents.Schemas.predictionsSchema
-  const Log = app.coincidents.Managers.logManager
 
   const setPredictions = (request, dictionary) => {
     const searchQuery = {
@@ -24,7 +23,6 @@ module.exports = (app) => {
 
         return _setNewUserPredictions(guessLine, request, championshipFixtureUserKey, requestFixtureIndex)
       })
-      .catch((err) => Log.error(err))
   }
 
   const _findAndUpdateUserPredictions = (request, championshipFixtureUserKey) => {
