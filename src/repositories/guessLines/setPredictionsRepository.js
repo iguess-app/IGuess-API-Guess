@@ -19,7 +19,7 @@ module.exports = (app) => {
         const requestFixtureIndex = guessLine.fixtures.findIndex((fixtureObj) => fixtureObj.fixture === request.fixture)
 
         if (guessLine.fixtures[requestFixtureIndex].usersWhoAlreadySentGuesses.includes(championshipFixtureUserKey)) {
-          return _findAndUpdateUserPredictions(guessLine, request, championshipFixtureUserKey, requestFixtureIndex)
+          return _findAndUpdateUserPredictions(request, championshipFixtureUserKey)
         }
 
         return _setNewUserPredictions(guessLine, request, championshipFixtureUserKey, requestFixtureIndex)
