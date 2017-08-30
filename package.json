@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "set MONGO_DB=guessDB&&set SERVER_PORT=9003DB&& node app.js",
+    "start": "set MONGO_DB=guessDB&&set SERVER_PORT=9003&& node app.js",
     "test": "set MONGO_DB=guessDB&&set ENV=test&&lab -v",
     "test-cov": "set MONGO_DB=guessDB&&set ENV=test&&lab -v -t 70",
     "test-cov-html": "set MONGO_DB=guessDB&&set ENV=test&&lab -r html -o coverage.html"

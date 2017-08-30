@@ -21,7 +21,6 @@ app.configServer.register(plugins, () => {
     if (err) {
       throw err;
     }
-    app.configServer.logger().info(`Server running at ${app.configServer.info.uri}`)
   })
 })
 
