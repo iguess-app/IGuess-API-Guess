@@ -10,7 +10,7 @@
     "test-cov-html": "set MONGO_DB=guessDBtest&&set ENV=test&&lab -r html -o coverage.html"
   },
   "engines": {
-    "node": "6.9.1"
+    "node": "8.2.1"
   },
   "author": "{{Lucas Alves L.A.}}",
   "dependencies": {
