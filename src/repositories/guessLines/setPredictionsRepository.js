@@ -35,6 +35,7 @@ module.exports = (app) => {
         const oldPredictionsMatchRefsDictionary = _makeAMatchRefsDictionary(oldPredictions)
         
         return _filterAndUpdatePredictionsOneByOne(oldPredictionsMatchRefsDictionary, oldPredictions, request.guesses)
+        .then(() => _returnSuccessMsg())
       })
   }
 
@@ -70,6 +71,7 @@ module.exports = (app) => {
 
     return guessLine.save()
       .then(() => Predictions.create(newPredictions))
+      .then(() => _returnSuccessMsg())
   }
 
   const _checkIfExists = (guessLine, dictionary) => {
@@ -77,6 +79,10 @@ module.exports = (app) => {
       throw Boom.notFound(dictionary.guessLineNotFound)
     }
   }
+
+  const _returnSuccessMsg = () => ({
+    predictionsSetted: true
+  })
 
   return {
     setPredictions

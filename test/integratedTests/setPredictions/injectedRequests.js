@@ -37,7 +37,7 @@ const matchRefDuplicated = {
   method: 'PUT',
   url: '/guessline/setPredictions',
   headers: {
-    'language': 'pt-br',
+    'language': 'en-us',
     'content-type': 'application/json'
   },
   payload: {
