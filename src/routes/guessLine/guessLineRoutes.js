@@ -108,21 +108,4 @@ module.exports = (app) => {
       }
     }
   })
-
-  server.route({
-    path: '/guessline/setPredictions',
-    method: 'PUT',
-    config: {
-      handler: (request, reply) => {
-        guessLineController.setPredictions(request, reply)
-      },
-      validate: {
-        payload: schemas.setPredictions.setPredictionsSchemaPayload,
-        headers: schemas.defaultHeaderSchema
-      },
-      response: {
-        schema: schemas.setPredictions.setPredictionsSchemaResponse
-      }
-    }
-  })
 }
