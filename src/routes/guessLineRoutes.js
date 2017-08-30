@@ -4,6 +4,7 @@ const Joi = require('joi')
 
 module.exports = (app) => {
   const server = app.configServer
+  const schemas = app.src.schemas
   const guessLineInterpreter = app.src.cron.guessLineInterpreter
   const guessLineController = app.src.controllers.guessLineController
   const Config = app.coincidents.Config
@@ -116,25 +117,11 @@ module.exports = (app) => {
         guessLineController.setPredictions(request, reply)
       },
       validate: {
-        payload: Joi.object({
-          championshipRef: Joi.string().length(ID_SIZE).required(),
-          fixture: fixtureSchema,
-          userRef: Joi.string().max(ID_SIZE).required(),
-          guesses: Joi.array().items({
-            matchRef: Joi.string().length(ID_SIZE).required(),
-            homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required(),
-            awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).required()
-          }).required()
-        }),
-        headers: Joi.object({
-          language: Joi.string().default('en-us')
-        }).unknown()
+        payload: schemas.setPredictions.setPredictionsSchemaPayload,
+        headers: schemas.defaultHeaderSchema
       },
       response: {
-        //TODO put here a object with a key called guessesSetted with a bool value
-        schema: Joi.object().meta({
-          className: 'Response'
-        })
+        schema: schemas.setPredictions.setPredictionsSchemaResponse
       }
     }
   })
