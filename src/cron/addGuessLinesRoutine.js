@@ -14,7 +14,7 @@ module.exports = (app) => {
   const requestManager = app.coincidents.Managers.requestManager
 
   return new CronJob(`${fullHour} ${dayOfMonth} ${months} ${dayOfWeek}`, () => {
-
+    //TODO usar app.coincidents.apis.holiUrl na url
     const url = 'http://localhost:9001/championship/getAllchampionship'
     const headers = {
       'language': 'en-us',
@@ -39,11 +39,13 @@ const _addGuessLines = (app, championships) => {
     .then((guessLine) => {
       if (!guessLine) {
         _insertNewGuessLine(championship)
+        return
       }
+      //TODO update nas flags isActive da GuessLine que já existir
     })
   })
 }
 
 const _insertNewGuessLine = (championship) => {
-  
+   
 }
