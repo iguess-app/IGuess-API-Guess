@@ -2,9 +2,9 @@
 
 const CronJob = require('cron').CronJob
 
-const Seconds = 30 //0
-const Minutes = 12 //0
-const Hours = 14 //0
+const Seconds = 30
+const Minutes = 34
+const Hours = 17
 const fullHour = `${Seconds} ${Minutes} ${Hours}`
 const dayOfMonth = '*'
 const months = '*'
@@ -13,6 +13,7 @@ const dayOfWeek = '*'
 module.exports = (app) => {
   const GuessLines = app.coincidents.Schemas.guessesLinesSchema
   const requestManager = app.coincidents.Managers.requestManager
+  const log = app.coincidents.Managers.logManager
 
   const cronJob = () => new CronJob(`${fullHour} ${dayOfMonth} ${months} ${dayOfWeek}`, () => {
 
@@ -41,6 +42,7 @@ module.exports = (app) => {
 
           return _updateFlagIsActive(championship, guessLine)
         })
+        .catch((err) => log.error(err))
     })
   }
 
@@ -53,11 +55,16 @@ module.exports = (app) => {
         championship: championship.championship
       },
       guessLineActive: championship.championshipActive,
-      usersAddedAtGuessLine: []
+      usersAddedAtGuessLine: [],
+      fixtures: _buildFixtureObj(championship)
     }
 
     return GuessLines.create(newGuessLineObj)
   }
+
+  const _buildFixtureObj = (championship) => championship.fixturesNames.map((fixtureName) => ({
+      fixture: fixtureName
+    }))
 
   const _updateFlagIsActive = (championship, guessLine) => {
     guessLine.guessLineActive = championship.championshipActive
