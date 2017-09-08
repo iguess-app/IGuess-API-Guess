@@ -1,21 +1,15 @@
 'use strict'
 
-const CronJob = require('cron').CronJob
+const cronTime = require('./cronTime')
 
-const Seconds = 0
-const Minutes = 0
-const Hours = 0
-const fullHour = `${Seconds} ${Minutes} ${Hours}`
-const dayOfMonth = '*'
-const months = '*'
-const dayOfWeek = '*'
+const CronJob = require('cron').CronJob
 
 module.exports = (app) => {
   const GuessLines = app.coincidents.Schemas.guessesLinesSchema
   const requestManager = app.coincidents.Managers.requestManager
   const log = app.coincidents.Managers.logManager
 
-  const cronJob = () => new CronJob(`${fullHour} ${dayOfMonth} ${months} ${dayOfWeek}`, _getAllchampionshipFromHoli, null, true, 'America/Sao_Paulo')
+  const cronJob = () => new CronJob(cronTime, _getAllchampionshipFromHoli, null, true, 'America/Sao_Paulo')
 
   const _getAllchampionshipFromHoli = () => {
     const url = `${app.coincidents.Config.apis.holiUrl}/championship/getAllchampionship`
