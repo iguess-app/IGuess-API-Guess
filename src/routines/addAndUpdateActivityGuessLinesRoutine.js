@@ -2,9 +2,9 @@
 
 const CronJob = require('cron').CronJob
 
-const Seconds = 30
-const Minutes = 34
-const Hours = 17
+const Seconds = 0
+const Minutes = 0
+const Hours = 0
 const fullHour = `${Seconds} ${Minutes} ${Hours}`
 const dayOfMonth = '*'
 const months = '*'
@@ -63,8 +63,8 @@ module.exports = (app) => {
   }
 
   const _buildFixtureObj = (championship) => championship.fixturesNames.map((fixtureName) => ({
-      fixture: fixtureName
-    }))
+    fixture: fixtureName
+  }))
 
   const _updateFlagIsActive = (championship, guessLine) => {
     guessLine.guessLineActive = championship.championshipActive
