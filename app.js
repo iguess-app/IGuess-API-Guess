@@ -7,7 +7,7 @@ const plugins = require('./src/plugins/serverPlugins')(app.coincidents.Config)
 
 consign()
   .include('configServer.js')
-  .include('src/cron')
+  .include('src/routines')
   .include('src/repositories')
   .include('src/services')
   .include('src/controllers')

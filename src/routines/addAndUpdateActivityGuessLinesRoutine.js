@@ -15,8 +15,9 @@ module.exports = (app) => {
   const requestManager = app.coincidents.Managers.requestManager
   const log = app.coincidents.Managers.logManager
 
-  const cronJob = () => new CronJob(`${fullHour} ${dayOfMonth} ${months} ${dayOfWeek}`, () => {
+  const cronJob = () => new CronJob(`${fullHour} ${dayOfMonth} ${months} ${dayOfWeek}`, _getAllchampionshipFromHoli, null, true, 'America/Sao_Paulo')
 
+  const _getAllchampionshipFromHoli = () => {
     const url = `${app.coincidents.Config.apis.holiUrl}/championship/getAllchampionship`
     const headers = {
       'language': 'en-us',
@@ -24,9 +25,7 @@ module.exports = (app) => {
     }
     requestManager.get(url, headers)
       .then((championships) => _addGuessLines(championships))
-
-  }, null, true, 'America/Sao_Paulo')
-
+  }
 
   const _addGuessLines = (championships) => {
     championships.map((championship) => {
