@@ -16,6 +16,6 @@ env_variables:
   REDIS_EXPIRE_TIME: 60
   MONGO_ATLAS: true
   MONGO_USER: luhalvesbr
-  MONGO_DB: iguess
+  MONGO_DB: guessDB
   MONGO_ADDRESS: zerocluster-shard-00-00-mfooh.mongodb.net:27017,zerocluster-shard-00-01-mfooh.mongodb.net:27017,zerocluster-shard-00-02-mfooh.mongodb.net:27017
   MONGO_KEY: xSxotVAFrlegS2yJ
