@@ -8,6 +8,46 @@ const _buildFixtureObj = (championship) => championship.fixturesNames.map((fixtu
   fixture: fixtureName
 }))
 
+const _updateFlagIsActive = (championship, guessLine) => {
+  guessLine.guessLineActive = championship.championshipActive
+
+  return guessLine.save()
+}
+
+const _insertNewGuessLine = (championship, GuessLines) => {
+  const newGuessLineObj = {
+    championship: {
+      championshipRef: championship._id,
+      league: championship.league,
+      season: championship.season,
+      championship: championship.championship
+    },
+    guessLineActive: championship.championshipActive,
+    usersAddedAtGuessLine: [],
+    fixtures: _buildFixtureObj(championship)
+  }
+
+  return GuessLines.create(newGuessLineObj)
+}
+
+const _addGuessLines = (championships, GuessLines, log) => {
+  championships.map((championship) => {
+    const searchQuery = {
+      'championship.championshipRef': championship._id
+    }
+
+    return GuessLines.findOne(searchQuery)
+      .then((guessLine) => {
+        if (!guessLine) {
+          return _insertNewGuessLine(championship, GuessLines)
+        }
+
+        return _updateFlagIsActive(championship, guessLine)
+      })
+      .catch((err) => log.error(err))
+  })
+}
+
 module.exports = (app) => {
   const GuessLines = app.coincidents.Schemas.guessesLinesSchema
   const requestManager = app.coincidents.Managers.requestManager
@@ -22,47 +62,7 @@ module.exports = (app) => {
       'content-type': 'application/json'
     }
     requestManager.get(url, headers)
-      .then((championships) => _addGuessLines(championships))
-  }
-
-  const _addGuessLines = (championships) => {
-    championships.map((championship) => {
-      const searchQuery = {
-        'championship.championshipRef': championship._id
-      }
-
-      return GuessLines.findOne(searchQuery)
-        .then((guessLine) => {
-          if (!guessLine) {
-            return _insertNewGuessLine(championship)
-          }
-
-          return _updateFlagIsActive(championship, guessLine)
-        })
-        .catch((err) => log.error(err))
-    })
-  }
-
-  const _insertNewGuessLine = (championship) => {
-    const newGuessLineObj = {
-      championship: {
-        championshipRef: championship._id,
-        league: championship.league,
-        season: championship.season,
-        championship: championship.championship
-      },
-      guessLineActive: championship.championshipActive,
-      usersAddedAtGuessLine: [],
-      fixtures: _buildFixtureObj(championship)
-    }
-
-    return GuessLines.create(newGuessLineObj)
-  }
-
-  const _updateFlagIsActive = (championship, guessLine) => {
-    guessLine.guessLineActive = championship.championshipActive
-
-    return guessLine.save()
+      .then((championships) => _addGuessLines(championships, GuessLines, log))
   }
 
   cronJob()
