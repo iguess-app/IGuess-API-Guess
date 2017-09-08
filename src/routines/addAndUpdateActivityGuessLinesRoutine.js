@@ -4,14 +4,18 @@ const cronTime = require('./cronTime')
 
 const CronJob = require('cron').CronJob
 
+const _buildFixtureObj = (championship) => championship.fixturesNames.map((fixtureName) => ({
+  fixture: fixtureName
+}))
+
 module.exports = (app) => {
   const GuessLines = app.coincidents.Schemas.guessesLinesSchema
   const requestManager = app.coincidents.Managers.requestManager
   const log = app.coincidents.Managers.logManager
 
-  const cronJob = () => new CronJob(cronTime, _getAllchampionshipFromHoli, null, true, 'America/Sao_Paulo')
+  const cronJob = () => new CronJob(cronTime, getAllchampionshipFromHoli, null, true, 'America/Sao_Paulo')
 
-  const _getAllchampionshipFromHoli = () => {
+  const getAllchampionshipFromHoli = () => {
     const url = `${app.coincidents.Config.apis.holiUrl}/championship/getAllchampionship`
     const headers = {
       'language': 'en-us',
@@ -55,10 +59,6 @@ module.exports = (app) => {
     return GuessLines.create(newGuessLineObj)
   }
 
-  const _buildFixtureObj = (championship) => championship.fixturesNames.map((fixtureName) => ({
-    fixture: fixtureName
-  }))
-
   const _updateFlagIsActive = (championship, guessLine) => {
     guessLine.guessLineActive = championship.championshipActive
 
@@ -66,4 +66,6 @@ module.exports = (app) => {
   }
 
   cronJob()
+
+  return getAllchampionshipFromHoli
 }
