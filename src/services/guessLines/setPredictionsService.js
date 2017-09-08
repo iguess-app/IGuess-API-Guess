@@ -7,12 +7,12 @@ module.exports = (app) => {
 
   const setPredictions = (request, headers) => {
     const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language);
-    _checkMatchRefIsQualified(request.guesses, dictionary)
+    _checkIfThereAreDuplicatedMatchRef(request.guesses, dictionary)
 
     return setPredictionsRepository.setPredictions(request, dictionary)
   }
 
-  const _checkMatchRefIsQualified = (guesses, dictionary) => {
+  const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
     const matchRefArray = guesses.map((guess) => guess.matchRef)
     const thereAreDuplicated = matchRefArray.some((matchRef, currentIndex) => matchRefArray.indexOf(matchRef) !== currentIndex)
     if (thereAreDuplicated) {
