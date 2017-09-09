@@ -5,13 +5,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 const Mixed = Schema.Types.Mixed
 
-const optionsSchema = {
-  versionKey: false
-}
-const optionsSchemaNoIdNoVersion = {
-  versionKey: false,
-  _id: false
-}
+const optionsSchemas = require('./optionsSchemas/optionsSchemas')
 
 module.exports = (app) => {
   const db = app.coincidents.Managers.mongoManager
@@ -35,7 +29,7 @@ module.exports = (app) => {
         validate: [championshipFixtureUserKeyValidator.checkChampionshipFixtureUserKey, String(serverErrors.notchampionshipFixtureUserKeyValid)]
       }]
     }
-  }, optionsSchemaNoIdNoVersion)
+  }, optionsSchemas._idAndVersionKeyDisable)
   
   const guessesLinesSchema = new Schema({
     championship: {
@@ -56,7 +50,7 @@ module.exports = (app) => {
         validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
       }]
     }
-  }, optionsSchema)
+  }, optionsSchemas.versionKeyDisable)
 
   return db.model('guesseslines', guessesLinesSchema)
 }

@@ -2,15 +2,9 @@
 
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const optionsSchemas = require('./optionsSchemas/optionsSchemas')
 
-const optionsSchema = {
-  versionKey: false
-}
-const optionsSchemaNoIdNoVersion = {
-  versionKey: false,
-  _id: false
-}
+const Schema = mongoose.Schema
 
 module.exports = (app) => {
   const db = app.coincidents.Managers.mongoManager
@@ -36,7 +30,7 @@ module.exports = (app) => {
     pontuation: {
       type: Number
     }
-  }, optionsSchemaNoIdNoVersion)
+  }, optionsSchemas._idAndVersionKeyDisable)
   
   const predictionsSchema = new Schema({
     championshipFixtureUserKey: {
@@ -52,7 +46,7 @@ module.exports = (app) => {
       type: [guessSchema],
       required: true
     }
-  }, optionsSchema)
+  }, optionsSchemas.versionKeyDisable)
 
   return db.model('predictions', predictionsSchema)
 }

@@ -5,13 +5,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 const Mixed = Schema.Types.Mixed
 
-const optionsSchema = {
-  versionKey: false
-}
-const optionsSchemaNoIdNoVersion = {
-  versionKey: false,
-  _id: false
-}
+const optionsSchemas = require('./optionsSchemas/optionsSchemas')
 
 module.exports = (app) => {
   const db = app.coincidents.Managers.mongoManager
@@ -33,7 +27,7 @@ module.exports = (app) => {
       type: Number,
       required: true
     }
-  }, optionsSchemaNoIdNoVersion)
+  }, optionsSchemas._idAndVersionKeyDisable)
   
   const pontuationsSchema = new Schema({
     championshipUserKey: {
@@ -58,7 +52,7 @@ module.exports = (app) => {
     pontuationByFixture: {
       type: [pontuationByFixtureSchema]
     }
-  }, optionsSchema)
+  }, optionsSchemas.versionKeyDisable)
 
   return db.model('pontuations', pontuationsSchema)
 }

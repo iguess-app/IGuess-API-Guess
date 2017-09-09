@@ -2,9 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const optionsSchema = {
-  versionKey: false
-}
+const optionsSchemas = require('./optionsSchemas/optionsSchemas')
 
 module.exports = (app) => {
   const Managers = app.coincidents.Managers
@@ -34,7 +32,7 @@ module.exports = (app) => {
       type: String,
       required: true
     }
-  }, optionsSchema)
+  }, optionsSchemas.versionKeyDisable)
   
   const guessesLeaguesSchema = new Schema({
     administrator: {
@@ -57,7 +55,7 @@ module.exports = (app) => {
       type: Array,
       required: true
     }
-  }, optionsSchema)
+  }, optionsSchemas.versionKeyDisable)
   
   return db.model('guessesleagues', guessesLeaguesSchema)
 } 
