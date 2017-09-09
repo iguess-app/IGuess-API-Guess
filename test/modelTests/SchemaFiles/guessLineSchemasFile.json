@@ -1,0 +1,64 @@
+{
+  "correctSchema": {
+    "championship": {
+      "championshipRef": "5872a8d2ed1b02314e088291",
+      "league": "5872467bed1b02314e08828a",
+      "season": "2016",
+      "championship": "Campeonato Brasileiro"
+    },
+    "guessLineActive": true,
+    "usersAddedAtGuessLine": [
+      "591df6c78d1fdc0bb4eba371"
+    ],
+    "fixtures": [{
+      "fixture": 1,
+      "usersWhoAlreadySentGuesses": [
+        "5872a8d2ed1b02314e088291_1_591df6c78d1fdc0bb4eba371",
+        "5872a8d2ed1b02314e088291_1_591df6c78d1fdc0bb4eba372",
+        "5872a8d2ed1b02314e088291_1_591df6c78d1fdc0bb4eba380"
+      ]
+    },
+    {
+      "fixture": 2,
+      "usersWhoAlreadySentGuesses": []
+    },
+    {
+      "fixture": 3,
+      "usersWhoAlreadySentGuesses": []
+    },
+    {
+      "fixture": 4,
+      "usersWhoAlreadySentGuesses": []
+    }
+  ]
+  },
+  "userDataWrong": {
+    "championship": {
+      "championshipRef": "5872a8d2ed1b02314e088291",
+      "league": "5872467bed1b02314e08828a",
+      "season": "2016",
+      "championship": "Campeonato Brasileiro"
+    },
+    "usersAddedAtGuessLine": [
+      "591df6c78d1fdc0bb4eba371"
+    ],
+    "fixtures": null
+  },
+  "championshipDataWrong": {
+    "championship": {
+      "championshipRef": "notObjectID",
+      "league": "5872467bed1b02314e08828a",
+      "championship": "Campeonato Brasileiro"
+    },
+    "guessLineActive": false,
+    "usersAddedAtGuessLine": [
+      "591df6c78d1fdc0bb4eba371"
+    ],
+    "fixtures": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": []
+    }
+  }
+}

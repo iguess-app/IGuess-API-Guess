@@ -1,0 +1,62 @@
+'use strict'
+
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema
+
+const optionsSchema = {
+  versionKey: false
+}
+const optionsSchemaNoIdNoVersion = {
+  versionKey: false,
+  _id: false
+}
+
+module.exports = (app) => {
+  const db = app.coincidents.Managers.mongoManager
+  const mongo = app.coincidents.Config.mongo
+  const serverErrors = app.coincidents.Utils.errorUtils.serverErrors
+
+  const championshipFixtureUserKeyValidator = require('./subValidations/championshipFixtureUserKey')(app)
+  
+  const guessSchema = new Schema({
+    matchRef: {
+      type: String,
+      required: true,
+      validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+    },
+    homeTeamScore: {
+      type: Number,
+      required: true
+    },
+    awayTeamScore: {
+      type: Number,
+      required: true
+    },
+    pontuation: {
+      type: Number
+    }
+  }, optionsSchemaNoIdNoVersion)
+  
+  const predictionsSchema = new Schema({
+    championshipFixtureUserKey: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: [championshipFixtureUserKeyValidator.checkChampionshipFixtureUserKey, String(serverErrors.notchampionshipFixtureUserKeyValid)]
+    },
+    fixturePontuation: {
+      type: Number
+    },
+    guesses: {
+      type: [guessSchema],
+      required: true
+    }
+  }, optionsSchema)
+
+  return db.model('predictions', predictionsSchema)
+}
+
+/*eslint global-require: 0*/
+
+
