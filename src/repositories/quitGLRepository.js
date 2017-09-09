@@ -3,7 +3,7 @@
 module.exports = (app) => {
   const QueryUtils = app.coincidents.Utils.queryUtils;
   const status = app.coincidents.Utils.guessLeagueStatus;
-  const GuessLeague = app.coincidents.Schemas.guessesLeaguesSchema;
+  const GuessLeague = app.src.models.guessesLeaguesModel;
 
   const quitGuessLeague = (request) => {
     const searchQuery = {

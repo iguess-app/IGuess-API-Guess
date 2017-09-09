@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
   const QueryUtils = app.coincidents.Utils.queryUtils;
-  const GuessLeague = app.coincidents.Schemas.guessesLeaguesSchema;
+  const GuessLeague = app.src.models.guessesLeaguesModel;
 
   const getGuessLeague = (request) => {
 

@@ -3,8 +3,8 @@
 const Boom = require('boom')
 
 module.exports = (app) => {
-  const GuessLines = app.coincidents.Schemas.guessesLinesSchema
-  const Predictions = app.coincidents.Schemas.predictionsSchema
+  const GuessLines = app.src.models.guessesLinesModel
+  const Predictions = app.src.models.predictionsModel
 
   const setPredictions = (request, dictionary) => {
     const searchQuery = {

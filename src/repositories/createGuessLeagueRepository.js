@@ -1,7 +1,7 @@
 'use Strict';
 
 module.exports = (app) => {
-  const GuessLeague = app.coincidents.Schemas.guessesLeaguesSchema;
+  const GuessLeague = app.src.models.guessesLeaguesModel;
 
   const createGuessLeague = (request) => {
     //TODO Check if the championshipID exists

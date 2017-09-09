@@ -4,16 +4,16 @@
 
 const Promise = require('bluebird');
 
-const HIT_ONLY_THE_WINNER = 2;
-const HIT_THE_SCOREBOARD = 5;
-const HOME_WINNER = 'HOME';
-const AWAY_WINNER = 'AWAY';
-const NO_WINNER = 'DRAW';
+const HIT_ONLY_THE_WINNER = 2
+const HIT_THE_SCOREBOARD = 5
+const HOME_WINNER = 'HOME'
+const AWAY_WINNER = 'AWAY'
+const NO_WINNER = 'DRAW'
 
 module.exports = (app) => {
-  const GuessesLines = app.coincidents.Schemas.guessesLinesSchema;
-  const Profile = app.coincidents.Schemas.profileSchema;
-  const Round = app.coincidents.Schemas.roundSchema;
+  const GuessesLines = app.src.models.guessesLinesSchema;
+  const Profile = app.src.models.profileSchema;
+  const Round = app.src.models.roundSchema;
   const QueryUtils = app.coincidents.Utils.queryUtils;
 
   const runInterpreter = () => {

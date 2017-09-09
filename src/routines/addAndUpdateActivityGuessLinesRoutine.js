@@ -49,7 +49,7 @@ const _addGuessLines = (championships, GuessLines, log) => {
 }
 
 module.exports = (app) => {
-  const GuessLines = app.coincidents.Schemas.guessesLinesSchema
+  const GuessLines = app.src.models.guessesLinesSchema
   const requestManager = app.coincidents.Managers.requestManager
   const log = app.coincidents.Managers.logManager
 

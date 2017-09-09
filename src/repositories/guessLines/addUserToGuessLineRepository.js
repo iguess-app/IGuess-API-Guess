@@ -3,7 +3,7 @@
 const Boom = require('boom')
 
 module.exports = (app) => {
-  const GuessLines = app.coincidents.Schemas.guessesLinesSchema
+  const GuessLines = app.src.models.guessesLinesModel
 
   const addUserToGuessLine = (request, dictionary) => {
 
