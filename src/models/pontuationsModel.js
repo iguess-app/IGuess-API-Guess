@@ -14,7 +14,6 @@ module.exports = (app) => {
   const userErrors = app.coincidents.Utils.errorUtils.userErrors
 
   const validateFixture = require('./subValidations/fixture')(app)
-  const championshipEmbeddedSchema = require('./subValidations/championshipEmbeddedModel')(app)
   const championshipUserKeyValidator = require('./subValidations/championshipUserKey')
 
   const pontuationByFixtureSchema = new Schema({

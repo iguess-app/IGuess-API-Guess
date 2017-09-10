@@ -7,7 +7,7 @@ const cronTime = require('./cronTime')
 const qs = require('querystring')
 const CronJob = require('cron').CronJob
 
-const fixtureCHUMBADA = 7
+const fixtureCHUMBADA = 23
 const championshipCHUMBADO = '5872a8d2ed1b02314e088291'
 
 const _buildQueryString = () =>
@@ -54,23 +54,25 @@ const _compareScoreWithPrediction = (usersPredictions, fixture, pontuationRules,
 }
 
 const _calculatePontuations = (game, guess, pontuationRules) => {
-  if (game.homeTeamScore > game.awayTeamScore && guess.homeTeamScore > guess.awayTeamScore) {
-    if (_hitTheScoreboard(game, guess)) {
-      return pontuationRules.HIT_THE_SCOREBOARD
+  if (game.homeTeamScore && game.awayTeamScore) {
+    if (game.homeTeamScore > game.awayTeamScore && guess.homeTeamScore > guess.awayTeamScore) {
+      if (_hitTheScoreboard(game, guess)) {
+        return pontuationRules.HIT_THE_SCOREBOARD
+      }
+      return pontuationRules.HIT_ONLY_THE_WINNER
     }
-    return pontuationRules.HIT_ONLY_THE_WINNER
-  }
-  if (game.homeTeamScore < game.awayTeamScore && guess.homeTeamScore < guess.awayTeamScore) {
-    if (_hitTheScoreboard(game, guess)) {
-      return pontuationRules.HIT_THE_SCOREBOARD
+    if (game.homeTeamScore < game.awayTeamScore && guess.homeTeamScore < guess.awayTeamScore) {
+      if (_hitTheScoreboard(game, guess)) {
+        return pontuationRules.HIT_THE_SCOREBOARD
+      }
+      return pontuationRules.HIT_ONLY_THE_WINNER
     }
-    return pontuationRules.HIT_ONLY_THE_WINNER
-  }
-  if (game.homeTeamScore === game.awayTeamScore && guess.homeTeamScore === guess.awayTeamScore) {
-    if (_hitTheScoreboard(game, guess)) {
-      return pontuationRules.HIT_THE_SCOREBOARD
+    if (game.homeTeamScore === game.awayTeamScore && guess.homeTeamScore === guess.awayTeamScore) {
+      if (_hitTheScoreboard(game, guess)) {
+        return pontuationRules.HIT_THE_SCOREBOARD
+      }
+      return pontuationRules.HIT_ONLY_THE_WINNER
     }
-    return pontuationRules.HIT_ONLY_THE_WINNER
   }
   return pontuationRules.HIT_NOTHING
 }
@@ -85,21 +87,38 @@ const _saveUserPontuation = (fixturePontuation, userPredictions, fixture, Pontua
   Pontuations.findOne(searchQuery)
     .then((userPontuation) => {
       if (!userPontuation) {
-        return _addNewUserPontuationDoc()
+        return _addNewUserPontuationDoc(fixturePontuation, userPredictions, fixture, Pontuations)
       }
-      userPontuation.totalPontuation += fixturePontuation
+      const pontuationByFixtureAlreadySettedIndex = userPontuation.pontuationByFixture.findIndex((fixtureSinglePontuation) => fixtureSinglePontuation.fixture === fixture.fixture)
+      if (pontuationByFixtureAlreadySettedIndex >= 0) {
+        userPontuation.pontuationByFixture[pontuationByFixtureAlreadySettedIndex].pontuation = fixturePontuation
+        
+        return userPontuation.save()
+      }
       const newFixturePontuation = {
         fixture: fixture.fixture,
         pontuation: fixturePontuation
       }
+      userPontuation.totalPontuation += fixturePontuation
       userPontuation.pontuationByFixture.push(newFixturePontuation)
 
       return userPontuation.save()
     })
 }
 
-const _addNewUserPontuationDoc = () => {
+const _addNewUserPontuationDoc = (fixturePontuation, userPredictions, fixture, Pontuations) => {
+  const newPontuationObj = {
+    championshipUserKey: `${fixture.championshipRef}_${userPredictions.userRef}`,
+    userRef: userPredictions.userRef,
+    championshipRef: fixture.championshipRef,
+    totalPontuation: fixturePontuation,
+    pontuationByFixture: [{
+      fixture: fixture.fixture,
+      pontuation: fixturePontuation
+    }]
+  }
 
+  return Pontuations.create(newPontuationObj)
 }
 
 module.exports = (app) => {
