@@ -19,13 +19,13 @@ const _getUsersPredictionsAndSetPontuations = (fixture, models) => {
 
   _getPredictions(models.predictionsModel)
   .then((predictions) => _calculatePontuations(fixture))
-  .then((pontuation) _saveUsersPontuations(models.pontuationsModel))
+  .then((pontuation) => _saveUsersPontuations(models.pontuationsModel))
 
 }
 
 const _getPredictions = (Predictions) => {
   //TODO usar um cursor para interar e não deixar tao custo
-
+  //TODO testar com uma quantidade alta de massa para verificar o flow
   const searchQuery = {
     'championshipFixtureUserKey': {
       '$regex': `${championship_chumbado}_${fixture_chumbada}`,
@@ -39,6 +39,9 @@ const _calculatePontuations = () => {
 
 }
 
+const _saveUsersPontuations = (Pontuations) => {
+
+}
  
 module.exports = (app) => {
   const pontuationRules = app.coincidents.Config.pontuationRules
