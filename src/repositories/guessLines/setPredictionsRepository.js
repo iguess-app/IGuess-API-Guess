@@ -13,7 +13,7 @@ module.exports = (app) => {
 
     return GuessLines.findOne(searchQuery)
       .then((guessLine) => {
-        _checkIfExists(guessLine, dictionary)
+        _checkErrors(guessLine, request, dictionary)
         const championshipFixtureUserKey = `${request.championshipRef}_${request.fixture}_${request.userRef}`
         const requestFixtureIndex = guessLine.fixtures.findIndex((fixtureObj) => fixtureObj.fixture === request.fixture)
 
@@ -74,9 +74,12 @@ module.exports = (app) => {
       .then(() => _returnSuccessMsg())
   }
 
-  const _checkIfExists = (guessLine, dictionary) => {
+  const _checkErrors = (guessLine, request, dictionary) => {
     if (!guessLine) {
       throw Boom.notFound(dictionary.guessLineNotFound)
+    }
+    if (!guessLine.usersAddedAtGuessLine.includes(request.userRef)) {
+      throw Boom.notAcceptable(dictionary.userNotAddedAtGuessLine)
     }
   }
 
