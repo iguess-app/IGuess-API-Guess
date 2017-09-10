@@ -65,6 +65,7 @@ module.exports = (app) => {
   const _setNewUserPredictions = (guessLine, request, championshipFixtureUserKey, requestFixtureIndex) => {
     const newPredictions = {
       championshipFixtureUserKey,
+      userRef: request.userRef,
       guesses: request.guesses
     }
     guessLine.fixtures[requestFixtureIndex].usersWhoAlreadySentGuesses.push(championshipFixtureUserKey)
