@@ -38,4 +38,13 @@ lab.experiment('Model Test ==> PredictionSchema Validator', () => {
       done()
     })
   })
+  
+  lab.test('GuessLineSchema without UserRef', (done) => {
+    const guessesDataWrongSchema = new Prediction(predictionSchemas.withOutUserRef)
+    guessesDataWrongSchema.validate((err) => {
+      expect(err.errors.userRef.message).to.be.equal('Path `userRef` is required.')
+      done()
+    })
+  })
+  
 })

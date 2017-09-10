@@ -2,12 +2,7 @@
     "correctSchema": {
         "championshipUserKey": "5872a8d2ed1b02314e088291_591df6c78d1fdc0bb4eba371",
         "userRef": "591df6c78d1fdc0bb4eba371",
-        "championship": {
-            "championshipRef": "5872a8d2ed1b02314e088291",
-            "championship": "Campeonato Brasileiro",
-            "league": "5872467bed1b02314e08828a",
-            "season": "2016"
-        },
+        "championshipRef": "5872a8d2ed1b02314e088291",
         "totalPontuation": 61,
         "pontuationByFixture": [{
                 "fixture": 1,
@@ -26,12 +21,7 @@
     "championshipUserKeyWrong": {
         "championshipUserKey": "5a8d2ed1b02314e088291_591df6c78d1fdc0bb4eba371",
         "userRef": "591df6c78d1fdc0bb4eba371",
-        "championship": {
-            "championshipRef": "5872a8d2ed1b02314e088291",
-            "championship": "Campeonato Brasileiro",
-            "league": "5872467bed1b02314e08828a",
-            "season": "2016"
-        },
+        "championshipRef": "5872a8d2ed1b02314e088291",
         "totalPontuation": 61,
         "pontuationByFixture": [{
                 "fixture": 1,
@@ -50,22 +40,12 @@
     "withoutPontuationByFixture": {
         "championshipUserKey": "5872a8d2ed1b02314e088291_591df6c78d1fdc0bb4eba371",
         "userRef": "591df6c78d1fdc0bb4eba371",
-        "championship": {
-            "championshipRef": "5872a8d2ed1b02314e088291",
-            "championship": "Campeonato Brasileiro",
-            "league": "5872467bed1b02314e08828a",
-            "season": "2016"
-        },
+        "championshipRef": "5872a8d2ed1b02314e088291",
         "totalPontuation": 0
     },
     "withoutPontuationByFixtureAndWithoutTotalPontuation": {
         "championshipUserKey": "5872a8d2ed1b02314e088291_591df6c78d1fdc0bb4eba371",
         "userRef": "591df6c78d1fdc0bb4eba371",
-        "championship": {
-            "championshipRef": "5872a8d2ed1b02314e088291",
-            "championship": "Campeonato Brasileiro",
-            "league": "5872467bed1b02314e08828a",
-            "season": "2016"
-        }
+        "championshipRef": "5872a8d2ed1b02314e088291"
     }
 }
