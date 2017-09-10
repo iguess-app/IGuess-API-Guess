@@ -5,6 +5,7 @@
 const cronTime = require('./cronTime')
 
 const qs = require('querystring')
+const CronJob = require('cron').CronJob
 
 const fixture_chumbada = 7
 const championship_chumbado = '5872a8d2ed1b02314e088291'
@@ -18,7 +19,7 @@ const _buildQueryString = () =>
 const _getUsersPredictionsAndSetPontuations = (fixture, models) => {
 
   _getPredictions(models.predictionsModel)
-  .then((predictions) => _calculatePontuations(fixture))
+  .then((predictions) => _calculatePontuations(predictions, fixture))
   .then((pontuation) => _saveUsersPontuations(models.pontuationsModel))
 
 }
@@ -35,8 +36,8 @@ const _getPredictions = (Predictions) => {
   return Predictions.find(searchQuery)
 }
 
-const _calculatePontuations = () => {
-
+const _calculatePontuations = (predictions, fixture) => {
+  let teste = 3
 }
 
 const _saveUsersPontuations = (Pontuations) => {
@@ -45,12 +46,13 @@ const _saveUsersPontuations = (Pontuations) => {
  
 module.exports = (app) => {
   const pontuationRules = app.coincidents.Config.pontuationRules
+  const requestManager = app.coincidents.Managers.requestManager
   const models = app.src.models
   
   const cronJob = () => new CronJob(cronTime, updatePredictionsPontuation, null, true, 'America/Sao_Paulo')
 
   const updatePredictionsPontuation = () => {
-    const url = `${app.coincidents.Config.apis.holiUrl}/fixture/getFixtureByChampionshipRefAndFixture${_buildQueryString()}`
+    const url = `${app.coincidents.Config.apis.holiUrl}/fixture/getFixtureByChampionshipRefAndFixture?${_buildQueryString()}`
     const headers = {
       'language': 'en-us',
       'content-type': 'application/json'
@@ -62,7 +64,7 @@ module.exports = (app) => {
 
   cronJob()
 
-  module.exports = updatePredictionsPontuation
+  return updatePredictionsPontuation
 }
 
 
