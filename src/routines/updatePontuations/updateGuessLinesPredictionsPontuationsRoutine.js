@@ -1,5 +1,3 @@
-///* eslint-disable */
-
 'use strict'
 
 const cronTime = require('../cronTime')
@@ -25,7 +23,6 @@ const _getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules)
 }
 
 const _getPredictions = (Predictions) => {
-  //TODO testar com uma quantidade alta de massa para verificar o flow
   const searchQuery = {
     'championshipFixtureUserKey': {
       '$regex': `${championshipCHUMBADO}_${fixtureCHUMBADA}`
@@ -67,7 +64,7 @@ const _saveUserPontuation = (fixturePontuation, userPredictions, fixture, Pontua
       const pontuationByFixtureAlreadySettedIndex = userPontuation.pontuationByFixture.findIndex((fixtureSinglePontuation) => fixtureSinglePontuation.fixture === fixture.fixture)
       if (pontuationByFixtureAlreadySettedIndex >= 0) {
         userPontuation.pontuationByFixture[pontuationByFixtureAlreadySettedIndex].pontuation = fixturePontuation
-        userPontuation.totalPontuation = _calculeTotalPontuation(userPontuation)
+        userPontuation.totalPontuation = _calculateTotalPontuation(userPontuation)
 
         return userPontuation.save()
       }
@@ -76,13 +73,13 @@ const _saveUserPontuation = (fixturePontuation, userPredictions, fixture, Pontua
         pontuation: fixturePontuation
       }
       userPontuation.pontuationByFixture.push(newFixturePontuation)
-      userPontuation.totalPontuation = _calculeTotalPontuation(userPontuation)
+      userPontuation.totalPontuation = _calculateTotalPontuation(userPontuation)
 
       return userPontuation.save()
     })
 }
 
-const _calculeTotalPontuation = (userPontuation) => userPontuation.pontuationByFixture
+const _calculateTotalPontuation = (userPontuation) => userPontuation.pontuationByFixture
   .reduce((prevValue, pontuationByFixture) => 
     prevValue + pontuationByFixture.pontuation
   , 0)
@@ -127,4 +124,5 @@ module.exports = (app) => {
 }
 
 /*eslint max-params: [2, 4]*/
-/*eslint max-statements: [0, 4]*/
+/*eslint max-statements: 0*/
+/*eslint no-magic-numbers: 0*/
