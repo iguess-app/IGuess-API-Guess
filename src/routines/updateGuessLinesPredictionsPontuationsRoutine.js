@@ -1,4 +1,4 @@
-/* eslint-disable */
+///* eslint-disable */
 
 'use strict'
 
@@ -7,21 +7,19 @@ const cronTime = require('./cronTime')
 const qs = require('querystring')
 const CronJob = require('cron').CronJob
 
-const fixture_chumbada = 7
-const championship_chumbado = '5872a8d2ed1b02314e088291'
+const fixtureCHUMBADA = 7
+const championshipCHUMBADO = '5872a8d2ed1b02314e088291'
 
-const _buildQueryString = () => 
+const _buildQueryString = () =>
   qs.stringify({
-    fixture: fixture_chumbada,
-    championshipRef: championship_chumbado
+    fixture: fixtureCHUMBADA,
+    championshipRef: championshipCHUMBADO
   })
 
-const _getUsersPredictionsAndSetPontuations = (fixture, models) => {
+const _getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules) => {
 
   _getPredictions(models.predictionsModel)
-  .then((predictions) => _calculatePontuations(predictions, fixture))
-  .then((pontuation) => _saveUsersPontuations(models.pontuationsModel))
-
+    .then((predictions) => _compareScoreWithPrediction(predictions, fixture, pontuationRules, models))
 }
 
 const _getPredictions = (Predictions) => {
@@ -29,26 +27,87 @@ const _getPredictions = (Predictions) => {
   //TODO testar com uma quantidade alta de massa para verificar o flow
   const searchQuery = {
     'championshipFixtureUserKey': {
-      '$regex': `${championship_chumbado}_${fixture_chumbada}`,
+      '$regex': `${championshipCHUMBADO}_${fixtureCHUMBADA}`,
     }
   }
 
   return Predictions.find(searchQuery)
 }
 
-const _calculatePontuations = (predictions, fixture) => {
-  let teste = 3
+const _compareScoreWithPrediction = (usersPredictions, fixture, pontuationRules, models) => {
+  usersPredictions.forEach((userPredictions) => {
+    let fixturePontuation = 0
+    fixture.games.forEach((game) => {
+      userPredictions.guesses.map((guess) => {
+        if (game._id === guess.matchRef) {
+          guess.pontuation = _calculatePontuations(game, guess, pontuationRules)
+          fixturePontuation += guess.pontuation
+        }
+
+        return guess
+      })
+    })
+    userPredictions.fixturePontuation = fixturePontuation
+    userPredictions.save()
+    _saveUserPontuation(fixturePontuation, userPredictions, fixture, models.pontuationsModel)
+  })
 }
 
-const _saveUsersPontuations = (Pontuations) => {
+const _calculatePontuations = (game, guess, pontuationRules) => {
+  if (game.homeTeamScore > game.awayTeamScore && guess.homeTeamScore > guess.awayTeamScore) {
+    if (_hitTheScoreboard(game, guess)) {
+      return pontuationRules.HIT_THE_SCOREBOARD
+    }
+    return pontuationRules.HIT_ONLY_THE_WINNER
+  }
+  if (game.homeTeamScore < game.awayTeamScore && guess.homeTeamScore < guess.awayTeamScore) {
+    if (_hitTheScoreboard(game, guess)) {
+      return pontuationRules.HIT_THE_SCOREBOARD
+    }
+    return pontuationRules.HIT_ONLY_THE_WINNER
+  }
+  if (game.homeTeamScore === game.awayTeamScore && guess.homeTeamScore === guess.awayTeamScore) {
+    if (_hitTheScoreboard(game, guess)) {
+      return pontuationRules.HIT_THE_SCOREBOARD
+    }
+    return pontuationRules.HIT_ONLY_THE_WINNER
+  }
+  return pontuationRules.HIT_NOTHING
+}
+
+const _hitTheScoreboard = (game, guess) => game.homeTeamScore === guess.homeTeamScore && game.awayTeamScore === guess.awayTeamScore
+
+const _saveUserPontuation = (fixturePontuation, userPredictions, fixture, Pontuations) => {
+
+  const searchQuery = {
+    championshipUserKey: `${fixture.championshipRef}_${userPredictions.userRef}`
+  }
+  Pontuations.findOne(searchQuery)
+    .then((userPontuation) => {
+      if (!userPontuation) {
+        return _addNewUserPontuationDoc()
+      }
+      userPontuation.totalPontuation += fixturePontuation
+      const newFixturePontuation = {
+        fixture: fixture.fixture,
+        pontuation: fixturePontuation
+      }
+      userPontuation.pontuationByFixture.push(newFixturePontuation)
+
+      return userPontuation.save()
+    })
+}
+
+const _addNewUserPontuationDoc = () => {
 
 }
- 
+
 module.exports = (app) => {
   const pontuationRules = app.coincidents.Config.pontuationRules
   const requestManager = app.coincidents.Managers.requestManager
+  const log = app.coincidents.Managers.logManager
   const models = app.src.models
-  
+
   const cronJob = () => new CronJob(cronTime, updatePredictionsPontuation, null, true, 'America/Sao_Paulo')
 
   const updatePredictionsPontuation = () => {
@@ -58,7 +117,7 @@ module.exports = (app) => {
       'content-type': 'application/json'
     }
     requestManager.get(url, headers)
-      .then((fixture) => _getUsersPredictionsAndSetPontuations(fixture, models))
+      .then((fixture) => _getUsersPredictionsAndSetPontuations(fixture, models, pontuationRules))
       .catch((err) => log.error(err))
   }
 
@@ -67,184 +126,4 @@ module.exports = (app) => {
   return updatePredictionsPontuation
 }
 
-
-/* module.exports = (app) => {
-  const GuessesLines = app.src.models.guessesLinesSchema;
-  const Profile = app.src.models.profileSchema;
-  const Round = app.src.models.roundSchema;
-  const QueryUtils = app.coincidents.Utils.queryUtils;
-
-  const runInterpreter = () => {
-
-    //TODO Pass be reference the championship and the fixture 
-    const championshipFixture = {
-      championship: '5872a8d2ed1b02314e088291',
-      fixture: 1
-    }
-
-    const guessesLinePromise = _getGuessesLines(championshipFixture);
-    const fixtureResultPromise = _getChampionshipFixtureResult(championshipFixture);
-
-    return Promise.all([guessesLinePromise, fixtureResultPromise])
-      .spread((guessesLine, fixture) => {
-
-        //_findGuessLineByUser();
-        if (!guessesLine.pontuationSetted) {
-          guessesLine.users.forEach((userGuessLine) => {
-            const guesses = userGuessLine.guesses
-            const results = fixture.results;
-            let totalPontuation = 0;
-
-            const guessesWithPontuation = guesses.map((gameGuess) => {
-
-              const gameResult = results.find((fixtureResult) =>
-                fixtureResult.homeTeam === gameGuess.homeTeam && fixtureResult.awayTeam === gameGuess.awayTeam
-              )
-
-              const resultProperties = _checkWinnerAndScore(gameResult);
-              const guessProperties = _checkWinnerAndScore(gameGuess);
-
-              const guessPontuation = _getPontuation(guessProperties, resultProperties);
-              gameGuess.pontuation = guessPontuation;
-
-              totalPontuation += guessPontuation;
-
-              return gameGuess;
-            })
-            userGuessLine.guesses = guessesWithPontuation;
-            userGuessLine.totalPontuation = totalPontuation;
-
-            _updateUserGuessLine(userGuessLine, championshipFixture);
-            _updateUserProfile(userGuessLine, championshipFixture);
-          })
-        }
-
-        return guessesLine;
-      })
-  }
-
-  const _updateUserProfile = (userGuessLine, championshipFixture) => {
-    const searchQuery = {
-      '_id': userGuessLine.userID,
-      'guessesLines.championship': championshipFixture.championship
-    }
-    const updateQuery = {
-      '$inc': {
-        'guessesLines.$.pontuation': userGuessLine.totalPontuation
-      }
-    }
-
-    Profile.update(searchQuery, updateQuery)
-      .catch((err) => console.log(err))
-  }
-
-  const _findGuessLineByUser = (reqBody) => {
-
-    //reqBody = {
-    //userID: 'Jao Pe de Arroza',
-    //championship: '5872a8d2ed1b02314e088291',
-    //fixture: 1
-    //} 
-    const searchQuery = {
-      'users.userID': reqBody.userID,
-      'championship': reqBody.championship,
-      'fixture': reqBody.fixture
-    }
-
-    GuessesLines
-      .findOne(searchQuery, {
-        'users.$': 1
-      })
-      .then((guessLine) => {
-
-        if (guessLine) {
-          return QueryUtils.makeObject(guessLine);
-        }
-
-        return 'trouble';
-      })
-  }
-
-  const _updateUserGuessLine = (userGuessLine, championshipFixture) => {
-
-    const searchQuery = {
-      'users.userID': userGuessLine.userID,
-      'championship': championshipFixture.championship,
-      'fixture': championshipFixture.fixture
-    };
-    const updateQuery = {
-      '$set': {
-        'pontuationSetted': true,
-        'users.$.totalPontuation': userGuessLine.totalPontuation,
-        'users.$.guesses': userGuessLine.guesses
-      }
-    }
-
-    GuessesLines.update(searchQuery, updateQuery)
-      .catch((err) => console.log(err))
-  }
-
-  const _getPontuation = (guessProperties, resultProperties) => {
-
-    let pontuation = 0;
-
-    if (guessProperties.winner === resultProperties.winner) {
-      pontuation = HIT_ONLY_THE_WINNER;
-      if (guessProperties.homeTeamScore === resultProperties.homeTeamScore &&
-        guessProperties.awayTeamScore === resultProperties.awayTeamScore) {
-        pontuation = HIT_THE_SCOREBOARD;
-      }
-    }
-
-    return pontuation;
-  }
-
-  const _checkWinnerAndScore = (score) => {
-
-    let winner = null;
-    const homeTeamScore = score.finalScore.split('x')[0];
-    const awayTeamScore = score.finalScore.split('x')[1];
-
-    if (homeTeamScore > awayTeamScore) {
-      winner = HOME_WINNER;
-    } else if (homeTeamScore < awayTeamScore) {
-      winner = AWAY_WINNER;
-    } else {
-      winner = NO_WINNER;
-    }
-
-    return {
-      winner,
-      homeTeamScore,
-      awayTeamScore
-    }
-  }
-
-  const _getGuessesLines = (championshipFixture) =>
-    new Promise((resolve, reject) =>
-      GuessesLines.findOne(championshipFixture)
-      .then((guesses) => {
-
-        if (!guesses) {
-          reject(guesses)
-        }
-        resolve(QueryUtils.makeObject(guesses));
-      })
-    )
-
-  const _getChampionshipFixtureResult = (championshipFixture) =>
-    new Promise((resolve, reject) =>
-      Round.findOne(championshipFixture)
-      .then((results) => {
-
-        if (!results) {
-          reject(results)
-        }
-        resolve(QueryUtils.makeObject(results));
-      })
-    )
-
-  return {
-    runInterpreter
-  };
-} */
+/*eslint max-params: [2, 4]*/
