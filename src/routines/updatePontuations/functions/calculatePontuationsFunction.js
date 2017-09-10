@@ -5,7 +5,7 @@ const _hitTheScoreboard = (game, guess) => game.homeTeamScore === guess.homeTeam
 module.exports = () => {
 
   const returnPontuation = (game, guess, pontuationRules) => {
-    if (game.homeTeamScore && game.awayTeamScore) {
+    if (game.hasOwnProperty('homeTeamScore') && game.hasOwnProperty('awayTeamScore')) {
       if (game.homeTeamScore > game.awayTeamScore && guess.homeTeamScore > guess.awayTeamScore) {
         if (_hitTheScoreboard(game, guess)) {
           return pontuationRules.HIT_THE_SCOREBOARD

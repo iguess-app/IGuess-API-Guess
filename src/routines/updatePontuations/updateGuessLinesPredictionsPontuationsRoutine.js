@@ -19,38 +19,38 @@ const _buildQueryString = () =>
 
 const _getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules) => {
 
-  return _getPredictions(models.predictionsModel)
-    .then((predictions) => _compareScoreWithPrediction(predictions, fixture, pontuationRules, models))
+  const predictionsCursor = _getPredictions(models.predictionsModel)
+
+  return _compareScoreWithPrediction(predictionsCursor, fixture, pontuationRules, models)
 }
 
 const _getPredictions = (Predictions) => {
-  //TODO usar um cursor para interar e não deixar tao custo
   //TODO testar com uma quantidade alta de massa para verificar o flow
   const searchQuery = {
     'championshipFixtureUserKey': {
-      '$regex': `${championshipCHUMBADO}_${fixtureCHUMBADA}`,
+      '$regex': `${championshipCHUMBADO}_${fixtureCHUMBADA}`
     }
   }
 
-  return Predictions.find(searchQuery)
+  return Predictions.find(searchQuery).cursor()
 }
 
-const _compareScoreWithPrediction = (usersPredictions, fixture, pontuationRules, models) => {
-  usersPredictions.forEach((userPredictions) => {
-    let fixturePontuation = 0
-    fixture.games.forEach((game) => {
-      userPredictions.guesses.map((guess) => {
-        if (game._id === guess.matchRef) {
-          guess.pontuation = calculatePontuations.returnPontuation(game, guess, pontuationRules)
-          fixturePontuation += guess.pontuation
-        }
+const _compareScoreWithPrediction = (predictionsCursor, fixture, pontuationRules, models) => {
+  predictionsCursor.on('data', (userPredictions) => {
+      let fixturePontuation = 0
+      fixture.games.forEach((game) => {
+        userPredictions.guesses.map((guess) => {
+          if (game._id === guess.matchRef) {
+            guess.pontuation = calculatePontuations.returnPontuation(game, guess, pontuationRules)
+            fixturePontuation += guess.pontuation
+          }
 
-        return guess
+          return guess
+        })
       })
-    })
-    userPredictions.fixturePontuation = fixturePontuation
-    userPredictions.save()
-    _saveUserPontuation(fixturePontuation, userPredictions, fixture, models.pontuationsModel)
+      userPredictions.fixturePontuation = fixturePontuation
+      userPredictions.save()
+      _saveUserPontuation(fixturePontuation, userPredictions, fixture, models.pontuationsModel)
   })
 }
 
@@ -67,19 +67,25 @@ const _saveUserPontuation = (fixturePontuation, userPredictions, fixture, Pontua
       const pontuationByFixtureAlreadySettedIndex = userPontuation.pontuationByFixture.findIndex((fixtureSinglePontuation) => fixtureSinglePontuation.fixture === fixture.fixture)
       if (pontuationByFixtureAlreadySettedIndex >= 0) {
         userPontuation.pontuationByFixture[pontuationByFixtureAlreadySettedIndex].pontuation = fixturePontuation
-        
+        userPontuation.totalPontuation = _calculeTotalPontuation(userPontuation)
+
         return userPontuation.save()
       }
       const newFixturePontuation = {
         fixture: fixture.fixture,
         pontuation: fixturePontuation
       }
-      userPontuation.totalPontuation += fixturePontuation
       userPontuation.pontuationByFixture.push(newFixturePontuation)
+      userPontuation.totalPontuation = _calculeTotalPontuation(userPontuation)
 
       return userPontuation.save()
     })
 }
+
+const _calculeTotalPontuation = (userPontuation) => userPontuation.pontuationByFixture
+  .reduce((prevValue, pontuationByFixture) => 
+    prevValue + pontuationByFixture.pontuation
+  , 0)
 
 const _addNewUserPontuationDoc = (fixturePontuation, userPredictions, fixture, Pontuations) => {
   const newPontuationObj = {
@@ -121,3 +127,4 @@ module.exports = (app) => {
 }
 
 /*eslint max-params: [2, 4]*/
+/*eslint max-statements: [0, 4]*/
