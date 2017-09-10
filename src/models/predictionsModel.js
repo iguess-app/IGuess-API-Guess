@@ -39,6 +39,11 @@ module.exports = (app) => {
       unique: true,
       validate: [championshipFixtureUserKeyValidator.checkChampionshipFixtureUserKey, String(serverErrors.notchampionshipFixtureUserKeyValid)]
     },
+    userRef: {
+      type: String,
+      required: true,
+      validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+    },
     fixturePontuation: {
       type: Number
     },

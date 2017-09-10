@@ -41,9 +41,10 @@ module.exports = (app) => {
       required: true,
       validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
     },
-    championship: {
-      type: championshipEmbeddedSchema,
-      required: true
+    championshipRef: {
+      type: String,
+      required: true,
+      validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
     },
     totalPontuation: {
       type: Number,
