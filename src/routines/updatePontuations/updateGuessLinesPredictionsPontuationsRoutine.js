@@ -2,7 +2,8 @@
 
 'use strict'
 
-const cronTime = require('./cronTime')
+const cronTime = require('../cronTime')
+const calculatePontuations = require('./functions/calculatePontuationsFunction')()
 
 const qs = require('querystring')
 const CronJob = require('cron').CronJob
@@ -18,7 +19,7 @@ const _buildQueryString = () =>
 
 const _getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules) => {
 
-  _getPredictions(models.predictionsModel)
+  return _getPredictions(models.predictionsModel)
     .then((predictions) => _compareScoreWithPrediction(predictions, fixture, pontuationRules, models))
 }
 
@@ -40,7 +41,7 @@ const _compareScoreWithPrediction = (usersPredictions, fixture, pontuationRules,
     fixture.games.forEach((game) => {
       userPredictions.guesses.map((guess) => {
         if (game._id === guess.matchRef) {
-          guess.pontuation = _calculatePontuations(game, guess, pontuationRules)
+          guess.pontuation = calculatePontuations.returnPontuation(game, guess, pontuationRules)
           fixturePontuation += guess.pontuation
         }
 
@@ -52,32 +53,6 @@ const _compareScoreWithPrediction = (usersPredictions, fixture, pontuationRules,
     _saveUserPontuation(fixturePontuation, userPredictions, fixture, models.pontuationsModel)
   })
 }
-
-const _calculatePontuations = (game, guess, pontuationRules) => {
-  if (game.homeTeamScore && game.awayTeamScore) {
-    if (game.homeTeamScore > game.awayTeamScore && guess.homeTeamScore > guess.awayTeamScore) {
-      if (_hitTheScoreboard(game, guess)) {
-        return pontuationRules.HIT_THE_SCOREBOARD
-      }
-      return pontuationRules.HIT_ONLY_THE_WINNER
-    }
-    if (game.homeTeamScore < game.awayTeamScore && guess.homeTeamScore < guess.awayTeamScore) {
-      if (_hitTheScoreboard(game, guess)) {
-        return pontuationRules.HIT_THE_SCOREBOARD
-      }
-      return pontuationRules.HIT_ONLY_THE_WINNER
-    }
-    if (game.homeTeamScore === game.awayTeamScore && guess.homeTeamScore === guess.awayTeamScore) {
-      if (_hitTheScoreboard(game, guess)) {
-        return pontuationRules.HIT_THE_SCOREBOARD
-      }
-      return pontuationRules.HIT_ONLY_THE_WINNER
-    }
-  }
-  return pontuationRules.HIT_NOTHING
-}
-
-const _hitTheScoreboard = (game, guess) => game.homeTeamScore === guess.homeTeamScore && game.awayTeamScore === guess.awayTeamScore
 
 const _saveUserPontuation = (fixturePontuation, userPredictions, fixture, Pontuations) => {
 

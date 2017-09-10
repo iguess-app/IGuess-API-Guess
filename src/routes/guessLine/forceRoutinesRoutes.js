@@ -3,9 +3,8 @@
 module.exports = (app) => {
   const server = app.configServer
   const addAndUpdateActivityGuessLinesRoutine = app.src.routines.addAndUpdateActivityGuessLinesRoutine
-  const updateGuessLinesPredictionsPontuationsRoutine = app.src.routines.updateGuessLinesPredictionsPontuationsRoutine
+  const updateGuessLinesPredictionsPontuationsRoutine = app.src.routines.updatePontuations.updateGuessLinesPredictionsPontuationsRoutine
   
-
   server.route({
     path: '/guessline/forceRoutine/addAndUpdateActivityGuessLines',
     method: 'PUT',
