@@ -1,16 +1,69 @@
 /* eslint-disable */
 
-'use strict';
+'use strict'
 
-const Promise = require('bluebird');
+const cronTime = require('./cronTime')
 
-const HIT_ONLY_THE_WINNER = 2
-const HIT_THE_SCOREBOARD = 5
-const HOME_WINNER = 'HOME'
-const AWAY_WINNER = 'AWAY'
-const NO_WINNER = 'DRAW'
+const qs = require('querystring')
 
+const fixture_chumbada = 7
+const championship_chumbado = '5872a8d2ed1b02314e088291'
+
+const _buildQueryString = () => 
+  qs.stringify({
+    fixture: fixture_chumbada,
+    championshipRef: championship_chumbado
+  })
+
+const _getUsersPredictionsAndSetPontuations = (fixture, models) => {
+
+  _getPredictions(models.predictionsModel)
+  .then((predictions) => _calculatePontuations(fixture))
+  .then((pontuation) _saveUsersPontuations(models.pontuationsModel))
+
+}
+
+const _getPredictions = (Predictions) => {
+  //TODO usar um cursor para interar e não deixar tao custo
+
+  const searchQuery = {
+    'championshipFixtureUserKey': {
+      '$regex': `${championship_chumbado}_${fixture_chumbada}`,
+    }
+  }
+
+  return Predictions.find(searchQuery)
+}
+
+const _calculatePontuations = () => {
+
+}
+
+ 
 module.exports = (app) => {
+  const pontuationRules = app.coincidents.Config.pontuationRules
+  const models = app.src.models
+  
+  const cronJob = () => new CronJob(cronTime, updatePredictionsPontuation, null, true, 'America/Sao_Paulo')
+
+  const updatePredictionsPontuation = () => {
+    const url = `${app.coincidents.Config.apis.holiUrl}/fixture/getFixtureByChampionshipRefAndFixture${_buildQueryString()}`
+    const headers = {
+      'language': 'en-us',
+      'content-type': 'application/json'
+    }
+    requestManager.get(url, headers)
+      .then((fixture) => _getUsersPredictionsAndSetPontuations(fixture, models))
+      .catch((err) => log.error(err))
+  }
+
+  cronJob()
+
+  module.exports = updatePredictionsPontuation
+}
+
+
+/* module.exports = (app) => {
   const GuessesLines = app.src.models.guessesLinesSchema;
   const Profile = app.src.models.profileSchema;
   const Round = app.src.models.roundSchema;
@@ -189,4 +242,4 @@ module.exports = (app) => {
   return {
     runInterpreter
   };
-}
+} */
