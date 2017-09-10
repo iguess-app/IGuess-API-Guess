@@ -54,4 +54,5 @@ module.exports = (app) => {
 
   return db.model('guesseslines', guessesLinesSchema)
 }
-  /*eslint global-require: 0*/
+
+/*eslint global-require: 0*/
