@@ -1,0 +1,7 @@
+Consome o endPoint do (HOLI)championship/getAllchampionship passando a flag onlyActive como true. 
+Daí fazemos a request (HOLI)fixture/lastRound para cada championship encontrado na request anterior.
+E para cada rodada encontrada buscamos na collection de predictions e calculamos a pontuacao de acordo com a rodada.
+Na sequência atualizamos o documento de predictions e inserimos a nova pontuacao na collection de pontuacao
+
+No 'forceRoutine' o fluxo vai direto no (HOLI)fixture/getFixtureByChampionshipRefAndFixture e 
+atualiza a predictions e pontuacao do campeonato/rodada selecionado

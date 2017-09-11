@@ -95,20 +95,25 @@ qs.stringify({
   championshipRef
 })
 
+const _buildGetRoundByFixtureQS = (request) =>
+qs.stringify({
+  fixture: request.fixture,
+  championshipRef: request.championshipRef
+})
+
 module.exports = (app) => {
   const pontuationRules = app.coincidents.Config.pontuationRules
   const requestManager = app.coincidents.Managers.requestManager
   const log = app.coincidents.Managers.logManager
   const models = app.src.models
-
+  const headers = {
+    'language': 'en-us',
+    'content-type': 'application/json'
+  }
   const cronJob = () => new CronJob(cronTime, getAllChampionshipActived, null, true, 'America/Sao_Paulo')
 
   const getAllChampionshipActived = () => {
     const url = `${app.coincidents.Config.apis.holiUrl}/championship/getAllchampionship?onlyActive=true`
-    const headers = {
-      'language': 'en-us',
-      'content-type': 'application/json'
-    }
     requestManager.get(url, headers)
       .then((championships) => championships.forEach((championship) => {
         updatePredictionsPontuation(championship._id)
@@ -118,10 +123,13 @@ module.exports = (app) => {
 
   const updatePredictionsPontuation = (championshipRef) => {
     const url = `${app.coincidents.Config.apis.holiUrl}/fixture/lastRound?${_buildGetLastRoundQS(championshipRef)}`
-    const headers = {
-      'language': 'en-us',
-      'content-type': 'application/json'
-    }
+    requestManager.get(url, headers)
+      .then((fixture) => _getUsersPredictionsAndSetPontuations(fixture, models, pontuationRules))
+      .catch((err) => log.error(err))
+  }
+
+  const updatePredictionsPontuationWithFixtureForced = (request) => {
+    const url = `${app.coincidents.Config.apis.holiUrl}/fixture/getFixtureByChampionshipRefAndFixture?${_buildGetRoundByFixtureQS(request)}`
     requestManager.get(url, headers)
       .then((fixture) => _getUsersPredictionsAndSetPontuations(fixture, models, pontuationRules))
       .catch((err) => log.error(err))
@@ -129,7 +137,7 @@ module.exports = (app) => {
 
   cronJob()
 
-  return getAllChampionshipActived
+  return updatePredictionsPontuationWithFixtureForced
 }
 
 /*eslint max-params: [2, 4]*/

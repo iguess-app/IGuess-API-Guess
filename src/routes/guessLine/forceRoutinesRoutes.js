@@ -2,6 +2,7 @@
 
 module.exports = (app) => {
   const server = app.configServer
+  const schemas = app.src.schemas
   const addAndUpdateActivityGuessLinesRoutine = app.src.routines.addNewAndUpdateGuessLinesActivityRoutine.addAndUpdateActivityGuessLinesRoutine
   const updateGuessLinesPredictionsPontuationsRoutine = app.src.routines.updatePontuationsRoutine.updateGuessLinesPredictionsPontuationsRoutine
   
@@ -21,8 +22,12 @@ module.exports = (app) => {
     method: 'PUT',
     config: {
       handler: (request, reply) => {
-        updateGuessLinesPredictionsPontuationsRoutine()
+        updateGuessLinesPredictionsPontuationsRoutine(request.query)
         reply('RoutineForced')
+      },
+      validate: {
+        query: schemas.forceRoutines.updateGuessLinesPredictionsPontuationsSchemaRequest,
+        headers: schemas.defaultHeaderSchema
       }
     }
   })
