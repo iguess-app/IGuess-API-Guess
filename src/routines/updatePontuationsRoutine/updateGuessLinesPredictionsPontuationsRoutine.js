@@ -1,31 +1,21 @@
 'use strict'
 
-const cronTime = require('../cronTime')
+const cronTime = require('./cronTime')
 const calculatePontuations = require('./functions/calculatePontuationsFunction')()
 
 const qs = require('querystring')
 const CronJob = require('cron').CronJob
 
-const fixtureCHUMBADA = 23
-const championshipCHUMBADO = '5872a8d2ed1b02314e088291'
-
-const _buildQueryString = () =>
-  qs.stringify({
-    fixture: fixtureCHUMBADA,
-    championshipRef: championshipCHUMBADO
-  })
-
 const _getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules) => {
-
-  const predictionsCursor = _getPredictions(models.predictionsModel)
+  const predictionsCursor = _getPredictions(fixture, models.predictionsModel)
 
   return _compareScoreWithPrediction(predictionsCursor, fixture, pontuationRules, models)
 }
 
-const _getPredictions = (Predictions) => {
+const _getPredictions = (fixture, Predictions) => {
   const searchQuery = {
     'championshipFixtureUserKey': {
-      '$regex': `${championshipCHUMBADO}_${fixtureCHUMBADA}`
+      '$regex': `${fixture.championshipRef}_${fixture.fixture}`
     }
   }
 
@@ -99,16 +89,35 @@ const _addNewUserPontuationDoc = (fixturePontuation, userPredictions, fixture, P
   return Pontuations.create(newPontuationObj)
 }
 
+const _buildGetLastRoundQS = (championshipRef) =>
+qs.stringify({
+  newestStarted: true,
+  championshipRef
+})
+
 module.exports = (app) => {
   const pontuationRules = app.coincidents.Config.pontuationRules
   const requestManager = app.coincidents.Managers.requestManager
   const log = app.coincidents.Managers.logManager
   const models = app.src.models
 
-  const cronJob = () => new CronJob(cronTime, updatePredictionsPontuation, null, true, 'America/Sao_Paulo')
+  const cronJob = () => new CronJob(cronTime, getAllChampionshipActived, null, true, 'America/Sao_Paulo')
 
-  const updatePredictionsPontuation = () => {
-    const url = `${app.coincidents.Config.apis.holiUrl}/fixture/getFixtureByChampionshipRefAndFixture?${_buildQueryString()}`
+  const getAllChampionshipActived = () => {
+    const url = `${app.coincidents.Config.apis.holiUrl}/championship/getAllchampionship?onlyActive=true`
+    const headers = {
+      'language': 'en-us',
+      'content-type': 'application/json'
+    }
+    requestManager.get(url, headers)
+      .then((championships) => championships.forEach((championship) => {
+        updatePredictionsPontuation(championship._id)
+      }))
+      .catch((err) => log.error(err))
+  }
+
+  const updatePredictionsPontuation = (championshipRef) => {
+    const url = `${app.coincidents.Config.apis.holiUrl}/fixture/lastRound?${_buildGetLastRoundQS(championshipRef)}`
     const headers = {
       'language': 'en-us',
       'content-type': 'application/json'
@@ -120,7 +129,7 @@ module.exports = (app) => {
 
   cronJob()
 
-  return updatePredictionsPontuation
+  return getAllChampionshipActived
 }
 
 /*eslint max-params: [2, 4]*/

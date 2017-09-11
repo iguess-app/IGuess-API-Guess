@@ -1,6 +1,6 @@
 'use strict'
 
-//Mid night every day
+//Mid night every day (São Paulo - Brazil)
 const Seconds = 0
 const Minutes = 0
 const Hours = 0
