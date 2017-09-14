@@ -14,5 +14,3 @@ module.exports = (app) => {
 
   return addUserToGuessLineSchemaRequest
 }
-
-/*eslint global-require: 0*/

@@ -1,9 +1,8 @@
-'use Strict';
+'use strict'
 
 module.exports = (app) => {
-  const QueryUtils = app.coincidents.Utils.queryUtils;
-  const status = app.coincidents.Utils.guessLeagueStatus;
-  const GuessLeague = app.src.models.guessesLeaguesModel;
+  const status = app.coincidents.Utils.guessLeagueStatus
+  const GuessLeague = app.src.models.guessesLeaguesModel
 
   const inviteResponse = (request) => {
 
