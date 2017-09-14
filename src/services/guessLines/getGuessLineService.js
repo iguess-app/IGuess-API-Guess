@@ -15,6 +15,7 @@ module.exports = (app) => {
     //daí pegar a pontuation dele com isso a ultima rodada inserida,
     //dai pegar a fixtura no Holi e as predictions no banco daqui,
     //dai juntar todas match via matchID e devolver = )
+    //after: Dar um jeito da request pro Holi não ser primordial.. para manter a resiliencia entre MicroServices
 
     return getPontuationsRepository.getPontuations(request, dictionary)
     .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations))
@@ -22,6 +23,7 @@ module.exports = (app) => {
   }
 
   const _getLastRoundSentByTheUser = (userGuessLinesPontuations) => {
+    //Nem vai precisar desse promise.map (he-he)
     const getFixtureAndPredictionsByPontuationsFound = userGuessLinesPontuations.map((userGuessLinePontuations) => {
       const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
       const request = {
