@@ -1,13 +1,14 @@
-'use Strict';
+'use Strict'
 
 module.exports = (app) => {
   const guessLinesServices = app.src.services.guessLines
-  const setPredictionsService = guessLinesServices.setPredictionsService;
-  const addUserToGuessLineService = guessLinesServices.addUserToGuessLineService;
+  const setPredictionsService = guessLinesServices.setPredictionsService
+  const addUserToGuessLineService = guessLinesServices.addUserToGuessLineService
+  const getGuessLineService = guessLinesServices.getGuessLineService
 
   const addUserToGuessLine = (request, reply) => {
-    const payload = request.payload;
-    const headers = request.headers;
+    const payload = request.payload
+    const headers = request.headers
 
     addUserToGuessLineService.addUserToGuessLine(payload, headers)
       .then((response) => reply(response))
@@ -15,16 +16,26 @@ module.exports = (app) => {
   }
 
   const setPredictions = (request, reply) => {
-    const payload = request.payload;
-    const headers = request.headers;
+    const payload = request.payload
+    const headers = request.headers
 
     setPredictionsService.setPredictions(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
 
+  const getGuessLine = (request, reply) => {
+    const payload = request.query
+    const headers = request.headers
+
+    getGuessLineService.getGuessLine(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
   return {
     setPredictions,
-    addUserToGuessLine
+    addUserToGuessLine,
+    getGuessLine
   }
 }
