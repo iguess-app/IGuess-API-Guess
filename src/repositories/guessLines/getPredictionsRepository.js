@@ -28,6 +28,16 @@ module.exports = (app) => {
       })
   }
 
+  const getAllUserFromAFixtureUsingCursor = (fixture) => {
+    const searchQuery = {
+      'championshipFixtureUserKey': {
+        '$regex': `${fixture.championshipRef}_${fixture.fixture}`
+      }
+    }
+
+    return Predictions.find(searchQuery).cursor()
+  }
+
   const _buildSearchQuery = (request) => {
     let searchQuery = {
       'userRef': request.userRef
@@ -37,7 +47,6 @@ module.exports = (app) => {
         'championshipFixtureUserKey': `${request.championshipRef}_${request.fixture}_${request.userRef}`
       }
     }
-
 
     return searchQuery
   }
@@ -50,6 +59,7 @@ module.exports = (app) => {
 
   return {
     getPredictions,
-    getUniqueChampionshipPredictions
+    getUniqueChampionshipPredictions,
+    getAllUserFromAFixtureUsingCursor
   }
 }

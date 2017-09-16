@@ -32,9 +32,8 @@ module.exports = () => {
     return pontuationRules.HIT_NOTHING
   }
 
-  return {
-    returnPontuation
-  }
+  return returnPontuation
+  
 }
 
 /*eslint max-statements: 0*/
