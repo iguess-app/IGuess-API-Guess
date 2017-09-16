@@ -4,7 +4,7 @@ module.exports = (app) => {
   const getPontuationsRepository = app.src.repositories.guessLines.getPontuationsRepository
   const getPredictionsRepository = app.src.repositories.guessLines.getPredictionsRepository
   const getGuessLineRepository = app.src.repositories.guessLines.getGuessLineRepository
-  const holiRepository = app.src.repositories.holi.holiRepository
+  const getFixtureByChampionshipRefAndFixtureRepository = app.src.repositories.holi.getFixtureByChampionshipRefAndFixtureRepository
 
   const getGuessLine = (request, headers) => {
     const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language);
@@ -26,7 +26,7 @@ module.exports = (app) => {
 
     return Promise.all([
       getPredictionsRepository.getUniqueChampionshipPredictions(request),
-      holiRepository.getFixtureByChampionshipRefAndFixture(request)
+      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(request)
     ])
   }
 
