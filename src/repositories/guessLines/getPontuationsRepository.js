@@ -5,10 +5,10 @@ const Boom = require('boom')
 module.exports = (app) => {
   const Pontuations = app.src.models.pontuationsModel
 
-  const getPontuations = (request, dictionary) => {
-    const searchQuery = _buildSearchQuery(request)
+  const getPontuations = (request, guessLine, dictionary) => {
+    const searchQuery = _buildSearchQuery(request, guessLine)
 
-    return Pontuations.find(searchQuery)
+    return Pontuations.findOne(searchQuery)
       .then((pontuationsFound) => {
         _checkErrors(pontuationsFound, dictionary)
 
@@ -16,14 +16,14 @@ module.exports = (app) => {
       })
   }
 
-  const _buildSearchQuery = (request) => {
-    let searchQuery = {
-      'userRef': request.userRef
+  const _buildSearchQuery = (request, guessLine) => {
+    const searchQuery = {
+      'userRef': request.userRef,
+      'championshipUserKey': `${guessLine.championship.championshipRef}_${request.userRef}`
     }
+
     if (request.championshipRef) {
-      searchQuery = {
-        'championshipUserKey': `${request.championshipRef}_${request.userRef}`
-      }
+      searchQuery.championshipUserKey = `${request.championshipRef}_${request.userRef}`
     }
     
     return searchQuery
