@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
   const server = app.configServer
-  const schemas = app.src.routes.schemas.guessLine
+  const schemas = app.src.routes.schemas
   const guessLineController = app.src.controllers.guessLineController
 
   server.route({
@@ -13,10 +13,10 @@ module.exports = (app) => {
         guessLineController.addUserToGuessLine(request, reply)
       },
       validate: {
-        payload: schemas.addUserToGuessLine.addUserToGuessLineSchemaRequest,
+        payload: schemas.guessLine.addUserToGuessLine.addUserToGuessLineSchemaRequest,
         headers: schemas.defaultHeaderSchema
       },
-      response: schemas.addUserToGuessLine.addUserToGuessLineSchemaResponse
+      response: schemas.guessLine.addUserToGuessLine.addUserToGuessLineSchemaResponse
     }
   })
 }

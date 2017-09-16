@@ -17,15 +17,10 @@ module.exports = (app) => {
       })
   }
 
-  const getUniqueChampionshipPredictions = (request, dictionary) => {
+  const getUniqueChampionshipPredictions = (request) => {
     const searchQuery = _buildSearchQuery(request)
 
     return Predictions.findOne(searchQuery)
-      .then((predictionFound) => {
-        _checkErrors(predictionFound, dictionary)
-
-        return QueryUtils.makeObject(predictionFound)
-      })
   }
 
   const getAllUserFromAFixtureUsingCursor = (fixture) => {

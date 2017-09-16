@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
   const server = app.configServer
-  const schemas = app.src.routes.schemas.guessLine
+  const schemas = app.src.routes.schemas
   const addAndUpdateActivityGuessLinesRoutine = app.src.routines.addNewAndUpdateGuessLinesActivityRoutine.addAndUpdateActivityGuessLinesRoutine
   const updateGuessLinesPredictionsPontuationsRoutine = app.src.routines.updatePontuationsRoutine.updateGuessLinesPredictionsPontuationsRoutine
   
@@ -26,7 +26,7 @@ module.exports = (app) => {
         reply('RoutineForced')
       },
       validate: {
-        query: schemas.forceRoutines.updateGuessLinesPredictionsPontuationsSchemaRequest,
+        query: schemas.guessLine.forceRoutines.updateGuessLinesPredictionsPontuationsSchemaRequest,
         headers: schemas.defaultHeaderSchema
       }
     }

@@ -8,7 +8,7 @@ module.exports = (app) => {
 
   const fixtureSchema = Joi.alternatives().try(
     Joi.number().min(MIN_ROUND_ROBIN_FIXTURES).max(MAX_ROUND_ROBIN_FIXTURES).description('Round-robin tournament'),
-    Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments')).required()
+    Joi.any().valid(KNOCKOUT_TOURNAMENT_ROUND_NAMES).description('Knockout tournaments'))
 
   return fixtureSchema
 }
