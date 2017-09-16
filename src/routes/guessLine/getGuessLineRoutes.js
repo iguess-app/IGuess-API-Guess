@@ -15,3 +15,7 @@ module.exports = (app) => {
     }
   })
 }
+
+/*
+  TODO: Schemas de req, res and header
+*/
