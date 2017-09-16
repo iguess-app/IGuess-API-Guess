@@ -11,22 +11,22 @@ module.exports = (app) => {
 
     return getGuessLineRepository.getGuessLineByUserRef(request, dictionary)
       .then((guessLine) => getPontuationsRepository.getPontuations(request, guessLine, dictionary))
-      .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations))
+      .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations, request, headers.language))
       .then((repositoriesResponses) => _joinMatchResultWithPredictions(repositoriesResponses))
-
+      .catch((err) => err)
   }
 
-  const _getLastRoundSentByTheUser = (userGuessLinePontuations) => {
+  const _getLastRoundSentByTheUser = (userGuessLinePontuations, request, language) => {
     const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
-    const request = {
+    const infoQueryAndRequestObj = {
       userRef: userGuessLinePontuations.userRef,
-      championshipRef: userGuessLinePontuations.championshipRef,
-      fixture: lastRoundSentByTheUser.fixture
+      championshipRef: request.championshipRef ? request.championshipRef : userGuessLinePontuations.championshipRef,
+      fixture: request.fixture ? request.fixture : lastRoundSentByTheUser.fixture
     }
 
     return Promise.all([
-      getPredictionsRepository.getUniqueChampionshipPredictions(request),
-      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(request)
+      getPredictionsRepository.getUniqueChampionshipPredictions(infoQueryAndRequestObj),
+      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(infoQueryAndRequestObj, language)
     ])
   }
 
@@ -34,14 +34,16 @@ module.exports = (app) => {
     const predictions = repositoriesResponses[0]
     const fixture = repositoriesResponses[1]
 
-    fixture.games.map((game) => {
-      const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
-      game.pontuation = gameGuess.pontuation
-      game.homeTeamScoreGuess = gameGuess.awayTeamScore
-      game.awayTeamScoreGuess = gameGuess.homeTeamScore
+    if (_theUserAlreadySentThePredictions(predictions)) {
+      fixture.games.map((game) => {
+        const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
+        game.pontuation = gameGuess.pontuation
+        game.homeTeamScoreGuess = gameGuess.awayTeamScore
+        game.awayTeamScoreGuess = gameGuess.homeTeamScore
 
-      return game
-    })
+        return game
+      })
+    }
 
     return fixture
   }
@@ -51,6 +53,8 @@ module.exports = (app) => {
   }
 }
 
+
+const _theUserAlreadySentThePredictions = (predictions) => predictions !== null
 /*eslint no-magic-numbers: 0*/
 
 /*
