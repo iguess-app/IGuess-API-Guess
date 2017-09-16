@@ -11,17 +11,15 @@ const _buildQS = (request) =>
 module.exports = (app) => {
   const requestManager = app.coincidents.Managers.requestManager
   const holiDomain = app.coincidents.Config.apis.holiUrl
-  const log = app.coincidents.Managers.logManager
 
-  const headers = {
-    'language': 'en-us',
-    'content-type': 'application/json'
-  }
+  const getLastRound = (request, language = 'en-us') => {
+    const headersReq = {
+      language,
+      'content-type': 'application/json'
+    }
+    const urlReq = `${holiDomain}/fixture/lastRound?${_buildQS(request)}`
 
-  const getLastRound = (request) => {
-    const url = `${holiDomain}/fixture/lastRound?${_buildQS(request)}`
-
-    return requestManager.get(url, headers)
+    return requestManager.get(urlReq, headersReq)
   }
 
 

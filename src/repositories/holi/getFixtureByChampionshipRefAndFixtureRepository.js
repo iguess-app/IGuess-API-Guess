@@ -11,16 +11,17 @@ const _buildGetRoundByFixtureQS = (request) =>
 module.exports = (app) => {
   const requestManager = app.coincidents.Managers.requestManager
   const holiDomain = app.coincidents.Config.apis.holiUrl
-  const log = app.coincidents.Managers.logManager
-  const headers = {
-    'language': 'en-us',
-    'content-type': 'application/json'
-  }
-  
-  const getFixtureByChampionshipRefAndFixture = (request) => {
-    const url = `${holiDomain}/fixture/getFixtureByChampionshipRefAndFixture?${_buildGetRoundByFixtureQS(request)}`
 
-    return requestManager.get(url, headers)
+  
+  const getFixtureByChampionshipRefAndFixture = (request, language = 'en-us') => {
+    const headersReq = {
+      language,
+      'content-type': 'application/json'
+    }
+    const urlReq = `${holiDomain}/fixture/getFixtureByChampionshipRefAndFixture?${_buildGetRoundByFixtureQS(request)}`
+
+    return requestManager.get(urlReq, headersReq)
+    .catch((err) => err.error)
   }
 
   return {
