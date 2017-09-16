@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
   const server = app.configServer
-  const schemas = app.src.schemas
+  const schemas = app.src.routes.schemas.guessLine
   const addAndUpdateActivityGuessLinesRoutine = app.src.routines.addNewAndUpdateGuessLinesActivityRoutine.addAndUpdateActivityGuessLinesRoutine
   const updateGuessLinesPredictionsPontuationsRoutine = app.src.routines.updatePontuationsRoutine.updateGuessLinesPredictionsPontuationsRoutine
   

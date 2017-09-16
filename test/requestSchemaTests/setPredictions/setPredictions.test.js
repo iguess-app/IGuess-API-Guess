@@ -5,7 +5,7 @@ const expect = Lab.expect
 
 const schemasExample = require('./schemasExample')
 const app = require('../../../app')
-const schemas = app.src.schemas
+const schemas = app.src.routes.schemas.guessLine
 
 lab.experiment('Schemas Test ==> setPredictions', () => {
 

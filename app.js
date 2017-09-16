@@ -13,8 +13,9 @@ consign()
   .exclude('src/routines/updatePontuationsRoutine/functions')
   .include('src/services')
   .include('src/controllers')
-  .include('src/schemas')
-  .include('src/routes')
+  .include('src/routes/schemas')
+  .include('src/routes/guessLine')
+  .include('src/routes/guessLeague')
   .into(app);
 
 

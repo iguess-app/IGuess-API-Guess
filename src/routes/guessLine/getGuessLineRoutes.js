@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
   const server = app.configServer
-  const schemas = app.src.schemas
+  const schemas = app.src.routes.schemas.guessLine
   const guessLineController = app.src.controllers.guessLineController
 
   server.route({
