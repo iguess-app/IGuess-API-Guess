@@ -37,6 +37,8 @@ module.exports = (app) => {
     fixture.games.map((game) => {
       const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
       game.pontuation = gameGuess.pontuation
+      game.homeTeamScoreGuess = gameGuess.awayTeamScore
+      game.awayTeamScoreGuess = gameGuess.homeTeamScore
 
       return game
     })
