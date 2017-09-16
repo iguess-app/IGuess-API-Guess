@@ -3,13 +3,14 @@
 const consign = require('consign')
 const app = {}
 app.coincidents = require('iguess-api-coincidents')
-const plugins = require('./src/plugins/serverPlugins')(app.coincidents.Config)
+const plugins = require('./config/plugins/serverPlugins')(app.coincidents.Config)
 
 consign()
   .include('configServer.js')
   .include('src/models')
-  .include('src/routines')
   .include('src/repositories')
+  .include('src/routines')
+  .exclude('src/routines/updatePontuationsRoutine/functions')
   .include('src/services')
   .include('src/controllers')
   .include('src/schemas')
