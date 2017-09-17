@@ -4,7 +4,6 @@ const Boom = require('boom')
 
 module.exports = (app) => {
   const Predictions = app.src.models.predictionsModel
-  const QueryUtils = app.coincidents.Utils.queryUtils
 
   const getPredictions = (request, dictionary) => {
     const searchQuery = _buildSearchQuery(request)

@@ -82,10 +82,5 @@ const _theUserAlreadyHavePontuations = (userGuessLinePontuations) => userGuessLi
 /*eslint no-magic-numbers: 0*/
 
 /*
-  Pegar primeiro um guessLine activo (qualquer) do usuario, 
-  daí pegar a pontuation dele com isso a ultima rodada inserida,
-  dai pegar a fixture no Holi e as predictions no banco daqui,
-  dai juntar todas match via matchID e devolver = )
-
   TODO Dar um jeito da request pro Holi não ser primordial.. para manter a resiliencia entre MicroServices
 */
