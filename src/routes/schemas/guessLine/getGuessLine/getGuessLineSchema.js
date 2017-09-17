@@ -28,10 +28,10 @@ module.exports = (app) => {
       _id: Joi.string().length(ID_SIZE).required(),
       gamePontuation: Joi.number().integer(),
       stadium: Joi.string(),
-      homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
-      awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
-      homeTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
-      awayTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
+      homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
+      awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
+      homeTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
+      awayTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
       homeTeam: teamEmbeddedSchema.required(),
       awayTeam: teamEmbeddedSchema.required()
     }).required()
