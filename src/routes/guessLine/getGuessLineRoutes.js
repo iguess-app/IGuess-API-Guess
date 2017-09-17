@@ -15,6 +15,9 @@ module.exports = (app) => {
       validate: {
         query: schemas.guessLine.getGuessLine.getGuessLineSchema.request,
         headers: schemas.defaultHeaderSchema
+      },
+      response: {
+        schema: schemas.guessLine.getGuessLine.getGuessLineSchema.response
       }
     }
   })

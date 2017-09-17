@@ -46,11 +46,12 @@ module.exports = (app) => {
     const pontuations = repositoriesResponses[2]
     fixture.guessLinePontuation = pontuations ? pontuations.totalPontuation : 0
     fixture.fixturePontuation = predictions ? predictions.fixturePontuation : 0
-    
+    Reflect.deleteProperty(fixture, '_id')
+
     if (_theUserAlreadySentThePredictions(predictions)) {
       fixture.games.map((game) => {
         const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
-        game.pontuation = gameGuess.pontuation
+        game.gamePontuation = gameGuess.pontuation
         game.homeTeamScoreGuess = gameGuess.awayTeamScore
         game.awayTeamScoreGuess = gameGuess.homeTeamScore
 
