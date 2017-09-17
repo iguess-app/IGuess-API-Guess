@@ -17,16 +17,15 @@ module.exports = (app) => {
   }
 
   const _buildSearchQuery = (request) => {
-    let searchQuery = {
+    const searchQuery = {
       'usersAddedAtGuessLine': {
         '$in': [request.userRef]
       },
       'guessLineActive': true
     }
     if (request.championshipRef) {
-      searchQuery = {
-        'championship.championshipRef': request.championshipRef
-      }
+      searchQuery['championship.championshipRef'] = request.championshipRef
+      
     }
 
     return searchQuery

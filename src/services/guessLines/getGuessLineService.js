@@ -5,6 +5,7 @@ module.exports = (app) => {
   const getPredictionsRepository = app.src.repositories.guessLines.getPredictionsRepository
   const getGuessLineRepository = app.src.repositories.guessLines.getGuessLineRepository
   const getFixtureByChampionshipRefAndFixtureRepository = app.src.repositories.holi.getFixtureByChampionshipRefAndFixtureRepository
+  const getLastRoundRepository = app.src.repositories.holi.getLastRoundRepository
 
   const getGuessLine = (request, headers) => {
     const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language);
@@ -17,16 +18,24 @@ module.exports = (app) => {
   }
 
   const _getLastRoundSentByTheUser = (userGuessLinePontuations, request, language) => {
-    const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
-    const infoQueryAndRequestObj = {
-      userRef: userGuessLinePontuations.userRef,
-      championshipRef: request.championshipRef ? request.championshipRef : userGuessLinePontuations.championshipRef,
-      fixture: request.fixture ? request.fixture : lastRoundSentByTheUser.fixture
+    const searchQueryAndRequestObj = _buildSearchQueryAndRequestObj(request)
+
+    if (_theUserAlreadyHavePontuations(userGuessLinePontuations)) {
+      const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
+      searchQueryAndRequestObj.championshipRef = userGuessLinePontuations.championshipRef
+      searchQueryAndRequestObj.fixture = request.fixture || lastRoundSentByTheUser.fixture
+    }
+
+    if (!searchQueryAndRequestObj.fixture) {
+      return Promise.all([
+        getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
+        getLastRoundRepository.getLastRound(searchQueryAndRequestObj)
+      ])
     }
 
     return Promise.all([
-      getPredictionsRepository.getUniqueChampionshipPredictions(infoQueryAndRequestObj),
-      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(infoQueryAndRequestObj, language)
+      getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
+      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(searchQueryAndRequestObj, language)
     ])
   }
 
@@ -53,8 +62,23 @@ module.exports = (app) => {
   }
 }
 
+const _buildSearchQueryAndRequestObj = (request) => {
+  const searchQueryAndRequestObj = {
+    userRef: request.userRef
+  }
+  if (request.championshipRef) {
+    searchQueryAndRequestObj.championshipRef = request.championshipRef
+  }
+
+  if (request.fixture) {
+    searchQueryAndRequestObj.fixture = request.fixture
+  }
+
+  return searchQueryAndRequestObj
+}
 
 const _theUserAlreadySentThePredictions = (predictions) => predictions !== null
+const _theUserAlreadyHavePontuations = (userGuessLinePontuations) => userGuessLinePontuations !== null
 /*eslint no-magic-numbers: 0*/
 
 /*

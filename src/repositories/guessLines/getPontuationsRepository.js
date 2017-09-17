@@ -9,11 +9,6 @@ module.exports = (app) => {
     const searchQuery = _buildSearchQuery(request, guessLine)
 
     return Pontuations.findOne(searchQuery)
-      .then((pontuationsFound) => {
-        _checkErrors(pontuationsFound, dictionary)
-
-        return pontuationsFound
-      })
   }
 
   const _buildSearchQuery = (request, guessLine) => {
@@ -27,12 +22,6 @@ module.exports = (app) => {
     }
     
     return searchQuery
-  }
-
-  const _checkErrors = (pontuationsFound, dictionary) => {
-    if (!pontuationsFound) {
-      throw Boom.notFound(dictionary.guessLineNotFound)
-    }
   }
 
   return {
