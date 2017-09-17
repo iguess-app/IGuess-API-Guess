@@ -44,7 +44,8 @@ module.exports = (app) => {
     const predictions = repositoriesResponses[0]
     const fixture = repositoriesResponses[1]
     const pontuations = repositoriesResponses[2]
-    fixture.pontuation = pontuations ? pontuations.totalPontuation : 0
+    fixture.guessLinePontuation = pontuations ? pontuations.totalPontuation : 0
+    fixture.fixturePontuation = predictions ? predictions.fixturePontuation : 0
     
     if (_theUserAlreadySentThePredictions(predictions)) {
       fixture.games.map((game) => {
