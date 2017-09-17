@@ -5,6 +5,7 @@ module.exports = (app) => {
   const setPredictionsService = guessLinesServices.setPredictionsService
   const addUserToGuessLineService = guessLinesServices.addUserToGuessLineService
   const getGuessLineService = guessLinesServices.getGuessLineService
+  const listGuessesLinesService = guessLinesServices.listGuessesLinesService
 
   const addUserToGuessLine = (request, reply) => {
     const payload = request.payload
@@ -24,6 +25,15 @@ module.exports = (app) => {
       .catch((err) => reply(err))
   }
 
+  const listGuessesLines = (request, reply) => {
+    const payload = request.query
+    const headers = request.headers
+
+    listGuessesLinesService.listGuessesLines(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
   const getGuessLine = (request, reply) => {
     const payload = request.query
     const headers = request.headers
@@ -36,6 +46,7 @@ module.exports = (app) => {
   return {
     setPredictions,
     addUserToGuessLine,
+    listGuessesLines,
     getGuessLine
   }
 }
