@@ -6,18 +6,18 @@
     "guesses" : [ 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba371",
-            "homeTeamScore" : 3,
-            "awayTeamScore" : 0
+            "homeTeamScoreGuess" : 3,
+            "awayTeamScoreGuess" : 0
         }, 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba371",
-            "homeTeamScore" : 2,
-            "awayTeamScore" : 4
+            "homeTeamScoreGuess" : 2,
+            "awayTeamScoreGuess" : 4
         }, 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba371",
-            "homeTeamScore" : 2,
-            "awayTeamScore" : 1
+            "homeTeamScoreGuess" : 2,
+            "awayTeamScoreGuess" : 1
         }
     ]
   },
@@ -27,18 +27,18 @@
     "guesses" : [ 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba371",
-            "homeTeamScore" : 3,
-            "awayTeamScore" : 0
+            "homeTeamScoreGuess" : 3,
+            "awayTeamScoreGuess" : 0
         }, 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba371",
-            "homeTeamScore" : 2,
-            "awayTeamScore" : 4
+            "homeTeamScoreGuess" : 2,
+            "awayTeamScoreGuess" : 4
         }, 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba371",
-            "homeTeamScore" : 2,
-            "awayTeamScore" : 1
+            "homeTeamScoreGuess" : 2,
+            "awayTeamScoreGuess" : 1
         }
     ]
   },
@@ -49,17 +49,17 @@
     "guesses" : [ 
         {
             "matchRef" : "591df6ceba371",
-            "homeTeamScore" : 3,
-            "awayTeamScore" : 0
+            "homeTeamScoreGuess" : 3,
+            "awayTeamScoreGuess" : 0
         }, 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba37bb4eba371",
-            "homeTeamScore" : 2,
-            "awayTeamScore" : 4
+            "homeTeamScoreGuess" : 2,
+            "awayTeamScoreGuess" : 4
         }, 
         {
             "matchRef" : 2006,
-            "awayTeamScore" : 1
+            "awayTeamScoreGuess" : 1
         }
     ]
   },
@@ -69,17 +69,17 @@
     "guesses" : [ 
         {
             "matchRef" : "591df6ceba371",
-            "homeTeamScore" : 3,
-            "awayTeamScore" : 0
+            "homeTeamScoreGuess" : 3,
+            "awayTeamScoreGuess" : 0
         }, 
         {
             "matchRef" : "591df6c78d1fdc0bb4eba37bb4eba371",
-            "homeTeamScore" : 2,
-            "awayTeamScore" : 4
+            "homeTeamScoreGuess" : 2,
+            "awayTeamScoreGuess" : 4
         }, 
         {
             "matchRef" : 2006,
-            "awayTeamScore" : 1
+            "awayTeamScoreGuess" : 1
         }
     ]
   }

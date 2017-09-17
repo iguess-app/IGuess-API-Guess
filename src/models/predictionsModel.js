@@ -19,11 +19,11 @@ module.exports = (app) => {
       required: true,
       validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
     },
-    homeTeamScore: {
+    homeTeamScoreGuess: {
       type: Number,
       required: true
     },
-    awayTeamScore: {
+    awayTeamScoreGuess: {
       type: Number,
       required: true
     },

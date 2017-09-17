@@ -15,8 +15,8 @@ module.exports = (app) => {
     userRef: Joi.string().max(ID_SIZE).required(),
     guesses: Joi.array().items({
       matchRef: Joi.string().length(ID_SIZE).required(),
-      homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
-      awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required()
+      homeTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
+      awayTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required()
     }).required()
   })
 

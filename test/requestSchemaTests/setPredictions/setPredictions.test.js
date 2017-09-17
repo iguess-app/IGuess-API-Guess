@@ -18,11 +18,11 @@ lab.experiment('Schemas Test ==> setPredictions', () => {
     })
   })
 
-  lab.test('setPredictions homeTeamScoreTooLowSchema', (done) => {
-    const schemaTest = schemasExample.homeTeamScoreTooLowSchema
+  lab.test('setPredictions homeTeamScoreGuessTooLowSchema', (done) => {
+    const schemaTest = schemasExample.homeTeamScoreGuessTooLowSchema
     const setPredictionsSchema = schemas.setPredictions.setPredictionsSchemaPayload
     Joi.validate(schemaTest, setPredictionsSchema, (err) => {
-      expect(err.details[0].message).to.be.equal('"homeTeamScore" must be larger than or equal to 0')
+      expect(err.details[0].message).to.be.equal('"homeTeamScoreGuess" must be larger than or equal to 0')
       done()
     })
   })

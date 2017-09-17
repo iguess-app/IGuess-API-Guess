@@ -33,7 +33,7 @@ lab.experiment('Model Test ==> PredictionSchema Validator', () => {
       expect(err.errors['guesses.0.matchRef'].message).to.be.equal(String(serverErrors.notMongoIdValid))
       expect(err.errors['guesses.1.matchRef'].message).to.be.equal(String(serverErrors.notMongoIdValid))
       expect(err.errors['guesses.2.matchRef'].message).to.be.equal(String(serverErrors.notMongoIdValid))
-      expect(err.errors['guesses.2.homeTeamScore'].message).to.be.equal('Path `homeTeamScore` is required.')
+      expect(err.errors['guesses.2.homeTeamScoreGuess'].message).to.be.equal('Path `homeTeamScoreGuess` is required.')
       expect(err.errors.fixturePontuation.message).to.be.equal('Cast to Number failed for value "Not a Number" at path "fixturePontuation"')
       done()
     })

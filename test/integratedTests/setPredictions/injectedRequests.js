@@ -11,23 +11,23 @@ const happyPathRequest = {
     userRef: '591df6c78d1fdc0bb4eba371',
     guesses: [{
         matchRef: '5872a51a4db3fb378bc7ee17',
-        homeTeamScore: 1,
-        awayTeamScore: 4
+        homeTeamScoreGuess: 1,
+        awayTeamScoreGuess: 4
       },
       {
         matchRef: '5872a51a4db3fb378bc7ee18',
-        homeTeamScore: 3,
-        awayTeamScore: 0
+        homeTeamScoreGuess: 3,
+        awayTeamScoreGuess: 0
       },
       {
         matchRef: '5872a51a4db3fb378bc7ee19',
-        homeTeamScore: 0,
-        awayTeamScore: 1
+        homeTeamScoreGuess: 0,
+        awayTeamScoreGuess: 1
       },
       {
         matchRef: '5872a51a4db3fb378bc7ee20',
-        homeTeamScore: 4,
-        awayTeamScore: 1
+        homeTeamScoreGuess: 4,
+        awayTeamScoreGuess: 1
       }
     ]
   }
@@ -46,23 +46,23 @@ const matchRefDuplicated = {
     userRef: '591df6c78d1fdc0bb4eba371',
     guesses: [{
         matchRef: '5872a51a4db3fb378bc7ee17',
-        homeTeamScore: 1,
-        awayTeamScore: 4
+        homeTeamScoreGuess: 1,
+        awayTeamScoreGuess: 4
       },
       {
         matchRef: '5872a51a4db3fb378bc7ee18',
-        homeTeamScore: 3,
-        awayTeamScore: 0
+        homeTeamScoreGuess: 3,
+        awayTeamScoreGuess: 0
       },
       {
         matchRef: '5872a51a4db3fb378bc7ee18',
-        homeTeamScore: 0,
-        awayTeamScore: 1
+        homeTeamScoreGuess: 0,
+        awayTeamScoreGuess: 1
       },
       {
         matchRef: '5872a51a4db3fb378bc7ee20',
-        homeTeamScore: 4,
-        awayTeamScore: 1
+        homeTeamScoreGuess: 4,
+        awayTeamScoreGuess: 1
       }
     ]
   }
