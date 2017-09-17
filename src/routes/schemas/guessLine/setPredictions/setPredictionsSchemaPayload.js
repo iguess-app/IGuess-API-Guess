@@ -11,7 +11,7 @@ module.exports = (app) => {
 
   const setPredictionsSchemaPayload = Joi.object({
     championshipRef: Joi.string().length(ID_SIZE).required(),
-    fixture: fixtureSchema,
+    fixture: fixtureSchema.required(),
     userRef: Joi.string().max(ID_SIZE).required(),
     guesses: Joi.array().items({
       matchRef: Joi.string().length(ID_SIZE).required(),
