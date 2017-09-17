@@ -35,14 +35,17 @@ module.exports = (app) => {
 
     return Promise.all([
       getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
-      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(searchQueryAndRequestObj, language)
+      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(searchQueryAndRequestObj, language),
+      userGuessLinePontuations
     ])
   }
 
   const _joinMatchResultWithPredictions = (repositoriesResponses) => {
     const predictions = repositoriesResponses[0]
     const fixture = repositoriesResponses[1]
-
+    const pontuations = repositoriesResponses[2]
+    fixture.pontuation = pontuations ? pontuations.totalPontuation : 0
+    
     if (_theUserAlreadySentThePredictions(predictions)) {
       fixture.games.map((game) => {
         const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
