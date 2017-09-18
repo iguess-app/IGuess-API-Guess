@@ -22,7 +22,7 @@ module.exports = (app) => {
     guessLeagueName: Joi.string().required(),
     championship: championshipEmbeddedSchema.required().unknown(),
     inviteads: Joi.array().items(
-      Joi.string().length(ID_SIZE).required()
+      Joi.string().length(ID_SIZE)
     ),
     players: Joi.array().items(
       Joi.string().length(ID_SIZE).required()

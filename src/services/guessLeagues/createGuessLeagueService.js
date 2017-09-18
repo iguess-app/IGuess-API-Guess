@@ -6,13 +6,9 @@ module.exports = (app) => {
 
   const createGuessLeague = (payload, headers) => {
     const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
-    
-    return getChampionshipAtGuessLineRepository.getChampionshipAtGuessLine(payload)
-    .then((championship) => createGuessLeagueRepository.createGuessLeague(payload, championship, dictionary)) 
-    .then((createdLeague) =>
-      createdLeague
-    )
-    .catch((err) => err)
+
+    return getChampionshipAtGuessLineRepository.getChampionshipAtGuessLine(payload, dictionary)
+      .then((championship) => createGuessLeagueRepository.createGuessLeague(payload, championship, dictionary))
   }
 
   return {
