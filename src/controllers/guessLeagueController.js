@@ -1,15 +1,16 @@
 'use strict'
 
 module.exports = (app) => {
-  const GLInviteService = app.src.services.GLInviteService;
-  const createGuessLeagueService = app.src.services.createGuessLeagueService;
-  const getGuessLeagueService = app.src.services.getGuessLeagueService;
-  const quitGLService = app.src.services.quitGLService;
-  const StatusUtils = app.coincidents.Utils.statusUtils;
+  const guessLeaguesServices = app.src.services.guessLeagues
+  const GLInviteService = guessLeaguesServices.GLInviteService
+  const createGuessLeagueService = guessLeaguesServices.createGuessLeagueService
+  const getGuessLeagueService = guessLeaguesServices.getGuessLeagueService
+  const quitGLService = guessLeaguesServices.quitGLService
+  const StatusUtils = app.coincidents.Utils.statusUtils
 
   const createGuessLeague = (request, reply) => {
-    const payload = request.payload;
-    const headers = request.headers;
+    const payload = request.payload
+    const headers = request.headers
 
     createGuessLeagueService.createGuessLeague(payload, headers)
       .then((response) => reply(response).code(StatusUtils.created))
@@ -17,8 +18,8 @@ module.exports = (app) => {
   }
 
   const inviteResponse = (request, reply) => {
-    const payload = request.payload;
-    const headers = request.headers;
+    const payload = request.payload
+    const headers = request.headers
 
     GLInviteService.inviteResponse(payload, headers)
       .then((response) => reply(response))
@@ -26,8 +27,8 @@ module.exports = (app) => {
   }
 
   const getGuessLeague = (request, reply) => {
-    const query = request.query;
-    const headers = request.headers;
+    const query = request.query
+    const headers = request.headers
 
     getGuessLeagueService.getGuessLeague(query, headers)
       .then((response) => reply(response))
@@ -35,8 +36,8 @@ module.exports = (app) => {
   }
   
   const quitGuessLeague = (request, reply) => {
-    const payload = request.payload;
-    const headers = request.headers;
+    const payload = request.payload
+    const headers = request.headers
 
     quitGLService.quitGuessLeague(payload, headers)
       .then((response) => reply(response))
@@ -50,3 +51,5 @@ module.exports = (app) => {
     quitGuessLeague
   }
 }
+
+/*eslint max-statements: 0*/

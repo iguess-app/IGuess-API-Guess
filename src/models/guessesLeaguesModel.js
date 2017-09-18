@@ -14,7 +14,7 @@ module.exports = (app) => {
   const serverErrors = Utils.errorUtils.serverErrors
   
   const championshipSchema = new Schema({
-    _id: {
+    championshipRef: {
       type: String,
       required: true,
       validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
@@ -32,11 +32,14 @@ module.exports = (app) => {
       type: String,
       required: true
     }
-  }, optionsSchemas.versionKeyDisable)
+  }, optionsSchemas._idAndVersionKeyDisable)
   
   const guessesLeaguesSchema = new Schema({
-    administrator: {
-      type: String,
+    administrators: {
+      type: [{
+        type: String,
+        validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+      }],
       required: true
     },
     guessLeagueName: {
@@ -44,16 +47,18 @@ module.exports = (app) => {
       required: true
     },
     players: {
-      type: Array,
+      type: [{
+        type: String,
+        validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+      }],
       required: true
     },
-    championship: {
-      type: championshipSchema,
-      required: true
-    },
+    championship: championshipSchema,
     inviteads: {
-      type: Array,
-      required: true
+      type: [{
+        type: String,
+        validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+      }]
     }
   }, optionsSchemas.versionKeyDisable)
   
