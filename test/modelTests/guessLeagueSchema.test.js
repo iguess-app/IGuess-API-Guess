@@ -10,22 +10,22 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
 
   lab.test('GuessLeagueSchema HappyPath', (done) => {
     const losBlancos = new GuessLeague({
-      'guessLeagueName': 'losBlancos',
-      'administrator': 'cristianoRonaldo',
+      'guessLeagueName': 'So Menino Certo',
       'championship': {
-        '_id': '5872a8d2ed1b02314e088291',
+        'championshipRef': '5872a8d2ed1b02314e088291',
         'league': '5872467bed1b02314e08828a',
         'season': '2016',
         'championship': 'Campeonato Brasileiro'
       },
       'inviteads': [
-        'toniKross',
-        'segioRamos',
-        'marceloTwelve'
+        '59bddedee7c8a12658c0c08c'
       ],
-      'players': [{
-        'userName': 'cristianoRonaldo'
-      }]
+      'players': [
+        '59b54e44a7631d433470fee7'
+      ],
+      'administrators': [
+        '59b54e44a7631d433470fee7'
+      ]
     })
     losBlancos.validate((err) => {
       expect(err).to.equal(null)
@@ -35,16 +35,16 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
 
   lab.test('GuessLeagueSchema withOut Championship Embedded', (done) => {
     const losBlancos = new GuessLeague({
-      'guessLeagueName': 'losBlancos',
-      'administrator': 'cristianoRonaldo',
+      'guessLeagueName': 'So Menino Certo',
       'inviteads': [
-        'toniKross',
-        'segioRamos',
-        'marceloTwelve'
+        '59bddedee7c8a12658c0c08c'
       ],
-      'players': [{
-        'userName': 'cristianoRonaldo'
-      }]
+      'players': [
+        '59b54e44a7631d433470fee7'
+      ],
+      'administrators': [
+        '59b54e44a7631d433470fee7'
+      ]
     })
     losBlancos.validate((err) => {
       expect(err.errors.championship).to.exists()
@@ -56,19 +56,19 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
   lab.test('GuessLeagueSchema withOut inviteads', (done) => {
     const losBlancos = new GuessLeague({
       'guessLeagueName': 'losBlancos',
-      'administrator': 'cristianoRonaldo',
       'championship': {
-        '_id': '5872a8d2ed1b02314e088291',
+        'championshipRef': '5872a8d2ed1b02314e088291',
         'league': '5872467bed1b02314e08828a',
         'season': '2016',
         'championship': 'Campeonato Brasileiro'
       },
-      'players': [{
-        'userName': 'cristianoRonaldo'
-      }]
+      'players': [
+        '59b54e44a7631d433470fee7'
+      ],
+      'inviteads': []
     })
     losBlancos.validate((err) => {
-      expect(err.errors.inviteads.message).to.be.equal('Path `inviteads` is required.')
+      expect(err.errors.administrators.message).to.be.equal('Path `administrators` is required.')
       done()
     })
   })
@@ -76,17 +76,21 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
   lab.test('GuessLeagueSchema withOut guessLeagueName', (done) => {
     const losBlancos = new GuessLeague({
       'guessLeagueName': null,
-      'administrator': 'cristianoRonaldo',
       'championship': {
-        '_id': '5872a8d2ed1b02314e088291',
+        'championshipRef': '5872a8d2ed1b02314e088291',
         'league': '5872467bed1b02314e08828a',
         'season': '2016',
         'championship': 'Campeonato Brasileiro'
       },
-      'players': [{
-        'userName': 'cristianoRonaldo'
-      }],
-      'inviteads': ['1', '1']
+      'inviteads': [
+        '59bddedee7c8a12658c0c08c'
+      ],
+      'players': [
+        '59b54e44a7631d433470fee7'
+      ],
+      'administrators': [
+        '59b54e44a7631d433470fee7'
+      ]
     })
     losBlancos.validate((err) => {
       expect(err.errors.guessLeagueName.message).to.be.equal('Path `guessLeagueName` is required.')
@@ -99,7 +103,7 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
       'guessLeagueName': 'losBlancos',
       'administrator': 'cristianoRonaldo',
       'championship': {
-        '_id': '5872a8d2ed1b02314e088291',
+        'championshipRef': '5872a8d2ed1b02314e088291',
         'league': 'notObjectID',
         'championship': 'Campeonato Brasileiro'
       },
@@ -111,6 +115,8 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
     losBlancos.validate((err) => {
       expect(err.errors.championship.errors.league.message).to.be.equal(String(serverErrors.notMongoIdValid))
       expect(err.errors.championship.errors.season.message).to.be.equal('Path `season` is required.')
+      expect(err.errors['inviteads.0'].message).to.be.equal(String(serverErrors.notMongoIdValid))
+      expect(err.errors['inviteads.1'].message).to.be.equal(String(serverErrors.notMongoIdValid))
       done()
     })
   })

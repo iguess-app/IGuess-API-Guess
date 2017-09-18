@@ -53,7 +53,10 @@ module.exports = (app) => {
       }],
       required: true
     },
-    championship: championshipSchema,
+    championship: {
+      type: championshipSchema,
+      required: true
+    },
     inviteads: {
       type: [{
         type: String,
