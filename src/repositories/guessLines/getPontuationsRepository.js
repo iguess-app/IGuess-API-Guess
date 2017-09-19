@@ -1,7 +1,5 @@
 'use strict'
 
-const Boom = require('boom')
-
 module.exports = (app) => {
   const Pontuations = app.src.models.pontuationsModel
 
@@ -14,14 +12,21 @@ module.exports = (app) => {
   const _buildSearchQuery = (request, guessLine) => {
     const searchQuery = {
       'userRef': request.userRef,
-      'championshipUserKey': `${guessLine.championship.championshipRef}_${request.userRef}`
+      'championshipUserKey': _championshipUserKeyChecker(request, guessLine)
     }
 
-    if (request.championshipRef) {
-      searchQuery.championshipUserKey = `${request.championshipRef}_${request.userRef}`
-    }
-    
     return searchQuery
+  }
+
+  const _championshipUserKeyChecker = (request, guessLine) => {
+    if (request.championshipRef) {
+      return `${request.championshipRef}_${request.userRef}`
+    }
+    if (guessLine.championship) {
+      return `${guessLine.championship.championshipRef}_${request.userRef}`
+    }
+
+    return null
   }
 
   return {
