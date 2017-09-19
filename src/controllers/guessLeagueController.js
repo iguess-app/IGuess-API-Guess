@@ -2,18 +2,23 @@
 
 module.exports = (app) => {
   const guessLeaguesServices = app.src.services.guessLeagues
-  const GLInviteService = guessLeaguesServices.GLInviteService
-  const createGuessLeagueService = guessLeaguesServices.createGuessLeagueService
-  const getGuessLeagueService = guessLeaguesServices.getGuessLeagueService
-  const quitGLService = guessLeaguesServices.quitGLService
   const StatusUtils = app.coincidents.Utils.statusUtils
 
   const createGuessLeague = (request, reply) => {
     const payload = request.payload
     const headers = request.headers
 
-    createGuessLeagueService.createGuessLeague(payload, headers)
+    guessLeaguesServices.createGuessLeagueService.createGuessLeague(payload, headers)
       .then((response) => reply(response).code(StatusUtils.created))
+      .catch((err) => reply(err))
+  }
+
+  const listGuessLeagues = (request, reply) => {
+    const payload = request.query
+    const headers = request.headers
+
+    guessLeaguesServices.listGuessLeagueService.listGuessLeagues(payload, headers)
+      .then((response) => reply(response))
       .catch((err) => reply(err))
   }
 
@@ -21,7 +26,7 @@ module.exports = (app) => {
     const payload = request.payload
     const headers = request.headers
 
-    GLInviteService.inviteResponse(payload, headers)
+    guessLeaguesServices.GLInviteService.inviteResponse(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -30,7 +35,7 @@ module.exports = (app) => {
     const query = request.query
     const headers = request.headers
 
-    getGuessLeagueService.getGuessLeague(query, headers)
+    guessLeaguesServices.getGuessLeagueService.getGuessLeague(query, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -39,13 +44,14 @@ module.exports = (app) => {
     const payload = request.payload
     const headers = request.headers
 
-    quitGLService.quitGuessLeague(payload, headers)
+    guessLeaguesServices.quitGLService.quitGuessLeague(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
 
   return {
     createGuessLeague,
+    listGuessLeagues,
     getGuessLeague,
     inviteResponse,
     quitGuessLeague
