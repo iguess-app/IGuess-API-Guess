@@ -21,6 +21,9 @@ module.exports = (app) => {
         _checkErrors(guessLeagueFound, request, dictionary)
 
         return _deleteUserFromPlayersArray(guessLeagueFound, request).save()
+          .then(() => ({
+              removed: true
+            }))
       })
   }
 
@@ -45,6 +48,6 @@ const _deleteUserFromPlayersArray = (guessLeagueFound, request) => {
   const QUANTITY_TO_REMOVE = 1
   const playerIndex = guessLeagueFound.players.findIndex((player) => player === request.userRef)
   guessLeagueFound.players.splice(playerIndex, QUANTITY_TO_REMOVE)
-  
+
   return guessLeagueFound
 }
