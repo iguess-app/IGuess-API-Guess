@@ -20,7 +20,6 @@ module.exports = (app) => {
     }
 
     const projectionQuery = {
-      _id: 0,
       inviteads: 0
     }
 

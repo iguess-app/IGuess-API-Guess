@@ -44,7 +44,7 @@ module.exports = (app) => {
     const payload = request.payload
     const headers = request.headers
 
-    guessLeaguesServices.quitGLService.quitGuessLeague(payload, headers)
+    guessLeaguesServices.quitGuessLeagueService.quitGuessLeague(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }

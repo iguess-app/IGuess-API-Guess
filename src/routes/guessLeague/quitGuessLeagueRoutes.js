@@ -1,16 +1,12 @@
 'use strict'
 
-const Joi = require('joi')
-
 module.exports = (app) => {
   const guessLeagueController = app.src.controllers.guessLeagueController
   const server = app.configServer
-  const Config = app.coincidents.Config
   const schemas = app.src.routes.schemas
-  const ID_SIZE = Config.mongo.idStringSize
 
   server.route({
-    path: '/guessleague/quit',
+    path: '/guessleague/quitGuessLeague',
     method: 'PUT',
     config: {
       handler: (request, reply) => {
@@ -18,11 +14,8 @@ module.exports = (app) => {
         guessLeagueController.quitGuessLeague(request, reply)
       },
       validate: {
-        query: Joi.object({}),
-        payload: Joi.object({
-          guessLeagueName: Joi.string().required(),
-          userID: Joi.string().required().length(ID_SIZE)
-        })
+        payload: schemas.guessLeague.quitGuessLeague.quitGuessLeagueSchema.request,
+        headers: schemas.defaultHeaderSchema
       }
     }
   })
