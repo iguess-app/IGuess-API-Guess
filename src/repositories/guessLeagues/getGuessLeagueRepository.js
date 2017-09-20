@@ -1,11 +1,13 @@
 'use strict'
 
 const Boom = require('boom')
+const Mongoose = require('mongoose')
+const objectId = Mongoose.Types.ObjectId
 
 module.exports = (app) => {
   const GuessLeagues = app.src.models.guessesLeaguesModel
 
-  const listGuessLeagues = (request, dictionary) => {
+  const getGuessLeague = (request, dictionary) => {
 
     const searchQuery = {
       players: {
@@ -13,16 +15,19 @@ module.exports = (app) => {
       }
     }
 
-    const projectionQuery = {
-      inviteads: 0,
-      players: 0,
-      administrators: 0
+    if (request.guessLeagueRef) {
+      searchQuery._id = objectId(request.guessLeagueRef)
     }
 
-    return GuessLeagues.find(searchQuery, projectionQuery)
+    const projectionQuery = {
+      _id: 0,
+      inviteads: 0
+    }
+
+    return GuessLeagues.findOne(searchQuery, projectionQuery)
       .then((guessesLeaguesFound) => {
         _checkErrors(guessesLeaguesFound, request, dictionary)
-         
+        
         return guessesLeaguesFound
       })
   }
@@ -34,6 +39,6 @@ module.exports = (app) => {
   }
 
   return {
-    listGuessLeagues
+    getGuessLeague
   }
 }

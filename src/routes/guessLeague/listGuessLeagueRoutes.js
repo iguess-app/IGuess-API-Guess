@@ -6,7 +6,7 @@ module.exports = (app) => {
   const schemas = app.src.routes.schemas
 
   server.route({
-    path: '/guessleague/listGuessLeagues',
+    path: '/guessleague/listGuessesLeagues',
     method: 'GET',
     config: {
       handler: (request, reply) => {
@@ -23,3 +23,8 @@ module.exports = (app) => {
 }
 
 //TODO adicionar schema de response
+
+
+//SEPARAR O LIST DO GET
+//NO LIST DEVOLVE SÓ O NOME E O CHAMP E DEVOLVE TODAS GLES
+//NO GET DEVOLVE SO UMA GLE E DEVOLVE TDS DETALHER COMO ESTAO AQUI
