@@ -22,15 +22,6 @@ module.exports = (app) => {
       .catch((err) => reply(err))
   }
 
-  const inviteResponse = (request, reply) => {
-    const payload = request.payload
-    const headers = request.headers
-
-    guessLeaguesServices.GLInviteService.inviteResponse(payload, headers)
-      .then((response) => reply(response))
-      .catch((err) => reply(err))
-  }
-
   const getGuessLeague = (request, reply) => {
     const query = request.query
     const headers = request.headers
@@ -49,11 +40,30 @@ module.exports = (app) => {
       .catch((err) => reply(err))
   }
 
+  const putAdministrator = (request, reply) => {
+    const payload = request.payload
+    const headers = request.headers
+
+    guessLeaguesServices.putAdministratorService.putAdministrator(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
+  const inviteResponse = (request, reply) => {
+    const payload = request.payload
+    const headers = request.headers
+
+    guessLeaguesServices.GLInviteService.inviteResponse(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
   return {
     createGuessLeague,
     listGuessLeagues,
     getGuessLeague,
     inviteResponse,
+    putAdministrator,
     quitGuessLeague
   }
 }
