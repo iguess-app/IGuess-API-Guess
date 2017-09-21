@@ -44,7 +44,16 @@ module.exports = (app) => {
     const payload = request.payload
     const headers = request.headers
 
-    guessLeaguesServices.putAdministratorService.putAdministrator(payload, headers)
+    guessLeaguesServices.putAdministratorService(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
+  const quitAdministrator = (request, reply) => {
+    const payload = request.payload
+    const headers = request.headers
+
+    guessLeaguesServices.quitAdministratorService(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -64,6 +73,7 @@ module.exports = (app) => {
     getGuessLeague,
     inviteResponse,
     putAdministrator,
+    quitAdministrator,
     quitGuessLeague
   }
 }

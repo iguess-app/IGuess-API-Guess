@@ -23,4 +23,22 @@ module.exports = (app) => {
     }
   })
 
+  server.route({
+    path: '/guessleague/quitAdministrator',
+    method: 'PUT',
+    config: {
+      handler: (request, reply) => {
+
+        guessLeagueController.quitAdministrator(request, reply)
+      },
+      validate: {
+        payload: schemas.guessLeague.administration.quitAdministrationSchema.request,
+        headers: schemas.defaultHeaderSchema
+      },
+      response: {
+        schema: schemas.guessLeague.administration.quitAdministrationSchema.response
+      }
+    }
+  })
+
 }

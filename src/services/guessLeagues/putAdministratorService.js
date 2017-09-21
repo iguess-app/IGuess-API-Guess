@@ -12,10 +12,8 @@ module.exports = (app) => {
       throw Boom.conflict(dictionary.youCantBeTheUserAndUserAdm)
     }
 
-    return putAdministratorRepository.putAdministrator(payload, dictionary)
+    return putAdministratorRepository(payload, dictionary)
   }
 
-  return {
-    putAdministrator
-  }
+  return putAdministrator
 }

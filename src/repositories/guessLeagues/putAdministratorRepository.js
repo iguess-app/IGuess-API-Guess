@@ -25,21 +25,19 @@ module.exports = (app) => {
     }
 
     return GuessLeagues.findOne(searchQuery, projectionQuery)
-      .then((guessesLeaguesFound) => {
-        _checkErrors(guessesLeaguesFound, request, dictionary)
-        guessesLeaguesFound.administrators.push(request.userRefToAdm)
+      .then((guessLeagueFound) => {
+        _checkErrors(guessLeagueFound, request, dictionary)
+        guessLeagueFound.administrators.push(request.userRefToAdm)
 
-        return guessesLeaguesFound.save()
+        return guessLeagueFound.save()
       })
   }
 
-  const _checkErrors = (guessesLeaguesFound, request, dictionary) => {
-    if (!guessesLeaguesFound) {
+  const _checkErrors = (guessLeagueFound, request, dictionary) => {
+    if (!guessLeagueFound) {
       throw Boom.notFound(dictionary.anyGuessLeagueFound)
     }
   }
 
-  return {
-    putAdministrator
-  }
+  return putAdministrator
 }
