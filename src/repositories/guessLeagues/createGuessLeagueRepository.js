@@ -18,7 +18,5 @@ module.exports = (app) => {
     championship: championship.championship
   })
 
-  return {
-    createGuessLeague
-  }
+  return createGuessLeague
 }

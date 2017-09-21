@@ -35,7 +35,5 @@ module.exports = (app) => {
     }
   }
 
-  return {
-    getChampionshipAtGuessLine
-  }
+  return getChampionshipAtGuessLine
 }

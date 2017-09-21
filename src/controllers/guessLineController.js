@@ -2,16 +2,12 @@
 
 module.exports = (app) => {
   const guessLinesServices = app.src.services.guessLines
-  const setPredictionsService = guessLinesServices.setPredictionsService
-  const addUserToGuessLineService = guessLinesServices.addUserToGuessLineService
-  const getGuessLineService = guessLinesServices.getGuessLineService
-  const listGuessesLinesService = guessLinesServices.listGuessesLinesService
 
   const addUserToGuessLine = (request, reply) => {
     const payload = request.payload
     const headers = request.headers
 
-    addUserToGuessLineService.addUserToGuessLine(payload, headers)
+    guessLinesServices.addUserToGuessLineService.addUserToGuessLine(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -20,7 +16,7 @@ module.exports = (app) => {
     const payload = request.payload
     const headers = request.headers
 
-    setPredictionsService.setPredictions(payload, headers)
+    guessLinesServices.setPredictionsService.setPredictions(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -29,7 +25,7 @@ module.exports = (app) => {
     const payload = request.query
     const headers = request.headers
 
-    listGuessesLinesService.listGuessesLines(payload, headers)
+    guessLinesServices.listGuessesLinesService.listGuessesLines(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -38,7 +34,16 @@ module.exports = (app) => {
     const payload = request.query
     const headers = request.headers
 
-    getGuessLineService.getGuessLine(payload, headers)
+    guessLinesServices.getGuessLineService.getGuessLine(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
+  const userAtGuessLine = (request, reply) => {
+    const payload = request.query
+    const headers = request.headers
+
+    guessLinesServices.userAtGuessLineService(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -47,6 +52,7 @@ module.exports = (app) => {
     setPredictions,
     addUserToGuessLine,
     listGuessesLines,
-    getGuessLine
+    getGuessLine,
+    userAtGuessLine
   }
 }
