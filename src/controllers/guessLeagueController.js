@@ -58,11 +58,11 @@ module.exports = (app) => {
       .catch((err) => reply(err))
   }
 
-  const inviteResponse = (request, reply) => {
+  const inviteToGuessLeague = (request, reply) => {
     const payload = request.payload
     const headers = request.headers
 
-    guessLeaguesServices.GLInviteService.inviteResponse(payload, headers)
+    guessLeaguesServices.inviteToGuessLeagueService(payload, headers)
       .then((response) => reply(response))
       .catch((err) => reply(err))
   }
@@ -71,7 +71,7 @@ module.exports = (app) => {
     createGuessLeague,
     listGuessLeagues,
     getGuessLeague,
-    inviteResponse,
+    inviteToGuessLeague,
     putAdministrator,
     quitAdministrator,
     quitGuessLeague

@@ -29,13 +29,18 @@ const _buildSearchQuery = (request) => {
       $in: [request.userRef]
     }
   }
+  if (request.userRefInvited) {
+    searchQuery.usersAddedAtGuessLine.$in = [request.userRef, request.userRefInvited]
+  }
 
   return searchQuery
 }
 
 const _checkErrors = (guesslineFound, dictionary, request, StatusUtils) => {
   if (!guesslineFound) {
-    throw Boom.create(StatusUtils.notFound, dictionary.notAtGuessLine, {request})
+    throw Boom.create(StatusUtils.notFound, dictionary.notAtGuessLine, {
+      request
+    })
   }
 }
 
