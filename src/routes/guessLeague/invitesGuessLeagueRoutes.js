@@ -20,4 +20,19 @@ module.exports = (app) => {
     }
   })
 
+  server.route({
+    path: '/guessleague/inviteResponse',
+    method: 'PATCH',
+    config: {
+      handler: (request, reply) => {
+
+        guessLeagueController.inviteResponse(request, reply)
+      },
+      validate: {
+        payload: schemas.guessLeague.inviteResponse.inviteResponseSchema.request,
+        headers: schemas.defaultHeaderSchema
+      }
+    }
+  })
+
 }

@@ -67,6 +67,15 @@ module.exports = (app) => {
       .catch((err) => reply(err))
   }
 
+  const inviteResponse = (request, reply) => {
+    const payload = request.payload
+    const headers = request.headers
+
+    guessLeaguesServices.inviteResponseService(payload, headers)
+      .then((response) => reply(response))
+      .catch((err) => reply(err))
+  }
+
   return {
     createGuessLeague,
     listGuessLeagues,
@@ -74,7 +83,8 @@ module.exports = (app) => {
     inviteToGuessLeague,
     putAdministrator,
     quitAdministrator,
-    quitGuessLeague
+    quitGuessLeague,
+    inviteResponse
   }
 }
 
