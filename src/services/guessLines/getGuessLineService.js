@@ -44,8 +44,8 @@ module.exports = (app) => {
     const predictions = repositoriesResponses[0]
     const fixture = repositoriesResponses[1]
     const pontuations = repositoriesResponses[2]
-    fixture.guessLinePontuation = pontuations ? pontuations.totalPontuation : 0
-    fixture.fixturePontuation = predictions ? predictions.fixturePontuation : 0
+    fixture.guessLinePontuation = pontuations.totalPontuation ? pontuations.totalPontuation : 0
+    fixture.fixturePontuation = predictions.fixturePontuation ? predictions.fixturePontuation : 0
     Reflect.deleteProperty(fixture, '_id')
 
     if (_theUserAlreadySentThePredictions(predictions)) {
