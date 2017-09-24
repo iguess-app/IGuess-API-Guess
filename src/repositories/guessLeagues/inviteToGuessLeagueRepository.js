@@ -14,10 +14,10 @@ module.exports = (app) => {
       _id: objectId(request.guessLeagueRef),
       players: {
         $in: [request.userRef],
-        $nin: [request.userRefInvited]
+        $nin: request.userRefInviteads
       },
       inviteads: {
-        $nin: [request.userRefInvited]
+        $nin: request.userRefInviteads
       },
       administrators: {
         $in: [request.userRef]
@@ -27,7 +27,7 @@ module.exports = (app) => {
     return GuessLeague.findOne(searchQuery)
       .then((quessLeagueFound) => {
         _checkErrors(quessLeagueFound, request, dictionary, StatusUtils)
-        quessLeagueFound.inviteads.push(request.userRefInvited)
+        request.userRefInviteads.map((userRefInvited) => quessLeagueFound.inviteads.push(userRefInvited))
 
         return quessLeagueFound.save()
       })

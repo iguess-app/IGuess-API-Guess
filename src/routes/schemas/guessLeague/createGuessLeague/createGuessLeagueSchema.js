@@ -11,9 +11,9 @@ module.exports = (app) => {
     guessLeagueName: Joi.string().required(),
     championshipRef: Joi.string().length(ID_SIZE).required(),
     userRef: Joi.string().required().length(ID_SIZE),
-    inviteads: Joi.array().items(
-      Joi.string().length(ID_SIZE).required()
-    )
+    userRefInviteads: Joi.array().items(
+      Joi.string().length(ID_SIZE)
+    ).required()
   }).meta({
     className: 'Request'
   })

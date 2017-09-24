@@ -11,7 +11,7 @@ module.exports = (app) => {
     administrators: [
       request.userRef
     ],
-    inviteads: request.inviteads,
+    inviteads: request.userRefInviteads,
     players: [
       request.userRef
     ],

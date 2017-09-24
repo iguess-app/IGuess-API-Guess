@@ -29,8 +29,8 @@ const _buildSearchQuery = (request) => {
       $in: [request.userRef]
     }
   }
-  if (request.userRefInvited) {
-    searchQuery.usersAddedAtGuessLine.$in = [request.userRef, request.userRefInvited]
+  if (request.userRefInviteads.length) {
+    searchQuery.usersAddedAtGuessLine.$all = request.userRefInviteads
   }
 
   return searchQuery

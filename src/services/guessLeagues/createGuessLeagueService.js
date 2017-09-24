@@ -1,6 +1,6 @@
 'use strict'
 
-const Promise = require('bluebird')
+const Boom = require('boom')
 
 module.exports = (app) => {
   const createGuessLeagueRepository = app.src.repositories.guessLeagues.createGuessLeagueRepository
@@ -10,7 +10,9 @@ module.exports = (app) => {
   const createGuessLeague = (payload, headers) => {
     const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
 
-    return _verifyIfUsersSentIsOnGuessLineList(verifyUserAtGuessLineRepository, payload, dictionary)
+    _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary)
+
+    return verifyUserAtGuessLineRepository(payload, dictionary)
       .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
       .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))
   }
@@ -20,19 +22,9 @@ module.exports = (app) => {
   }
 }
 
-const _verifyIfUsersSentIsOnGuessLineList = (verifyUserAtGuessLineRepository, payload, dictionary) => {
-  if (payload.inviteads) {
-    const inviteadsCheckArrayPromise = payload.inviteads.map((userRefInvited) => {
-      const verifyUserAtGuessLineObj = {
-        championshipRef: payload.championshipRef,
-        userRef: userRefInvited
-      }
-
-      return verifyUserAtGuessLineRepository(verifyUserAtGuessLineObj, dictionary)
-    })
-
-    return Promise.map(inviteadsCheckArrayPromise, (justReturn) => justReturn)
+const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary) => {
+  const thereAreDuplicated = userRefInviteads.some((userRefInvited, currentIndex) => userRefInviteads.indexOf(userRefInvited) !== currentIndex)
+  if (thereAreDuplicated) {
+    throw Boom.notAcceptable(dictionary.userRefDuplicated)
   }
-
-  return payload
 }
