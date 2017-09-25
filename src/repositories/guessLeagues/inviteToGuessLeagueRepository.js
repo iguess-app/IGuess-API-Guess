@@ -40,6 +40,7 @@ const _checkErrors = (quessLeagueFound, request, dictionary, StatusUtils) => {
   if (!quessLeagueFound) {
     throw Boom.create(StatusUtils.forbidden, dictionary.someWrongAtInvite, request)
   }
+  //TODO tornar esse erro mais intuitivo para o front
 }
 
 /*eslint max-params: [2, 4]*/
