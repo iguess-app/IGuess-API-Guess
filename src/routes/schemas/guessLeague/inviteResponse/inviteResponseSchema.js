@@ -10,7 +10,8 @@ module.exports = (app) => {
   const request = Joi.object({
     userRef: Joi.string().required().length(ID_SIZE),
     guessLeagueRef: Joi.string().required().length(ID_SIZE),
-    championshipRef: Joi.string().required().length(ID_SIZE)
+    championshipRef: Joi.string().required().length(ID_SIZE),
+    response: Joi.bool().required()
   }).meta({
     className: 'Request'
   })
