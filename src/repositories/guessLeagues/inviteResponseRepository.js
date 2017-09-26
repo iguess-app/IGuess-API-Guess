@@ -21,20 +21,22 @@ module.exports = (app) => {
     }
 
     return GuessLeague.findOne(searchQuery)
-      .then((quessLeagueFound) => {
-        _checkErrors(quessLeagueFound, request, dictionary, StatusUtils)
-        quessLeagueFound.players.push(request.userRef)
-        _deleteUserFromInviteadsArray(quessLeagueFound, request.userRef)
+      .then((guessLeagueFound) => {
+        _checkErrors(guessLeagueFound, request, dictionary, StatusUtils)
+        _deleteUserFromInviteadsArray(guessLeagueFound, request.userRef)
+        if (request.response) {
+          guessLeagueFound.players.push(request.userRef)
+        }
 
-        return quessLeagueFound.save()
+        return guessLeagueFound.save()
       })
   }
 
   return inviteToGuessLeagueRepository
 }
 
-const _checkErrors = (quessLeagueFound, request, dictionary, StatusUtils) => {
-  if (!quessLeagueFound) {
+const _checkErrors = (guessLeagueFound, request, dictionary, StatusUtils) => {
+  if (!guessLeagueFound) {
     throw Boom.create(StatusUtils.forbidden, dictionary.someWrongAtInvite, request)
   }
 }
