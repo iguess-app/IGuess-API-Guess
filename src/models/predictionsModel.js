@@ -14,11 +14,6 @@ module.exports = (app) => {
   const championshipFixtureUserKeyValidator = require('./subValidations/championshipFixtureUserKey')(app)
   
   const guessSchema = new Schema({
-    matchRef: {
-      type: String,
-      required: true,
-      validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
-    },
     homeTeamScoreGuess: {
       type: Number,
       required: true
@@ -26,14 +21,11 @@ module.exports = (app) => {
     awayTeamScoreGuess: {
       type: Number,
       required: true
-    },
-    pontuation: {
-      type: Number
     }
   }, optionsSchemas._idAndVersionKeyDisable)
   
   const predictionsSchema = new Schema({
-    championshipFixtureUserKey: {
+    matchUserRef: {
       type: String,
       required: true,
       unique: true,
@@ -44,12 +36,25 @@ module.exports = (app) => {
       required: true,
       validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
     },
-    fixturePontuation: {
+    matchRef: {
+      type: String,
+      required: true,
+      validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+    },
+    championshipRef: {
+      type: String,
+      required: true,
+      validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+    },
+    matchPontuation: {
       type: Number
     },
-    guesses: {
-      type: [guessSchema],
+    date: {
+      type: Date,
       required: true
+    },
+    guesses: {
+      type: guessSchema
     }
   }, optionsSchemas.versionKeyDisable)
 
@@ -57,5 +62,3 @@ module.exports = (app) => {
 }
 
 /*eslint global-require: 0*/
-
-

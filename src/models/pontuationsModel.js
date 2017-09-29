@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema
-const Mixed = Schema.Types.Mixed
 
 const optionsSchemas = require('./optionsSchemas/optionsSchemas')
 
@@ -11,16 +10,13 @@ module.exports = (app) => {
   const db = app.coincidents.Managers.mongoManager
   const mongo = app.coincidents.Config.mongo
   const serverErrors = app.coincidents.Utils.errorUtils.serverErrors
-  const userErrors = app.coincidents.Utils.errorUtils.userErrors
 
-  const validateFixture = require('./subValidations/fixture')(app)
   const championshipUserKeyValidator = require('./subValidations/championshipUserKey')
 
-  const pontuationByFixtureSchema = new Schema({
-    fixture: {
-      type: Mixed,
-      required: true,
-      validate: [validateFixture, String(userErrors.notValidFixture)]
+  const pontuationByMatchDaySchema = new Schema({
+    day: {
+      type: String,
+      required: true
     },
     pontuation: {
       type: Number,
@@ -49,8 +45,8 @@ module.exports = (app) => {
       type: Number,
       required: true
     },
-    pontuationByFixture: {
-      type: [pontuationByFixtureSchema]
+    pontuationByMatchDay: {
+      type: [pontuationByMatchDaySchema]
     }
   }, optionsSchemas.versionKeyDisable)
 
