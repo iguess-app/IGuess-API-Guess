@@ -9,7 +9,7 @@ const getPontuationsRepository = require('../../repositories/guessLines/getPontu
 const listGuessesLines = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
 
-  return listGuessesLinesRepository.listGuessesLines(request, dictionary)
+  return listGuessesLinesRepository(request, dictionary)
     .then((list) => _checkIfPontuationWillReturnsToo(list, request))
 }
 
@@ -19,7 +19,7 @@ const _checkIfPontuationWillReturnsToo = (list, request) => {
   }
 
   const getPontuationArrayPromise = list.map((guessLine) =>
-    getPontuationsRepository.getPontuations(request, guessLine)
+    getPontuationsRepository(request, guessLine)
     .then((pontuationDoc) => {
       guessLine._doc.pontuation = 0
       if (pontuationDoc) {
