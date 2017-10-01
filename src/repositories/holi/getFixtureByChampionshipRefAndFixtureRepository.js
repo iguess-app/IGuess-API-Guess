@@ -4,7 +4,7 @@ const qs = require('querystring')
 
 const _buildGetRoundByFixtureQS = (request) =>
   qs.stringify({
-    fixture: request.fixture,
+    date: request.date,
     championshipRef: request.championshipRef
   })
 
@@ -18,7 +18,7 @@ module.exports = (app) => {
       language,
       'content-type': 'application/json'
     }
-    const urlReq = `${holiDomain}/fixture/getFixtureByChampionshipRefAndFixture?${_buildGetRoundByFixtureQS(request)}`
+    const urlReq = `${holiDomain}/fixture/getFixtureByChampionshipRefAndDate?${_buildGetRoundByFixtureQS(request)}`
 
     return requestManager.get(urlReq, headersReq)
     .catch((err) => err.error)

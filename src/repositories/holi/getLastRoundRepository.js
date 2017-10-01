@@ -4,7 +4,6 @@ const qs = require('querystring')
 
 const _buildQS = (request) =>
   qs.stringify({
-    newestStarted: true,
     championshipRef: request.championshipRef
   })
 
