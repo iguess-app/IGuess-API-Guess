@@ -1,3 +1,5 @@
+'use strict'
+
 const versionKeyDisable = {
   versionKey: false
 }

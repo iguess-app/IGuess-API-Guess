@@ -1,39 +1,39 @@
 'use strict'
 
 const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
 
-module.exports = (app) => {
-  const GuessLine = app.src.models.guessesLinesModel
-  const QueryUtils = app.coincidents.Utils.queryUtils
+const GuessLine = require('../../models/guessesLinesModel')
 
-  const getChampionshipAtGuessLine = (request, dictionary) => {
-    const searchQuery = _buildSearchQuery(request)
-    const projectionQuery = {
-      _id: 0,
-      championship: 1
-    }
+const queryUtils = coincidents.Utils.queryUtils
 
-    return GuessLine.findOne(searchQuery, projectionQuery)
-      .then((championshipFromGuessLine) => {
-        _checkErrors(championshipFromGuessLine, dictionary)
-
-        return QueryUtils.makeObject(championshipFromGuessLine)
-      })
+const getChampionshipAtGuessLine = (request, dictionary) => {
+  const searchQuery = _buildSearchQuery(request)
+  const projectionQuery = {
+    _id: 0,
+    championship: 1
   }
 
-  const _buildSearchQuery = (request) => {
-    const searchQuery = {
-      'championship.championshipRef': request.championshipRef
-    }
+  return GuessLine.findOne(searchQuery, projectionQuery)
+    .then((championshipFromGuessLine) => {
+      _checkErrors(championshipFromGuessLine, dictionary)
 
-    return searchQuery
-  }
-
-  const _checkErrors = (championshipFromGuessLine, dictionary) => {
-    if (!championshipFromGuessLine) {
-      throw Boom.notFound(dictionary.championshipNotFound)
-    }
-  }
-
-  return getChampionshipAtGuessLine
+      return queryUtils.makeObject(championshipFromGuessLine)
+    })
 }
+
+const _buildSearchQuery = (request) => {
+  const searchQuery = {
+    'championship.championshipRef': request.championshipRef
+  }
+
+  return searchQuery
+}
+
+const _checkErrors = (championshipFromGuessLine, dictionary) => {
+  if (!championshipFromGuessLine) {
+    throw Boom.notFound(dictionary.championshipNotFound)
+  }
+}
+
+module.exports = getChampionshipAtGuessLine

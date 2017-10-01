@@ -1,38 +1,37 @@
 'use strict'
 
-module.exports = (app) => {
-  const guessLeagueController = app.src.controllers.guessLeagueController
-  const server = app.configServer
-  const schemas = app.src.routes.schemas
+const guessLeagueController = require('../../controllers/guessLeagueController')
+const server = require('../../../configServer')
+const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const inviteToGuessLeagueSchema = require('../schemas/guessLeague/inviteToGuessLeague/inviteToGuessLeagueSchema')
+const inviteResponseSchema = require('../schemas/guessLeague/inviteResponse/inviteResponseSchema')
 
-  server.route({
-    path: '/guessleague/inviteToGuessLeague',
-    method: 'PATCH',
-    config: {
-      handler: (request, reply) => {
+server.route({
+  path: '/guessleague/inviteToGuessLeague',
+  method: 'PATCH',
+  config: {
+    handler: (request, reply) => {
 
-        guessLeagueController.inviteToGuessLeague(request, reply)
-      },
-      validate: {
-        payload: schemas.guessLeague.inviteToGuessLeague.inviteToGuessLeagueSchema.request,
-        headers: schemas.defaultHeaderSchema
-      }
+      guessLeagueController.inviteToGuessLeague(request, reply)
+    },
+    validate: {
+      payload: inviteToGuessLeagueSchema.request,
+      headers: defaultHeaderSchema
     }
-  })
+  }
+})
 
-  server.route({
-    path: '/guessleague/inviteResponse',
-    method: 'PATCH',
-    config: {
-      handler: (request, reply) => {
+server.route({
+  path: '/guessleague/inviteResponse',
+  method: 'PATCH',
+  config: {
+    handler: (request, reply) => {
 
-        guessLeagueController.inviteResponse(request, reply)
-      },
-      validate: {
-        payload: schemas.guessLeague.inviteResponse.inviteResponseSchema.request,
-        headers: schemas.defaultHeaderSchema
-      }
+      guessLeagueController.inviteResponse(request, reply)
+    },
+    validate: {
+      payload: inviteResponseSchema.request,
+      headers: defaultHeaderSchema
     }
-  })
-
-}
+  }
+})

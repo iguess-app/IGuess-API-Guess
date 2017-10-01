@@ -1,38 +1,36 @@
 'use strict'
 
 const Boom = require('boom')
-const Mongoose = require('mongoose')
-const objectId = Mongoose.Types.ObjectId
+const coincidents = require('iguess-api-coincidents')
+
+const GuessLeague = require('../../models/guessesLeaguesModel')
+
+const queryUtils = coincidents.Utils.queryUtils
+
 const MINIMUM_NUMBER_OF_ADM_ALLOW = 1
 
-module.exports = (app) => {
-  const GuessLeagues = app.src.models.guessesLeaguesModel
+const quitAdministration = (request, dictionary) => {
 
-  const quitAdministration = (request, dictionary) => {
-
-    const searchQuery = {
-      _id: objectId(request.guessLeagueRef),
-      players: {
-        $in: [request.userRef]
-      },
-      administrators: {
-        $in: [request.userRef]
-      }
+  const searchQuery = {
+    _id: queryUtils.makeObjectId(request.guessLeagueRef),
+    players: {
+      $in: [request.userRef]
+    },
+    administrators: {
+      $in: [request.userRef]
     }
-
-    const projectionQuery = {
-      inviteads: 0
-    }
-
-    return GuessLeagues.findOne(searchQuery, projectionQuery)
-      .then((guessLeagueFound) => {
-        _checkErrors(guessLeagueFound, request, dictionary)
-
-        return _deleteAdministratorFromAdministratorsArray(guessLeagueFound, request).save()
-      })
   }
 
-  return quitAdministration
+  const projectionQuery = {
+    inviteads: 0
+  }
+
+  return GuessLeague.findOne(searchQuery, projectionQuery)
+    .then((guessLeagueFound) => {
+      _checkErrors(guessLeagueFound, request, dictionary)
+
+      return _deleteAdministratorFromAdministratorsArray(guessLeagueFound, request).save()
+    })
 }
 
 
@@ -52,3 +50,5 @@ const _deleteAdministratorFromAdministratorsArray = (guessLeagueFound, request) 
 
   return guessLeagueFound
 }
+
+module.exports = quitAdministration

@@ -1,27 +1,27 @@
 'use strict'
 
-module.exports = (app) => {
-  const server = app.configServer
-  const schemas = app.src.routes.schemas
-  const guessLineController = app.src.controllers.guessLineController
+const guessLineController = require('../../controllers/guessLineController')
+const server = require('../../../configServer')
+const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const getGuessLineSchema = require('../schemas/guessLine/getGuessLine/getGuessLineSchema')
 
-  server.route({
-    path: '/guessline/getGuessLine',
-    method: 'GET',
-    config: {
-      handler: (request, reply) => {
-        guessLineController.getGuessLine(request, reply)
-      },
-      validate: {
-        query: schemas.guessLine.getGuessLine.getGuessLineSchema.request,
-        headers: schemas.defaultHeaderSchema
-      },
-      response: {
-        schema: schemas.guessLine.getGuessLine.getGuessLineSchema.response
-      }
+server.route({
+  path: '/guessline/getGuessLine',
+  method: 'GET',
+  config: {
+    handler: (request, reply) => {
+      guessLineController.getGuessLine(request, reply)
+    },
+    validate: {
+      query: getGuessLineSchema.request,
+      headers: defaultHeaderSchema
+    },
+    response: {
+      schema: getGuessLineSchema.response
     }
-  })
-}
+  }
+})
+
 
 /*
   TODO: Schemas de req, res and header

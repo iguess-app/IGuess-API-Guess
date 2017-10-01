@@ -1,13 +1,13 @@
 'use strict'
 
-module.exports = (app) => {
-  const quitAdministrationRepository = app.src.repositories.guessLeagues.quitAdministrationRepository
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-  const quitAdministration = (payload, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
+const quitAdministrationRepository = require('../../repositories/guessLeagues/quitAdministrationRepository')
 
-    return quitAdministrationRepository(payload, dictionary)
-  }
+const quitAdministration = (payload, headers) => {
+  const dictionary = selectLanguage(headers.language)
 
-  return quitAdministration
+  return quitAdministrationRepository(payload, dictionary)
 }
+
+module.exports = quitAdministration

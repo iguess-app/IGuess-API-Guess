@@ -1,43 +1,41 @@
 'use strict'
 
 const Joi = require('joi')
+const coincidents = require('iguess-api-coincidents')
 
-module.exports = (app) => {
-  const championshipEmbeddedSchema = require('../../embeddedSchemas/championshipEmbeddedSchema')(app)
-  const Config = app.coincidents.Config
-  const ID_SIZE = Config.mongo.idStringSize
+const championshipEmbeddedSchema = require('../../embeddedSchemas/championshipEmbeddedSchema')
 
-  const request = Joi.object({
-    guessLeagueName: Joi.string().required(),
-    championshipRef: Joi.string().length(ID_SIZE).required(),
-    userRef: Joi.string().required().length(ID_SIZE),
-    userRefInviteads: Joi.array().items(
-      Joi.string().length(ID_SIZE)
-    ).required()
-  }).meta({
-    className: 'Request'
-  })
+const Config = coincidents.Config
+const ID_SIZE = Config.mongo.idStringSize
 
-  const response = Joi.object({
-    guessLeagueName: Joi.string().required(),
-    championship: championshipEmbeddedSchema.required().unknown(),
-    inviteads: Joi.array().items(
-      Joi.string().length(ID_SIZE)
-    ),
-    players: Joi.array().items(
-      Joi.string().length(ID_SIZE).required()
-    ),
-    administrators: Joi.array().items(
-      Joi.string().length(ID_SIZE).required()
-    )
-  }).unknown().meta({
-    className: 'Response'
-  })
+const request = Joi.object({
+  guessLeagueName: Joi.string().required(),
+  championshipRef: Joi.string().length(ID_SIZE).required(),
+  userRef: Joi.string().required().length(ID_SIZE),
+  userRefInviteads: Joi.array().items(
+    Joi.string().length(ID_SIZE)
+  ).required()
+}).meta({
+  className: 'Request'
+})
 
-  return {
-    request,
-    response
-  }
+const response = Joi.object({
+  guessLeagueName: Joi.string().required(),
+  championship: championshipEmbeddedSchema.required().unknown(),
+  inviteads: Joi.array().items(
+    Joi.string().length(ID_SIZE)
+  ),
+  players: Joi.array().items(
+    Joi.string().length(ID_SIZE).required()
+  ),
+  administrators: Joi.array().items(
+    Joi.string().length(ID_SIZE).required()
+  )
+}).unknown().meta({
+  className: 'Response'
+})
+
+module.exports = {
+  request,
+  response
 }
-
-/*eslint global-require: 0*/

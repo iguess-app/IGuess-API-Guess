@@ -1,22 +1,21 @@
 'use strict'
 
-module.exports = (app) => {
-  const guessLeagueController = app.src.controllers.guessLeagueController
-  const server = app.configServer
-  const schemas = app.src.routes.schemas
+const guessLeagueController = require('../../controllers/guessLeagueController')
+const server = require('../../../configServer')
+const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const quitGuessLeagueSchema = require('../schemas/guessLeague/quitGuessLeague/quitGuessLeagueSchema')
 
-  server.route({
-    path: '/guessleague/quitGuessLeague',
-    method: 'PUT',
-    config: {
-      handler: (request, reply) => {
+server.route({
+  path: '/guessleague/quitGuessLeague',
+  method: 'PUT',
+  config: {
+    handler: (request, reply) => {
 
-        guessLeagueController.quitGuessLeague(request, reply)
-      },
-      validate: {
-        payload: schemas.guessLeague.quitGuessLeague.quitGuessLeagueSchema.request,
-        headers: schemas.defaultHeaderSchema
-      }
+      guessLeagueController.quitGuessLeague(request, reply)
+    },
+    validate: {
+      payload: quitGuessLeagueSchema.request,
+      headers: defaultHeaderSchema
     }
-  })
-}
+  }
+})

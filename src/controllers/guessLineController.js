@@ -1,58 +1,56 @@
-'use Strict'
+'use strict'
 
-module.exports = (app) => {
-  const guessLinesServices = app.src.services.guessLines
+const guessLinesServices = require('../services/guessLines')
 
-  const addUserToGuessLine = (request, reply) => {
-    const payload = request.payload
-    const headers = request.headers
+const addUserToGuessLine = (request, reply) => {
+  const payload = request.payload
+  const headers = request.headers
 
-    guessLinesServices.addUserToGuessLineService.addUserToGuessLine(payload, headers)
-      .then((response) => reply(response))
-      .catch((err) => reply(err))
-  }
+  guessLinesServices.addUserToGuessLineService(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
 
-  const setPredictions = (request, reply) => {
-    const payload = request.payload
-    const headers = request.headers
+const setPredictions = (request, reply) => {
+  const payload = request.payload
+  const headers = request.headers
 
-    guessLinesServices.setPredictionsService.setPredictions(payload, headers)
-      .then((response) => reply(response))
-      .catch((err) => reply(err))
-  }
+  guessLinesServices.setPredictionsService(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
 
-  const listGuessesLines = (request, reply) => {
-    const payload = request.query
-    const headers = request.headers
+const listGuessesLines = (request, reply) => {
+  const payload = request.query
+  const headers = request.headers
 
-    guessLinesServices.listGuessesLinesService.listGuessesLines(payload, headers)
-      .then((response) => reply(response))
-      .catch((err) => reply(err))
-  }
+  guessLinesServices.listGuessesLinesService(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
 
-  const getGuessLine = (request, reply) => {
-    const payload = request.query
-    const headers = request.headers
+const getGuessLine = (request, reply) => {
+  const payload = request.query
+  const headers = request.headers
 
-    guessLinesServices.getGuessLineService.getGuessLine(payload, headers)
-      .then((response) => reply(response))
-      .catch((err) => reply(err))
-  }
+  guessLinesServices.getGuessLineService(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
 
-  const userAtGuessLine = (request, reply) => {
-    const payload = request.query
-    const headers = request.headers
+const userAtGuessLine = (request, reply) => {
+  const payload = request.query
+  const headers = request.headers
 
-    guessLinesServices.userAtGuessLineService(payload, headers)
-      .then((response) => reply(response))
-      .catch((err) => reply(err))
-  }
+  guessLinesServices.userAtGuessLineService(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
 
-  return {
-    setPredictions,
-    addUserToGuessLine,
-    listGuessesLines,
-    getGuessLine,
-    userAtGuessLine
-  }
+module.exports = {
+  setPredictions,
+  addUserToGuessLine,
+  listGuessesLines,
+  getGuessLine,
+  userAtGuessLine
 }

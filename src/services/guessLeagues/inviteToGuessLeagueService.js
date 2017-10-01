@@ -1,22 +1,18 @@
 'use strict'
 
 const Boom = require('boom')
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-module.exports = (app) => {
-  const inviteToGuessLeagueRepository = app.src.repositories.guessLeagues.inviteToGuessLeagueRepository
-  const verifyUserAtGuessLineRepository = app.src.repositories.guessLines.verifyUserAtGuessLineRepository
+const inviteToGuessLeagueRepository = require('../../repositories/guessLeagues/inviteToGuessLeagueRepository')
+const verifyUserAtGuessLineRepository = require('../../repositories/guessLines/verifyUserAtGuessLineRepository')
 
-  const inviteToGuessLeague = (payload, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
+const inviteToGuessLeague = (payload, headers) => {
+  const dictionary = selectLanguage(headers.language)
 
-    _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary)
+  _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary)
 
-    return verifyUserAtGuessLineRepository(payload, dictionary)
-      .then(() => inviteToGuessLeagueRepository(payload, dictionary))
-      .catch((err) => err)
-  }
-
-  return inviteToGuessLeague
+  return verifyUserAtGuessLineRepository(payload, dictionary)
+    .then(() => inviteToGuessLeagueRepository(payload, dictionary))
 }
 
 const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary) => {
@@ -25,3 +21,5 @@ const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary) 
     throw Boom.notAcceptable(dictionary.userRefDuplicated)
   }
 }
+
+module.exports = inviteToGuessLeague

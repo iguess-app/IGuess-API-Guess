@@ -1,25 +1,20 @@
 'use strict'
 
 const Boom = require('boom')
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-module.exports = (app) => {
-  const createGuessLeagueRepository = app.src.repositories.guessLeagues.createGuessLeagueRepository
-  const getChampionshipAtGuessLineRepository = app.src.repositories.guessLines.getChampionshipAtGuessLineRepository
-  const verifyUserAtGuessLineRepository = app.src.repositories.guessLines.verifyUserAtGuessLineRepository
+const createGuessLeagueRepository = require('../../repositories/guessLeagues/createGuessLeagueRepository')
+const getChampionshipAtGuessLineRepository = require('../../repositories/guessLines/getChampionshipAtGuessLineRepository')
+const verifyUserAtGuessLineRepository = require('../../repositories/guessLines/verifyUserAtGuessLineRepository')
 
-  const createGuessLeague = (payload, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
+const createGuessLeague = (payload, headers) => {
+  const dictionary = selectLanguage(headers.language)
 
-    _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary)
+  _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary)
 
-    return verifyUserAtGuessLineRepository(payload, dictionary)
-      .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
-      .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))
-  }
-
-  return {
-    createGuessLeague
-  }
+  return verifyUserAtGuessLineRepository(payload, dictionary)
+    .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
+    .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))
 }
 
 const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary) => {
@@ -28,3 +23,5 @@ const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary) 
     throw Boom.notAcceptable(dictionary.userRefDuplicated)
   }
 }
+
+module.exports = createGuessLeague

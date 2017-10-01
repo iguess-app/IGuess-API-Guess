@@ -3,7 +3,7 @@
 const calculatePontuations = require('./calculatePontuationsFunction')
 const saveUserPontuation = require('./saveUserPontuation')
 
-const compareScoreWithPrediction = (predictionsCursorAndFixtureObj, pontuationRules, models) => {
+const compareScoreWithPrediction = (predictionsCursorAndFixtureObj) => {
   const predictionsCursor = predictionsCursorAndFixtureObj.predictionsCursor
   const fixture = predictionsCursorAndFixtureObj.fixture
 
@@ -12,7 +12,7 @@ const compareScoreWithPrediction = (predictionsCursorAndFixtureObj, pontuationRu
     fixture.games.forEach((game) => {
       userPredictions.guesses.map((guess) => {
         if (game._id === guess.matchRef) {
-          guess.pontuation = calculatePontuations(game, guess, pontuationRules)
+          guess.pontuation = calculatePontuations(game, guess)
           fixturePontuation += guess.pontuation
         }
 
@@ -22,7 +22,7 @@ const compareScoreWithPrediction = (predictionsCursorAndFixtureObj, pontuationRu
     userPredictions.fixturePontuation = fixturePontuation
     userPredictions.save()
     
-    saveUserPontuation(fixturePontuation, userPredictions, fixture, models.pontuationsModel)
+    saveUserPontuation(fixturePontuation, userPredictions, fixture)
   })
 }
 

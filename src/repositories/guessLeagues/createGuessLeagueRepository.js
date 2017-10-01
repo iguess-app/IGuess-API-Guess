@@ -1,22 +1,28 @@
 'use strict'
 
-module.exports = (app) => {
-  const GuessLeague = app.src.models.guessesLeaguesModel;
+const GuessLeague = require('../../models/guessesLeaguesModel')
+const coincidents = require('iguess-api-coincidents')
 
-  const createGuessLeague = (request, championship) =>
-    GuessLeague.create(_buildGuessLeagueObj(request, championship))
+const log = coincidents.Managers.logManager
 
-  const _buildGuessLeagueObj = (request, championship) => ({
-    guessLeagueName: request.guessLeagueName,
-    administrators: [
-      request.userRef
-    ],
-    inviteads: request.userRefInviteads,
-    players: [
-      request.userRef
-    ],
-    championship: championship.championship
+const createGuessLeague = (request, championship) =>
+  GuessLeague
+  .create(_buildGuessLeagueObj(request, championship))
+  .catch((err) => {
+    log.error(err)
+    throw err
   })
 
-  return createGuessLeague
-}
+const _buildGuessLeagueObj = (request, championship) => ({
+  guessLeagueName: request.guessLeagueName,
+  administrators: [
+    request.userRef
+  ],
+  inviteads: request.userRefInviteads,
+  players: [
+    request.userRef
+  ],
+  championship: championship.championship
+})
+
+module.exports = createGuessLeague

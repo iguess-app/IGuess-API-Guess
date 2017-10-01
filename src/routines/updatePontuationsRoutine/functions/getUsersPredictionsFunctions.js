@@ -1,7 +1,9 @@
 'use strict'
 
-const getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules) => {
-  const predictionsCursor = _getPredictions(fixture, models.predictionsModel)
+const Prediction = require('../../../models/predictionsModel')
+
+const getUsersPredictionsAndSetPontuations = (fixture) => {
+  const predictionsCursor = _getPredictions(fixture)
 
   return {
     predictionsCursor,
@@ -9,14 +11,14 @@ const getUsersPredictionsAndSetPontuations = (fixture, models, pontuationRules) 
   }
 }
 
-const _getPredictions = (fixture, Predictions) => {
+const _getPredictions = (fixture) => {
   const searchQuery = {
     'championshipFixtureUserKey': {
       '$regex': `${fixture.championshipRef}_${fixture.fixture}`
     }
   }
 
-  return Predictions.find(searchQuery).cursor()
+  return Prediction.find(searchQuery).cursor()
 }
 
 

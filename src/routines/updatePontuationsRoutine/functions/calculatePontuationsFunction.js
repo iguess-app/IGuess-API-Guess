@@ -1,8 +1,10 @@
 'use strict'
 
+const pontuationRules = require('iguess-api-coincidents').Config.pontuationRules
+
 const _hitTheScoreboard = (game, guess) => game.homeTeamScore === guess.homeTeamScoreGuess && game.awayTeamScore === guess.awayTeamScoreGuess
 
-const returnPontuation = (game, guess, pontuationRules) => {
+const returnPontuation = (game, guess) => {
   if (game.hasOwnProperty('homeTeamScore') && game.hasOwnProperty('awayTeamScore')) {
     if (game.homeTeamScore > game.awayTeamScore && guess.homeTeamScoreGuess > guess.awayTeamScoreGuess) {
       if (_hitTheScoreboard(game, guess)) {

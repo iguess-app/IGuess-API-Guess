@@ -4,7 +4,7 @@ const CHAMPIONSHIP_POSITION = 0
 const USER_POSITION = 1
 
 const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId;
+const ObjectId = mongoose.Types.ObjectId
 
 const checkChampionshipUserKey = (key) => {
   const deconstructedKey = key.split('_')
@@ -13,6 +13,4 @@ const checkChampionshipUserKey = (key) => {
     ObjectId.isValid(deconstructedKey[USER_POSITION])
 }
 
-module.exports = {
-  checkChampionshipUserKey
-}
+module.exports = checkChampionshipUserKey

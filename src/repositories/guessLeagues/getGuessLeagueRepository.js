@@ -1,43 +1,38 @@
 'use strict'
 
 const Boom = require('boom')
-const Mongoose = require('mongoose')
-const objectId = Mongoose.Types.ObjectId
+const queryUtils = require('iguess-api-coincidents').Utils.queryUtils
 
-module.exports = (app) => {
-  const GuessLeagues = app.src.models.guessesLeaguesModel
+const GuessLeague = require('../../models/guessesLeaguesModel')
 
-  const getGuessLeague = (request, dictionary) => {
+const getGuessLeague = (request, dictionary) => {
 
-    const searchQuery = {
-      players: {
-        $in: [request.userRef]
-      }
-    }
-
-    if (request.guessLeagueRef) {
-      searchQuery._id = objectId(request.guessLeagueRef)
-    }
-
-    const projectionQuery = {
-      inviteads: 0
-    }
-
-    return GuessLeagues.findOne(searchQuery, projectionQuery)
-      .then((guessesLeaguesFound) => {
-        _checkErrors(guessesLeaguesFound, request, dictionary)
-        
-        return guessesLeaguesFound
-      })
-  }
-
-  const _checkErrors = (guessesLeaguesFound, request, dictionary) => {
-    if (!guessesLeaguesFound) {
-      throw Boom.notFound(dictionary.anyGuessLeagueFound)
+  const searchQuery = {
+    players: {
+      $in: [request.userRef]
     }
   }
 
-  return {
-    getGuessLeague
+  if (request.guessLeagueRef) {
+    searchQuery._id = queryUtils.makeObjectId(request.guessLeagueRef)
+  }
+
+  const projectionQuery = {
+    inviteads: 0
+  }
+
+  return GuessLeague.findOne(searchQuery, projectionQuery)
+    .then((guessesLeaguesFound) => {
+      _checkErrors(guessesLeaguesFound, request, dictionary)
+
+      return guessesLeaguesFound
+    })
+}
+
+const _checkErrors = (guessesLeaguesFound, request, dictionary) => {
+  if (!guessesLeaguesFound) {
+    throw Boom.notFound(dictionary.anyGuessLeagueFound)
   }
 }
+
+module.exports = getGuessLeague

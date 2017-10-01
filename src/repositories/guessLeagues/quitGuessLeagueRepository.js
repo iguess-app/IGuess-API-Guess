@@ -1,35 +1,29 @@
 'use strict'
 
 const Boom = require('boom')
-const Mongoose = require('mongoose')
+const coincidents = require('iguess-api-coincidents')
 
-const objectId = Mongoose.Types.ObjectId
+const GuessLeague = require('../../models/guessesLeaguesModel')
 
-module.exports = (app) => {
-  const GuessLeague = app.src.models.guessesLeaguesModel
+const queryUtils = coincidents.Utils.queryUtils
 
-  const quitGuessLeague = (request, dictionary) => {
-    const searchQuery = {
-      _id: objectId(request.guessLeagueRef),
-      players: {
-        $in: [request.userRef]
-      }
+const quitGuessLeague = (request, dictionary) => {
+  const searchQuery = {
+    _id: queryUtils.makeObjectId(request.guessLeagueRef),
+    players: {
+      $in: [request.userRef]
     }
-
-    return GuessLeague.findOne(searchQuery)
-      .then((guessLeagueFound) => {
-        _checkErrors(guessLeagueFound, request, dictionary)
-
-        return _deleteUserFromPlayersArray(guessLeagueFound, request).save()
-          .then(() => ({
-              removed: true
-            }))
-      })
   }
 
-  return {
-    quitGuessLeague
-  }
+  return GuessLeague.findOne(searchQuery)
+    .then((guessLeagueFound) => {
+      _checkErrors(guessLeagueFound, request, dictionary)
+
+      return _deleteUserFromPlayersArray(guessLeagueFound, request).save()
+        .then(() => ({
+          removed: true
+        }))
+    })
 }
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
@@ -51,3 +45,5 @@ const _deleteUserFromPlayersArray = (guessLeagueFound, request) => {
 
   return guessLeagueFound
 }
+
+module.exports = quitGuessLeague

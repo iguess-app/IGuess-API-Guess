@@ -1,25 +1,21 @@
 'use strict'
 
 const Boom = require('boom')
+const statusUtils = require('iguess-api-coincidents').Utils.statusUtils
 
-module.exports = (app) => {
-  const GuessLine = app.src.models.guessesLinesModel
-  const StatusUtils = app.coincidents.Utils.statusUtils
+const GuessLine = require('../../models/guessesLinesModel')
 
-  const verifyUserAtGuessLine = (request, dictionary) => {
-    const searchQuery = _buildSearchQuery(request)
+const verifyUserAtGuessLine = (request, dictionary) => {
+  const searchQuery = _buildSearchQuery(request)
 
-    return GuessLine.findOne(searchQuery)
-      .then((guesslineFound) => {
-        _checkErrors(guesslineFound, dictionary, request, StatusUtils)
+  return GuessLine.findOne(searchQuery)
+    .then((guesslineFound) => {
+      _checkErrors(guesslineFound, dictionary, request)
 
-        return {
-          userRefAtGuessLineList: true
-        }
-      })
-  }
-
-  return verifyUserAtGuessLine
+      return {
+        userRefAtGuessLineList: true
+      }
+    })
 }
 
 const _buildSearchQuery = (request) => {
@@ -36,12 +32,12 @@ const _buildSearchQuery = (request) => {
   return searchQuery
 }
 
-const _checkErrors = (guesslineFound, dictionary, request, StatusUtils) => {
+const _checkErrors = (guesslineFound, dictionary, request) => {
   if (!guesslineFound) {
-    throw Boom.create(StatusUtils.notFound, dictionary.notAtGuessLine, {
+    throw Boom.create(statusUtils.notFound, dictionary.notAtGuessLine, {
       request
     })
   }
 }
 
-/*eslint max-params: [2, 4]*/
+module.exports = verifyUserAtGuessLine

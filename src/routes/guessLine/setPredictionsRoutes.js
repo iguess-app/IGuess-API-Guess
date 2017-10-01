@@ -1,24 +1,24 @@
 'use strict'
 
-module.exports = (app) => {
-  const server = app.configServer
-  const schemas = app.src.routes.schemas
-  const guessLineController = app.src.controllers.guessLineController
+const guessLineController = require('../../controllers/guessLineController')
+const server = require('../../../configServer')
+const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const setPredictionsSchemaPayload = require('../schemas/guessLine/setPredictions/setPredictionsSchemaPayload')
+const setPredictionsSchemaResponse = require('../schemas/guessLine/setPredictions/setPredictionsSchemaResponse')
 
-  server.route({
-    path: '/guessline/setPredictions',
-    method: 'PUT',
-    config: {
-      handler: (request, reply) => {
-        guessLineController.setPredictions(request, reply)
-      },
-      validate: {
-        payload: schemas.guessLine.setPredictions.setPredictionsSchemaPayload,
-        headers: schemas.defaultHeaderSchema
-      },
-      response: {
-        schema: schemas.guessLine.setPredictions.setPredictionsSchemaResponse
-      }
+server.route({
+  path: '/guessline/setPredictions',
+  method: 'PUT',
+  config: {
+    handler: (request, reply) => {
+      guessLineController.setPredictions(request, reply)
+    },
+    validate: {
+      payload: setPredictionsSchemaPayload,
+      headers: defaultHeaderSchema
+    },
+    response: {
+      schema: setPredictionsSchemaResponse
     }
-  })
-}
+  }
+})

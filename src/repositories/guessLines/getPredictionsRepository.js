@@ -2,58 +2,56 @@
 
 const Boom = require('boom')
 
-module.exports = (app) => {
-  const Predictions = app.src.models.predictionsModel
+const Prediction = require('../../models/predictionsModel')
 
-  const getPredictions = (request, dictionary) => {
-    const searchQuery = _buildSearchQuery(request)
+const getPredictions = (request, dictionary) => {
+  const searchQuery = _buildSearchQuery(request)
 
-    return Predictions.find(searchQuery)
-      .then((predictionsFound) => {
-        _checkErrors(predictionsFound, dictionary)
+  return Prediction.find(searchQuery)
+    .then((predictionsFound) => {
+      _checkErrors(predictionsFound, dictionary)
 
-        return predictionsFound
-      })
-  }
+      return predictionsFound
+    })
+}
 
-  const getUniqueChampionshipPredictions = (request) => {
-    const searchQuery = _buildSearchQuery(request)
+const getUniqueChampionshipPredictions = (request) => {
+  const searchQuery = _buildSearchQuery(request)
 
-    return Predictions.findOne(searchQuery)
-  }
+  return Prediction.findOne(searchQuery)
+}
 
-  const getAllUserFromAFixtureUsingCursor = (fixture) => {
-    const searchQuery = {
-      'championshipFixtureUserKey': {
-        '$regex': `${fixture.championshipRef}_${fixture.fixture}`
-      }
-    }
-
-    return Predictions.find(searchQuery).cursor()
-  }
-
-  const _buildSearchQuery = (request) => {
-    let searchQuery = {
-      'userRef': request.userRef
-    }
-    if (request.championshipRef) {
-      searchQuery = {
-        'championshipFixtureUserKey': `${request.championshipRef}_${request.fixture}_${request.userRef}`
-      }
-    }
-
-    return searchQuery
-  }
-
-  const _checkErrors = (predictionsFound, dictionary) => {
-    if (!predictionsFound) {
-      throw Boom.notFound(dictionary.guessLineNotFound)
+const getAllUserFromAFixtureUsingCursor = (fixture) => {
+  const searchQuery = {
+    'championshipFixtureUserKey': {
+      '$regex': `${fixture.championshipRef}_${fixture.fixture}`
     }
   }
 
-  return {
-    getPredictions,
-    getUniqueChampionshipPredictions,
-    getAllUserFromAFixtureUsingCursor
+  return Prediction.find(searchQuery).cursor()
+}
+
+const _buildSearchQuery = (request) => {
+  let searchQuery = {
+    'userRef': request.userRef
   }
+  if (request.championshipRef) {
+    searchQuery = {
+      'championshipFixtureUserKey': `${request.championshipRef}_${request.fixture}_${request.userRef}`
+    }
+  }
+
+  return searchQuery
+}
+
+const _checkErrors = (predictionsFound, dictionary) => {
+  if (!predictionsFound) {
+    throw Boom.notFound(dictionary.guessLineNotFound)
+  }
+}
+
+module.exports = {
+  getPredictions,
+  getUniqueChampionshipPredictions,
+  getAllUserFromAFixtureUsingCursor
 }

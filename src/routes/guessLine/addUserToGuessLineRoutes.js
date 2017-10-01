@@ -1,22 +1,22 @@
 'use strict'
 
-module.exports = (app) => {
-  const server = app.configServer
-  const schemas = app.src.routes.schemas
-  const guessLineController = app.src.controllers.guessLineController
+const guessLineController = require('../../controllers/guessLineController')
+const server = require('../../../configServer')
+const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const addUserToGuessLineSchemaRequest = require('../schemas/guessLine/addUserToGuessLine/addUserToGuessLineSchemaRequest')
+const addUserToGuessLineSchemaResponse = require('../schemas/guessLine/addUserToGuessLine/addUserToGuessLineSchemaResponse')
 
-  server.route({
-    path: '/guessline/addUserToGuessLine',
-    method: 'PUT',
-    config: {
-      handler: (request, reply) => {
-        guessLineController.addUserToGuessLine(request, reply)
-      },
-      validate: {
-        payload: schemas.guessLine.addUserToGuessLine.addUserToGuessLineSchemaRequest,
-        headers: schemas.defaultHeaderSchema
-      },
-      response: schemas.guessLine.addUserToGuessLine.addUserToGuessLineSchemaResponse
-    }
-  })
-}
+server.route({
+  path: '/guessline/addUserToGuessLine',
+  method: 'PUT',
+  config: {
+    handler: (request, reply) => {
+      guessLineController.addUserToGuessLine(request, reply)
+    },
+    validate: {
+      payload: addUserToGuessLineSchemaRequest,
+      headers: defaultHeaderSchema
+    },
+    response: addUserToGuessLineSchemaResponse
+  }
+})

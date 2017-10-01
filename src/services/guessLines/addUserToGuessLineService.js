@@ -1,15 +1,13 @@
-'use strict';
+'use strict'
 
-module.exports = (app) => {
-  const addUserToGuessLineRepository = app.src.repositories.guessLines.addUserToGuessLineRepository
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-  const addUserToGuessLine = (request, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language);
+const addUserToGuessLineRepository = require('../../repositories/guessLines/addUserToGuessLineRepository')
 
-    return addUserToGuessLineRepository.addUserToGuessLine(request, dictionary)
-  }
+const addUserToGuessLine = (request, headers) => {
+  const dictionary = selectLanguage(headers.language)
 
-  return {
-    addUserToGuessLine
-  }
+  return addUserToGuessLineRepository(request, dictionary)
 }
+
+module.exports = addUserToGuessLine

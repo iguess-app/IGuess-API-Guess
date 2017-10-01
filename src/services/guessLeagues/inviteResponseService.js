@@ -1,17 +1,15 @@
 'use strict'
 
-module.exports = (app) => {
-  const inviteResponseRepository = app.src.repositories.guessLeagues.inviteResponseRepository
-  const verifyUserAtGuessLineRepository = app.src.repositories.guessLines.verifyUserAtGuessLineRepository
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-  const inviteResponse = (payload, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
+const inviteResponseRepository = require('../../repositories/guessLeagues/inviteResponseRepository')
+const verifyUserAtGuessLineRepository = require('../../repositories/guessLines/verifyUserAtGuessLineRepository')
 
-    return verifyUserAtGuessLineRepository(payload, dictionary)
-      .then(() => inviteResponseRepository(payload, dictionary))
-      .catch((err) => err)
-  }
+const inviteResponse = (payload, headers) => {
+  const dictionary = selectLanguage(headers.language)
 
-
-  return inviteResponse
+  return verifyUserAtGuessLineRepository(payload, dictionary)
+    .then(() => inviteResponseRepository(payload, dictionary))
 }
+
+module.exports = inviteResponse

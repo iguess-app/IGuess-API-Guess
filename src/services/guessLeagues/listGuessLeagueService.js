@@ -1,15 +1,13 @@
 'use strict'
 
-module.exports = (app) => {
-  const listGuessLeagueRepository = app.src.repositories.guessLeagues.listGuessLeagueRepository
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-  const listGuessLeagues = (payload, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language)
+const listGuessLeagueRepository = require('../../repositories/guessLeagues/listGuessLeagueRepository')
 
-    return listGuessLeagueRepository.listGuessLeagues(payload, dictionary)
-  }
+const listGuessLeagues = (payload, headers) => {
+  const dictionary = selectLanguage(headers.language)
 
-  return {
-    listGuessLeagues
-  }
+  return listGuessLeagueRepository(payload, dictionary)
 }
+
+module.exports = listGuessLeagues

@@ -1,26 +1,25 @@
 'use strict'
 
-module.exports = (app) => {
-  const guessLeagueController = app.src.controllers.guessLeagueController
-  const server = app.configServer
-  const schemas = app.src.routes.schemas
+const guessLeagueController = require('../../controllers/guessLeagueController')
+const server = require('../../../configServer')
+const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const listGuessLeagueSchema = require('../schemas/guessLeague/listGuessLeague/listGuessLeagueSchema')
 
-  server.route({
-    path: '/guessleague/listGuessesLeagues',
-    method: 'GET',
-    config: {
-      handler: (request, reply) => {
+server.route({
+  path: '/guessleague/listGuessesLeagues',
+  method: 'GET',
+  config: {
+    handler: (request, reply) => {
 
-        guessLeagueController.listGuessLeagues(request, reply)
-      },
-      validate: {
-        query: schemas.guessLeague.listGuessLeague.listGuessLeagueSchema.request,
-        headers: schemas.defaultHeaderSchema
-      }
+      guessLeagueController.listGuessLeagues(request, reply)
+    },
+    validate: {
+      query: listGuessLeagueSchema.request,
+      headers: defaultHeaderSchema
     }
-  })
+  }
+})
 
-}
 
 //TODO adicionar schema de response
 

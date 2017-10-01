@@ -1,70 +1,66 @@
-'use strict';
+'use strict'
 
-module.exports = (app) => {
-  const getPontuationsRepository = app.src.repositories.guessLines.getPontuationsRepository
-  const getPredictionsRepository = app.src.repositories.guessLines.getPredictionsRepository
-  const getGuessLineRepository = app.src.repositories.guessLines.getGuessLineRepository
-  const getFixtureByChampionshipRefAndFixtureRepository = app.src.repositories.holi.getFixtureByChampionshipRefAndFixtureRepository
-  const getLastRoundRepository = app.src.repositories.holi.getLastRoundRepository
+const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-  const getGuessLine = (request, headers) => {
-    const dictionary = app.coincidents.Translate.gate.selectLanguage(headers.language);
+const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
+const getPredictionsRepository = require('../../repositories/guessLines/getPredictionsRepository')
+const getGuessLineRepository = require('../../repositories/guessLines/getGuessLineRepository')
+const getFixtureByChampionshipRefAndDateRepository = require('../../repositories/holi/getFixtureByChampionshipRefAndDateRepository')
+const getLastRoundRepository = require('../../repositories/holi/getLastRoundRepository')
 
-    return getGuessLineRepository.getGuessLineByUserRef(request, dictionary)
-      .then((guessLine) => getPontuationsRepository.getPontuations(request, guessLine, dictionary))
-      .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations, request, headers.language))
-      .then((repositoriesResponses) => _joinMatchResultWithPredictions(repositoriesResponses))
-      .catch((err) => err)
+const getGuessLine = (request, headers) => {
+  const dictionary = selectLanguage(headers.language)
+
+  return getGuessLineRepository(request, dictionary)
+    .then((guessLine) => getPontuationsRepository(request, guessLine, dictionary))
+    .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations, request, headers.language))
+    .then((repositoriesResponses) => _joinMatchResultWithPredictions(repositoriesResponses))
+    .catch((err) => err)
+}
+
+const _getLastRoundSentByTheUser = (userGuessLinePontuations, request, language) => {
+  const searchQueryAndRequestObj = _buildSearchQueryAndRequestObj(request)
+
+  if (_theUserAlreadyHavePontuations(userGuessLinePontuations)) {
+    const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
+    searchQueryAndRequestObj.championshipRef = userGuessLinePontuations.championshipRef
+    searchQueryAndRequestObj.fixture = request.fixture || lastRoundSentByTheUser.fixture
   }
 
-  const _getLastRoundSentByTheUser = (userGuessLinePontuations, request, language) => {
-    const searchQueryAndRequestObj = _buildSearchQueryAndRequestObj(request)
-
-    if (_theUserAlreadyHavePontuations(userGuessLinePontuations)) {
-      const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
-      searchQueryAndRequestObj.championshipRef = userGuessLinePontuations.championshipRef
-      searchQueryAndRequestObj.fixture = request.fixture || lastRoundSentByTheUser.fixture
-    }
-
-    if (!searchQueryAndRequestObj.fixture) {
-      return Promise.all([
-        getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
-        getLastRoundRepository.getLastRound(searchQueryAndRequestObj)
-      ])
-    }
-
+  if (!searchQueryAndRequestObj.fixture) {
     return Promise.all([
       getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
-      getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(searchQueryAndRequestObj, language),
-      userGuessLinePontuations
+      getLastRoundRepository(searchQueryAndRequestObj)
     ])
   }
 
-  const _joinMatchResultWithPredictions = (repositoriesResponses) => {
-    const predictions = repositoriesResponses[0]
-    const fixture = repositoriesResponses[1]
-    const pontuations = repositoriesResponses[2]
-    fixture.guessLinePontuation = pontuations.totalPontuation ? pontuations.totalPontuation : 0
-    fixture.fixturePontuation = predictions.fixturePontuation ? predictions.fixturePontuation : 0
-    Reflect.deleteProperty(fixture, '_id')
+  return Promise.all([
+    getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
+    getFixtureByChampionshipRefAndDateRepository(searchQueryAndRequestObj, language),
+    userGuessLinePontuations
+  ])
+}
 
-    if (_theUserAlreadySentThePredictions(predictions)) {
-      fixture.games.map((game) => {
-        const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
-        game.gamePontuation = gameGuess.pontuation
-        game.homeTeamScoreGuess = gameGuess.homeTeamScoreGuess
-        game.awayTeamScoreGuess = gameGuess.awayTeamScoreGuess
+const _joinMatchResultWithPredictions = (repositoriesResponses) => {
+  const predictions = repositoriesResponses[0]
+  const fixture = repositoriesResponses[1]
+  const pontuations = repositoriesResponses[2]
+  fixture.guessLinePontuation = pontuations.totalPontuation ? pontuations.totalPontuation : 0
+  fixture.fixturePontuation = predictions.fixturePontuation ? predictions.fixturePontuation : 0
+  Reflect.deleteProperty(fixture, '_id')
 
-        return game
-      })
-    }
+  if (_theUserAlreadySentThePredictions(predictions)) {
+    fixture.games.map((game) => {
+      const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
+      game.gamePontuation = gameGuess.pontuation
+      game.homeTeamScoreGuess = gameGuess.homeTeamScoreGuess
+      game.awayTeamScoreGuess = gameGuess.awayTeamScoreGuess
 
-    return fixture
+      return game
+    })
   }
 
-  return {
-    getGuessLine
-  }
+  return fixture
 }
 
 const _buildSearchQueryAndRequestObj = (request) => {
@@ -89,3 +85,5 @@ const _theUserAlreadyHavePontuations = (userGuessLinePontuations) => userGuessLi
 /*
   TODO Dar um jeito da request pro Holi não ser primordial.. para manter a resiliencia entre MicroServices
 */
+
+module.exports = getGuessLine

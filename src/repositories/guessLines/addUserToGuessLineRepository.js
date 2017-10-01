@@ -2,45 +2,41 @@
 
 const Boom = require('boom')
 
-module.exports = (app) => {
-  const GuessLines = app.src.models.guessesLinesModel
+const GuessLine = require('../../models/guessesLinesModel')
 
-  const addUserToGuessLine = (request, dictionary) => {
+const addUserToGuessLine = (request, dictionary) => {
 
-    const searchQuery = {
-      'championship.championshipRef': request.championshipRef
-    }
-
-    return GuessLines.findOne(searchQuery)
-      .then((guessLineFound) => {
-        _checkErrors(guessLineFound, request, dictionary)
-        guessLineFound.usersAddedAtGuessLine.push(request.userRef)
-
-        return guessLineFound.save()
-          .then(() => ({
-            userAddedToGuessLine: true
-          }))
-          .catch(() => ({
-            userAddedToGuessLine: false
-          }))
-      })
+  const searchQuery = {
+    'championship.championshipRef': request.championshipRef
   }
 
-  const _checkErrors = (guessLineFound, request, dictionary) => {
-    if (!guessLineFound) {
-      throw Boom.notFound(dictionary.guessLineNotFound)
-    }
+  return GuessLine.findOne(searchQuery)
+    .then((guessLineFound) => {
+      _checkErrors(guessLineFound, request, dictionary)
+      guessLineFound.usersAddedAtGuessLine.push(request.userRef)
 
-    if (guessLineFound.usersAddedAtGuessLine.includes(request.userRef)) {
-      throw Boom.unauthorized(dictionary.alreadyAdd)
-    }
+      return guessLineFound.save()
+        .then(() => ({
+          userAddedToGuessLine: true
+        }))
+        .catch(() => ({
+          userAddedToGuessLine: false
+        }))
+    })
+}
 
-    if (!guessLineFound.guessLineActive) {
-      throw Boom.unauthorized(dictionary.guessLineInactive)
-    }
+const _checkErrors = (guessLineFound, request, dictionary) => {
+  if (!guessLineFound) {
+    throw Boom.notFound(dictionary.guessLineNotFound)
   }
 
-  return {
-    addUserToGuessLine
+  if (guessLineFound.usersAddedAtGuessLine.includes(request.userRef)) {
+    throw Boom.unauthorized(dictionary.alreadyAdd)
+  }
+
+  if (!guessLineFound.guessLineActive) {
+    throw Boom.unauthorized(dictionary.guessLineInactive)
   }
 }
+
+module.exports = addUserToGuessLine

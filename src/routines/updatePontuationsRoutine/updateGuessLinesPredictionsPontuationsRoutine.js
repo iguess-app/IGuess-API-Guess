@@ -1,37 +1,36 @@
 'use strict'
 
+const CronJob = require('cron').CronJob
+
 const cronTime = require('./cronTime')
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
 
-const CronJob = require('cron').CronJob
+const getAllChampionshipRepository = require('../../repositories/holi/getAllChampionshipRepository')
+const getLastRoundRepository = require('../../repositories/holi/getLastRoundRepository')
+const getFixtureByChampionshipRefAndDateRepository = require('../../repositories/holi/getFixtureByChampionshipRefAndDateRepository')
 
-module.exports = (app) => {
-  const pontuationRules = app.coincidents.Config.pontuationRules
-  const models = app.src.models
-  const holiRepositories = app.src.repositories.holi
-  
-  const getAllChampionshipRepository = holiRepositories.getAllChampionshipRepository
-  const getLastRoundRepository = holiRepositories.getLastRoundRepository
-  const getFixtureByChampionshipRefAndFixtureRepository = holiRepositories.getFixtureByChampionshipRefAndFixtureRepository
+const cronJob = () => new CronJob(cronTime, () => {
 
-  const cronJob = () => new CronJob(cronTime, () => {
-    
-    getAllChampionshipRepository.getAllChampionship({onlyActive: true})
-      .then((championships) => 
-        championships.forEach((championship) => {
-          getLastRoundRepository.getLastRound({championshipRef: championship._id})
-          .then((fixture) => getUsersPredictionsFunctions(fixture, models, pontuationRules))
-          .then((predictionsCursorAndFixtureObj) => compareScoreWithPredictionAndSave(predictionsCursorAndFixtureObj, pontuationRules, models))
+  getAllChampionshipRepository({
+    onlyActive: true
+  }).then((championships) =>
+    championships.forEach((championship) => {
+      getLastRoundRepository({
+          championshipRef: championship._id
         })
-      ) 
-  }, null, true, 'America/Sao_Paulo')
+        .then((fixture) => getUsersPredictionsFunctions(fixture))
+        .then((predictionsCursorAndFixtureObj) => compareScoreWithPredictionAndSave(predictionsCursorAndFixtureObj))
+    })
+  )
+}, null, true, 'America/Sao_Paulo')
 
-  const updatePredictionsPontuationWithFixtureForced = (request) => getFixtureByChampionshipRefAndFixtureRepository.getFixtureByChampionshipRefAndFixture(request)
-    .then((fixture) => getUsersPredictionsFunctions(fixture, models, pontuationRules))
-    .then((predictionsCursorAndFixtureObj) => compareScoreWithPredictionAndSave(predictionsCursorAndFixtureObj, pontuationRules, models))
-  
-  cronJob()
+const updatePredictionsPontuationWithFixtureForced = (request) => getFixtureByChampionshipRefAndDateRepository(request)
+  .then((fixture) => getUsersPredictionsFunctions(fixture))
+  .then((predictionsCursorAndFixtureObj) => compareScoreWithPredictionAndSave(predictionsCursorAndFixtureObj))
 
-  return updatePredictionsPontuationWithFixtureForced
+
+module.exports = {
+  updatePredictionsPontuationWithFixtureForced,
+  cronJob
 }
