@@ -2,7 +2,7 @@
 
 const Boom = require('boom')
 
-const GuessLeague = require('../../models/guessesLeaguesModel')
+const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const listGuessLeagues = (request, dictionary) => {
 

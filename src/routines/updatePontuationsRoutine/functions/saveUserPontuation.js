@@ -1,6 +1,6 @@
 'use strict'
 
-const Pontuation = require('../../../models/pontuationsModel')
+const Pontuation = require('../../../models/guessDB/pontuationsModel')
 
 const _saveUserPontuation = (fixturePontuation, userPredictions, fixture) => {
 

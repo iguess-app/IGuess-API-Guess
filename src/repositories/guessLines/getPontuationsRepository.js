@@ -1,6 +1,6 @@
 'use strict'
 
-const Pontuation = require('../../models/pontuationsModel')
+const Pontuation = require('../../models/guessDB/pontuationsModel')
 
 const getPontuations = (request, guessLine) => {
   const searchQuery = _buildSearchQuery(request, guessLine)

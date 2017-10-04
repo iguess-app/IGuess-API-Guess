@@ -2,7 +2,7 @@
 
 const Boom = require('boom')
 
-const Prediction = require('../../models/predictionsModel')
+const Prediction = require('../../models/guessDB/predictionsModel')
 
 const getPredictions = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)

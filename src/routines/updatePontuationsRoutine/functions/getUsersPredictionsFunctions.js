@@ -1,6 +1,6 @@
 'use strict'
 
-const Prediction = require('../../../models/predictionsModel')
+const Prediction = require('../../../models/guessDB/predictionsModel')
 
 const getUsersPredictionsAndSetPontuations = (fixture) => {
   const predictionsCursor = _getPredictions(fixture)

@@ -3,7 +3,7 @@
 const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
-const GuessLeague = require('../../models/guessesLeaguesModel')
+const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const queryUtils = coincidents.Utils.queryUtils
 

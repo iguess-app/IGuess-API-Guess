@@ -3,7 +3,7 @@
 const Boom = require('boom')
 const queryUtils = require('iguess-api-coincidents').Utils.queryUtils
 
-const GuessLeague = require('../../models/guessesLeaguesModel')
+const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const getGuessLeague = (request, dictionary) => {
 

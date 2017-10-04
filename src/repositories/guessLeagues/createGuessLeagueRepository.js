@@ -1,6 +1,6 @@
 'use strict'
 
-const GuessLeague = require('../../models/guessesLeaguesModel')
+const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 const coincidents = require('iguess-api-coincidents')
 
 const log = coincidents.Managers.logManager

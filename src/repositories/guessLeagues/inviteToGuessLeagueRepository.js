@@ -2,7 +2,7 @@
 
 const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
-const GuessLeague = require('../../models/guessesLeaguesModel')
+const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const queryUtils = coincidents.Utils.queryUtils
 const statusUtils = coincidents.Utils.statusUtils
@@ -37,7 +37,7 @@ const _checkErrors = (quessLeagueFound, request, dictionary) => {
   if (!quessLeagueFound) {
     throw Boom.create(statusUtils.forbidden, dictionary.someWrongAtInvite, request)
   }
-  //TODO tornar esse erro mais intuitivo para o front
+  //TODO: tornar esse erro mais intuitivo para o front
 }
 
 module.exports = inviteToGuessLeagueRepository

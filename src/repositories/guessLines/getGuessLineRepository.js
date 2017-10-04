@@ -2,7 +2,7 @@
 
 const Boom = require('boom')
 
-const GuessLine = require('../../models/guessesLinesModel')
+const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
 const getGuessLineByUserRef = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
