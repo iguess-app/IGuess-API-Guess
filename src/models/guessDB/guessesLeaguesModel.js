@@ -2,13 +2,12 @@
 
 const mongoose = require('mongoose');
 const coincidents = require('iguess-api-coincidents')
+const db = require('./connect')
 
-const optionsSchemas = require('./optionsSchemas/optionsSchemas')
+const optionsSchemas = require('../optionsSchemas/optionsSchemas')
 
-const Managers = coincidents.Managers
 const Utils = coincidents.Utils
 const mongo = coincidents.Config.mongo
-const db = Managers.mongoManager
 const Schema = mongoose.Schema
 const serverErrors = Utils.errorUtils.serverErrors
 

@@ -1,17 +1,15 @@
 'use strict'
 
-const mongoose = require('mongoose')
-
-const ObjectId = mongoose.Types.ObjectId
+const queryUtils = require('iguess-api-coincidents').Utils.queryUtils
 
 const MATCH_POSITION = 0
-const USER_POSITION = 2
+const USER_POSITION = 1
 
 const checkChampionshipMatchUserKey = (key) => {
   const deconstructedKey = key.split('_')
-  
-    return ObjectId.isValid(deconstructedKey[MATCH_POSITION]) &&
-      ObjectId.isValid(deconstructedKey[USER_POSITION])
+
+  return queryUtils.makeObjectId(deconstructedKey[MATCH_POSITION]) &&
+    queryUtils.makeObjectId(deconstructedKey[USER_POSITION])
 }
 
 module.exports = checkChampionshipMatchUserKey

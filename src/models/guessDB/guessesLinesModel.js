@@ -2,25 +2,14 @@
 
 const mongoose = require('mongoose')
 const coincidents = require('iguess-api-coincidents')
+const db = require('./connect')
 
 const Schema = mongoose.Schema
-const db = coincidents.Managers.mongoManager
 const mongo = coincidents.Config.mongo
 const serverErrors = coincidents.Utils.errorUtils.serverErrors
 
-const championshipEmbeddedSchema = require('./subValidations/championshipEmbeddedModel')
-const optionsSchemas = require('./optionsSchemas/optionsSchemas')
-
-const matchSchema = new Schema({
-  matchRef: {
-    type: String,
-    validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
-  },
-  date: {
-    type: Date,
-    required: true
-  }
-}, optionsSchemas._idAndVersionKeyDisable)
+const championshipEmbeddedSchema = require('../subValidations/championshipEmbeddedModel')
+const optionsSchemas = require('../optionsSchemas/optionsSchemas')
 
 const guessesLinesSchema = new Schema({
   championship: {
@@ -29,10 +18,6 @@ const guessesLinesSchema = new Schema({
   },
   guessLineActive: {
     type: Boolean,
-    required: true
-  },
-  matches: {
-    type: [matchSchema],
     required: true
   },
   usersAddedAtGuessLine: {

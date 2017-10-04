@@ -2,14 +2,14 @@
 
 const mongoose = require('mongoose')
 const coincidents = require('iguess-api-coincidents')
+const db = require('./connect')
 
 const Schema = mongoose.Schema
-const db = coincidents.Managers.mongoManager
 const mongo = coincidents.Config.mongo
 const serverErrors = coincidents.Utils.errorUtils.serverErrors
 
-const championshipUserKeyValidator = require('./subValidations/championshipUserKey')
-const optionsSchemas = require('./optionsSchemas/optionsSchemas')
+const championshipUserKeyValidator = require('../subValidations/championshipUserKey')
+const optionsSchemas = require('../optionsSchemas/optionsSchemas')
 
 const pontuationByMatchDaySchema = new Schema({
   day: {
