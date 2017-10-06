@@ -11,6 +11,17 @@ const getLastRoundRepository = require('../../repositories/holi/getLastRoundRepo
 const getGuessLine = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
 
+  //TODO: Seguir passos:
+  //se nao tiver nada
+  //buscar alguma guessLine que o user esteja inserido
+  //getLastRound
+  //getPrediction daquelas matchIDs
+
+  //se tiver championshipId:
+  //getLastRound
+  //getPrediction daquelas matchIDs
+
+
   return getGuessLineRepository(request, dictionary)
     .then((guessLine) => getPontuationsRepository(request, guessLine, dictionary))
     .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations, request, headers.language))
@@ -22,7 +33,7 @@ const _getLastRoundSentByTheUser = (userGuessLinePontuations, request, language)
   const searchQueryAndRequestObj = _buildSearchQueryAndRequestObj(request)
 
   if (_theUserAlreadyHavePontuations(userGuessLinePontuations)) {
-    const lastRoundSentByTheUser = userGuessLinePontuations.pontuationByFixture[userGuessLinePontuations.pontuationByFixture.length - 1]
+    const lastRoundSentByTheUser = userGuessLinePontuations._doc.pontuationByFixture[userGuessLinePontuations._doc.pontuationByFixture.length - 1]
     searchQueryAndRequestObj.championshipRef = userGuessLinePontuations.championshipRef
     searchQueryAndRequestObj.fixture = request.fixture || lastRoundSentByTheUser.fixture
   }
@@ -81,9 +92,5 @@ const _buildSearchQueryAndRequestObj = (request) => {
 const _theUserAlreadySentThePredictions = (predictions) => predictions !== null
 const _theUserAlreadyHavePontuations = (userGuessLinePontuations) => userGuessLinePontuations !== null
 /*eslint no-magic-numbers: 0*/
-
-/*
-  TODO Dar um jeito da request pro Holi não ser primordial.. para manter a resiliencia entre MicroServices
-*/
 
 module.exports = getGuessLine
