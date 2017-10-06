@@ -3,7 +3,7 @@
 const Boom = require('boom')
 const statusUtils = require('iguess-api-coincidents').Utils.statusUtils
 
-const GuessLine = require('../../models/guessesLinesModel')
+const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
 const verifyUserAtGuessLine = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
