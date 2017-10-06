@@ -2,8 +2,6 @@
 
 const Joi = require('joi')
 
-const setPredictionsSchemaResponse = Joi.object({
-  predictionsSetted: Joi.bool()
-})
+const setPredictionsSchemaResponse = Joi.array()
 
 module.exports = setPredictionsSchemaResponse

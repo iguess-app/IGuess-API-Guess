@@ -1,92 +1,52 @@
 'use strict'
 
-const Boom = require('boom')
+const moment = require('moment')
+const Promise = require('bluebird')
+const Log = require('iguess-api-coincidents').Managers.logManager
 
-const GuessLine = require('../../models/guessesLinesModel')
-const Prediction = require('../../models/predictionsModel')
+const Prediction = require('../../models/guessDB/predictionsModel')
 
 const setPredictions = (request, dictionary) => {
-  const searchQuery = {
-    'championship.championshipRef': request.championshipRef
-  }
 
-  return GuessLine.findOne(searchQuery)
-    .then((guessLine) => {
-      _checkErrors(guessLine, request, dictionary)
-      const championshipFixtureUserKey = `${request.championshipRef}_${request.fixture}_${request.userRef}`
-      const requestFixtureIndex = guessLine.fixtures.findIndex((fixtureObj) => fixtureObj.fixture === request.fixture)
-
-      if (guessLine.fixtures[requestFixtureIndex].usersWhoAlreadySentGuesses.includes(championshipFixtureUserKey)) {
-        return _findAndUpdateUserPredictions(request, championshipFixtureUserKey)
-      }
-
-      return _setNewUserPredictions(guessLine, request, championshipFixtureUserKey, requestFixtureIndex)
-    })
-}
-
-const _findAndUpdateUserPredictions = (request, championshipFixtureUserKey) => {
-  const searchQuery = {
-    championshipFixtureUserKey
-  }
-
-  return Prediction.findOne(searchQuery)
-    .then((oldPredictions) => {
-      const oldPredictionsMatchRefsDictionary = _makeAMatchRefsDictionary(oldPredictions)
-
-      return _filterAndUpdatePredictionsOneByOne(oldPredictionsMatchRefsDictionary, oldPredictions, request.guesses)
-        .then(() => _returnSuccessMsg())
-    })
-}
-
-const _makeAMatchRefsDictionary = (oldPredictions) => {
-  const oldPredictionsMatchRefsDictionary = {}
-  oldPredictions.guesses.forEach((oldSinglePrediction, index) => {
-    oldPredictionsMatchRefsDictionary[oldSinglePrediction.matchRef] = index
-  })
-
-  return oldPredictionsMatchRefsDictionary
-}
-
-const _filterAndUpdatePredictionsOneByOne = (oldPredictionsMatchRefsDictionary, oldPredictions, newPredictions) => {
-  newPredictions.forEach((newSinglePrediction) => {
-    if (Number.isInteger(oldPredictionsMatchRefsDictionary[newSinglePrediction.matchRef])) {
-      const index = oldPredictionsMatchRefsDictionary[newSinglePrediction.matchRef]
-      oldPredictions.guesses[index] = newSinglePrediction
-
-      return
+  const setPredictionsPromiseArray = request.guesses.map((guess) => {
+    const searchQuery = {
+      matchUserRef: `${guess.matchRef}_${request.userRef}`
     }
-    oldPredictions.guesses.push(newSinglePrediction)
+
+    return Prediction.findOne(searchQuery)
+      .then((matchPredictionFound) => {
+        if (matchPredictionFound) {
+          matchPredictionFound.guess.homeTeamScoreGuess = guess.homeTeamScoreGuess
+          matchPredictionFound.guess.awayTeamScoreGuess = guess.awayTeamScoreGuess
+          matchPredictionFound.predictionSentDate = moment().format()
+
+          return matchPredictionFound.save()
+        }
+
+        const newMatchPrediction = {
+          matchUserRef: `${guess.matchRef}_${request.userRef}`,
+          userRef: request.userRef,
+          matchRef: guess.matchRef,
+          championshipRef: request.championshipRef,
+          predictionSentDate: moment().format(),
+          guess: {
+            homeTeamScoreGuess: guess.homeTeamScoreGuess,
+            awayTeamScoreGuess: guess.awayTeamScoreGuess
+          }
+        }
+
+        return Prediction.create(newMatchPrediction)
+          .catch((err) => Log.error(err))
+      })
   })
 
-  return oldPredictions.save()
+  return Promise.map(setPredictionsPromiseArray,
+    (prediction) => ({
+      matchRef: prediction.matchRef,
+      prediction: prediction.guess
+    }))
 }
-
-const _setNewUserPredictions = (guessLine, request, championshipFixtureUserKey, requestFixtureIndex) => {
-  const newPredictions = {
-    championshipFixtureUserKey,
-    userRef: request.userRef,
-    guesses: request.guesses
-  }
-  guessLine.fixtures[requestFixtureIndex].usersWhoAlreadySentGuesses.push(championshipFixtureUserKey)
-
-  return guessLine.save()
-    .then(() => Prediction.create(newPredictions))
-    .then(() => _returnSuccessMsg())
-}
-
-const _checkErrors = (guessLine, request, dictionary) => {
-  if (!guessLine) {
-    throw Boom.notFound(dictionary.guessLineNotFound)
-  }
-  if (!guessLine.usersAddedAtGuessLine.includes(request.userRef)) {
-    throw Boom.notAcceptable(dictionary.userNotAddedAtGuessLine)
-  }
-}
-
-const _returnSuccessMsg = () => ({
-  predictionsSetted: true
-})
 
 module.exports = setPredictions
 
-/*eslint max-params: [2, 4]*/
+//TODO: Mesmo que uma prediction falhar, fazer as outras darem certo

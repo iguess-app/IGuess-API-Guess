@@ -4,14 +4,10 @@ const CronJob = require('cron').CronJob
 const coincidents = require('iguess-api-coincidents')
 
 const cronTime = require('./cronTime')
-const GuessLine = require('../../models/guessesLinesModel')
+const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
 const requestManager = coincidents.Managers.requestManager
 const log = coincidents.Managers.logManager
-
-const _buildFixtureObj = (championship) => championship.fixturesNames.map((fixtureName) => ({
-  fixture: fixtureName
-}))
 
 const _updateFlagIsActive = (championship, guessLine) => {
   guessLine.guessLineActive = championship.championshipActive
@@ -28,8 +24,7 @@ const _insertNewGuessLine = (championship) => {
       championship: championship.championship
     },
     guessLineActive: championship.championshipActive,
-    usersAddedAtGuessLine: [],
-    fixtures: _buildFixtureObj(championship)
+    usersAddedAtGuessLine: []
   }
 
   return GuessLine.create(newGuessLineObj)
@@ -74,6 +69,5 @@ module.exports = {
 }
 
 /*
-TODO:
-Put all the logic that use Database in some repository to respect the partner 
+TODO: Put all the logic that use Database in some repository to respect the partner 
 */
