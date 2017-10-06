@@ -21,3 +21,5 @@ const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
 }
 
 module.exports = setPredictions
+
+//TODO: Travar se a prediction for de menos de 1h pro jogo
