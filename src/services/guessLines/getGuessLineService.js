@@ -9,7 +9,7 @@ const selectLanguage = coincidents.Translate.gate.selectLanguage
 const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
 const getPredictionsRepository = require('../../repositories/guessLines/getPredictionsRepository')
 const getGuessLineRepository = require('../../repositories/guessLines/getGuessLineRepository')
-const getLastRoundRepository = require('../../repositories/holi/getLastRoundRepository')
+const getSomeNearMatchDayRepository = require('../../repositories/holi/getLastRoundRepository')
 
 const getGuessLine = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -28,7 +28,7 @@ const _getPontuationAndSomeNearMatchDay = (guessLine, request, dictionary) => {
   }
   return Promise.all([
     getPontuationsRepository(repositoriesObj, dictionary),
-    getLastRoundRepository(repositoriesObj, dictionary), 
+    getSomeNearMatchDayRepository(repositoriesObj, dictionary), 
     guessLine])
 }
 
@@ -120,3 +120,6 @@ module.exports = getGuessLine
 
 
 /*eslint no-magic-numbers: 0*/
+
+
+//TODO: Added JSDoc to all this functions
