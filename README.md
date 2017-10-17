@@ -1,6 +1,11 @@
 # IGuess-API-Guess
-
-API Microservice responsible by match prediction (GuessLine) and users leagues (GuessLeague)
+API Microservice responsible by match prediction and users leagues
+##### GuessLine 
+Everything that linked with predictions.
+##### GuessLeague 
+About the users leagues.
+##### MongoDB
+The Guess Microservice have a user to guessDB Read and Write and to the holiDB read-only
 
 ## Stack
 * Node.js v8.x.x // NPM v5.X
@@ -17,29 +22,26 @@ API Microservice responsible by match prediction (GuessLine) and users leagues (
 ## Language
 All functions and variables need to be in English
 
-## MongoDB
-The Guess Microservice have a user to guessDB Read and Write and to the holiDB read-only
-
 ## Folder layers responsibilities
-### Routes
+##### Routes
 Responsible to declare Routes, with Rest Verb, url path, call the schemas and handler the request
-### Schema
+##### Schema
 Responsible to fix a schema pattern to response/request/headers. All route need to have schemas.
-### Controller
+##### Controller
 Responsible to response the request, error or success
-### Service¹
+##### Service¹
 Responsible to treat clientErrors, cache logic, some bussiness Rule, multiple repositories logic
-### Routines
+##### Routines
 Responsible fire events to get from Holi the championships, matchDays and matchDays results
-### Models²
+##### Models²
 Responsible to declare a collection pattern, indexes, requireds fields
-### Repositories
+##### Repositories
 Responsible by external connections, HTTP, SOAP, GraphQL, SQL, noSQL, etc.
 
 1. Anemic Models need to be avoided, it is possible elimine some layers if necessary
 2. There are a Schema for each Collection at MongoDB
 
-## Estrutura de Pastas
+## Folders structure
 
 ```
 app.js
