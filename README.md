@@ -17,6 +17,9 @@ API Microservice responsible by match prediction (GuessLine) and users leagues (
 ## Language
 All functions and variables need to be in English
 
+## MongoDB
+The Guess Microservice have a user to guessDB Read and Write and to the holiDB read-only
+
 ## Folder layers responsibilities
 ### Routes
 Responsible to declare Routes, with Rest Verb, url path, call the schemas and handler the request
@@ -26,6 +29,8 @@ Responsible to fix a schema pattern to response/request/headers. All route need 
 Responsible to response the request, error or success
 ### Service¹
 Responsible to treat clientErrors, cache logic, some bussiness Rule, multiple repositories logic
+### Routines
+Responsible fire events to get from Holi the championships, matchDays and matchDays results
 ### Models²
 Responsible to declare a collection pattern, indexes, requireds fields
 ### Repositories
@@ -39,41 +44,45 @@ Responsible by external connections, HTTP, SOAP, GraphQL, SQL, noSQL, etc.
 ```
 app.js
 src
-  ├── api
-  │   ├── routes
-  │   │   ├── login
-  │   │   │   ├── index.js
-  │   │   │   ├── signUpRoutes.js
-  │   │   │   ├── signInRoutes.js
-  |	  |   |   ├── schemas.js
-  |   |   |   |   ├── signUpSchemas.js
-  |   |   |   |   ├── signInSchemas.js
-  │   │   ├── availability
-  │   │   │   ├── index.js
-  │   │   │   ├── userNameAvailabilityRoutes.js
-  |	  |   |   ├── schemas.js
-  |   |   |   |   ├── userNameAvailabilitySchemas.js
-  │   ├── controllers
-  │   │   ├── login  
-  │   │   │   ├── signUpController.js
-  │   │   │   ├── signInController.js
-  │   │   ├── availability
-  │   │   │   ├── userNameAvailabilityController.js
-  │   ├── services
-  │   │   ├── login  
-  │   │   │   ├── signUpService.js
-  │   │   │   ├── signInService.js
-  │   │   ├── availability
-  │   │   │   ├── userNameAvailabilityService.js
-  │   ├── models  
-  │   │   ├── profileModel.js
-  │   │   ├── optionsModel.js
-  │   ├── repositories
-  │   │   ├── login
-  │   │   │   ├── signUpRepository.js
-  │   │   │   ├── signInRepository.js
-  │   │   ├── availability
-  │   │   │   ├── userNameAvailabilityRepository.js
+  ├── routes
+  │   ├── login
+  │   │   ├── index.js
+  │   │   ├── signUpRoutes.js
+  │   │   ├── signInRoutes.js
+  |   |   ├── schemas.js
+  |   |   |   ├── signUpSchemas.js
+  |   |   |   ├── signInSchemas.js
+  │   ├── availability
+  │   │   ├── index.js
+  │   │   ├── userNameAvailabilityRoutes.js
+  |   |   ├── schemas.js
+  |   |   |   ├── userNameAvailabilitySchemas.js
+  ├── controllers
+  │   ├── login  
+  │   │   ├── signUpController.js
+  │   │   ├── signInController.js
+  │   ├── availability
+  │   │   ├── userNameAvailabilityController.js
+  ├── services
+  │   ├── login  
+  │   │   ├── signUpService.js
+  │   │   ├── signInService.js
+  │   ├── availability
+  │   │   ├── userNameAvailabilityService.js
+  ├── routines
+  │   ├── updatePontuationRoutine  
+  │   │   ├── cronTime.js
+  │   │   ├── updateGuessLinesPredictionsPontuationsRoutine.js
+  │   │   ├── functions
+  ├── models  
+  │   ├── profileModel.js
+  │   ├── optionsModel.js
+  ├── repositories
+  │   ├── login
+  │   │   ├── signUpRepository.js
+  │   │   ├── signInRepository.js
+  │   ├── availability
+  │   │   ├── userNameAvailabilityRepository.js
 test
   ├── (TODO: terminar readMe )
 ```
