@@ -1,96 +1,94 @@
 'use strict'
 
-const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
+const coincidents = require('iguess-api-coincidents')
+const selectLanguage = coincidents.Translate.gate.selectLanguage
+
+const moment = require('moment')
+const Promise = require('bluebird')
 
 const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
 const getPredictionsRepository = require('../../repositories/guessLines/getPredictionsRepository')
 const getGuessLineRepository = require('../../repositories/guessLines/getGuessLineRepository')
-const getFixtureByChampionshipRefAndDateRepository = require('../../repositories/holi/getFixtureByChampionshipRefAndDateRepository')
 const getLastRoundRepository = require('../../repositories/holi/getLastRoundRepository')
 
 const getGuessLine = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
 
-  //TODO: Seguir passos:
-  //se nao tiver nada
-  //buscar alguma guessLine que o user esteja inserido
-  //getLastRound
-  //getPrediction daquelas matchIDs
-
-  //se tiver championshipId:
-  //getLastRound
-  //getPrediction daquelas matchIDs
-
-
   return getGuessLineRepository(request, dictionary)
-    .then((guessLine) => getPontuationsRepository(request, guessLine, dictionary))
-    .then((userGuessLinesPontuations) => _getLastRoundSentByTheUser(userGuessLinesPontuations, request, headers.language))
-    .then((repositoriesResponses) => _joinMatchResultWithPredictions(repositoriesResponses))
-    .catch((err) => err)
-}
-
-const _getLastRoundSentByTheUser = (userGuessLinePontuations, request, language) => {
-  const searchQueryAndRequestObj = _buildSearchQueryAndRequestObj(request)
-
-  if (_theUserAlreadyHavePontuations(userGuessLinePontuations)) {
-    const lastRoundSentByTheUser = userGuessLinePontuations._doc.pontuationByFixture[userGuessLinePontuations._doc.pontuationByFixture.length - 1]
-    searchQueryAndRequestObj.championshipRef = userGuessLinePontuations.championshipRef
-    searchQueryAndRequestObj.fixture = request.fixture || lastRoundSentByTheUser.fixture
-  }
-
-  if (!searchQueryAndRequestObj.fixture) {
-    return Promise.all([
-      getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
-      getLastRoundRepository(searchQueryAndRequestObj)
-    ])
-  }
-
-  return Promise.all([
-    getPredictionsRepository.getUniqueChampionshipPredictions(searchQueryAndRequestObj),
-    getFixtureByChampionshipRefAndDateRepository(searchQueryAndRequestObj, language),
-    userGuessLinePontuations
-  ])
-}
-
-const _joinMatchResultWithPredictions = (repositoriesResponses) => {
-  const predictions = repositoriesResponses[0]
-  const fixture = repositoriesResponses[1]
-  const pontuations = repositoriesResponses[2]
-  fixture.guessLinePontuation = pontuations.totalPontuation ? pontuations.totalPontuation : 0
-  fixture.fixturePontuation = predictions.fixturePontuation ? predictions.fixturePontuation : 0
-  Reflect.deleteProperty(fixture, '_id')
-
-  if (_theUserAlreadySentThePredictions(predictions)) {
-    fixture.games.map((game) => {
-      const gameGuess = predictions.guesses.find((guess) => game._id === guess.matchRef)
-      game.gamePontuation = gameGuess.pontuation
-      game.homeTeamScoreGuess = gameGuess.homeTeamScoreGuess
-      game.awayTeamScoreGuess = gameGuess.awayTeamScoreGuess
-
-      return game
+    .then((guessLine) => {
+      const getLastRoundObj = {
+        championshipRef: guessLine.championship.championshipRef,
+        userRef: request.userRef
+      }
+      return Promise.all([
+        getPontuationsRepository(getLastRoundObj),
+        getLastRoundRepository(getLastRoundObj), 
+        guessLine])
     })
-  }
+    .then((guessLineAndlastRound) => {
+      const userPontuation = guessLineAndlastRound[0]
+      const lastRound = guessLineAndlastRound[1]
+      const guessLine = guessLineAndlastRound[2]
+      const matchDayDate = moment(lastRound.unixDate, 'X').format('DD/MM/YYYY')
+      const arrayPromise = lastRound.games.map((match) => {
+        const obj = {
+          userRef: request.userRef,
+          matchRef: match._id.toString()
+        }
+        return Promise.all([
+          getPredictionsRepository.getPredictions(obj, dictionary),
+          match
+        ])
+      })
 
-  return fixture
+      const games = Promise.map(arrayPromise, (matchAndPrediction) => {
+        const prediction = matchAndPrediction[0]
+        const match = matchAndPrediction[1]
+        //TODO: verificar se alguns campos existir antes de inserir no obj
+
+        return {
+          matchRef: prediction.matchRef,
+          gamePontuation: prediction.matchPontuation,
+          homeTeamScore: match.homeTeamScore,
+          awayTeamScore: match.awayTeamScore,
+          homeTeamScoreGuess: prediction.guess.homeTeamScoreGuess,
+          awayTeamScoreGuess: prediction.guess.awayTeamScoreGuess,
+          homeTeam: match.homeTeam,
+          awayTeam: match.awayTeam
+        }
+      })
+
+      return Promise.all([games, guessLine, userPontuation, matchDayDate])
+    })
+    .then((obj) => {
+      const guessLine = obj[1]
+      const userPontuation = obj[2]
+      const matchDayDate = obj[3]
+
+      return {
+        championshipRef: guessLine.championship.championshipRef,
+        guessLinePontuation: userPontuation.totalPontuation,
+        matchDayPontuation: userPontuation.pontuationByMatchDay.find((matchDayPontuation) => matchDayPontuation.day === matchDayDate).pontuation,
+        games: obj[0]
+      }
+
+    })
+
 }
 
-const _buildSearchQueryAndRequestObj = (request) => {
-  const searchQueryAndRequestObj = {
-    userRef: request.userRef
-  }
-  if (request.championshipRef) {
-    searchQueryAndRequestObj.championshipRef = request.championshipRef
-  }
+const _buildGamesArray = (predictions) => predictions.map((prediction) => {
 
-  if (request.fixture) {
-    searchQueryAndRequestObj.fixture = request.fixture
-  }
-
-  return searchQueryAndRequestObj
-}
-
-const _theUserAlreadySentThePredictions = (predictions) => predictions !== null
-const _theUserAlreadyHavePontuations = (userGuessLinePontuations) => userGuessLinePontuations !== null
-/*eslint no-magic-numbers: 0*/
-
+  })
 module.exports = getGuessLine
+
+//TODO: Seguir passos:
+//se nao tiver nada
+//buscar alguma guessLine que o user esteja inserido
+//getLastRound
+//getPrediction daquelas matchIDs
+
+//se tiver championshipId:
+//getLastRound
+//getPrediction daquelas matchIDs
+
+//TODO: trocar nomenclatura de lastRound para nextMatchDay

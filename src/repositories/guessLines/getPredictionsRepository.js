@@ -7,7 +7,7 @@ const Prediction = require('../../models/guessDB/predictionsModel')
 const getPredictions = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
 
-  return Prediction.find(searchQuery)
+  return Prediction.findOne(searchQuery)
     .then((predictionsFound) => {
       _checkErrors(predictionsFound, dictionary)
 
@@ -35,9 +35,9 @@ const _buildSearchQuery = (request) => {
   let searchQuery = {
     'userRef': request.userRef
   }
-  if (request.championshipRef) {
+  if (request.matchRef) {
     searchQuery = {
-      'championshipFixtureUserKey': `${request.championshipRef}_${request.fixture}_${request.userRef}`
+      'matchUserRef': `${request.matchRef}_${request.userRef}`
     }
   }
 

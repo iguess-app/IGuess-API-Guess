@@ -9,7 +9,7 @@ const queryUtils = coincidents.Utils.queryUtils
 
 const getLastRound = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
-  
+    //TODO: dar um jeito de sempre encontrar a próxima fixture, se nao for hj, amanha, se nao dps, se nao dps dps. e Assim vai  
     return Round.findOne(searchQuery)
       .then((lastRound) => {
         _checkErrors(lastRound, dictionary)
@@ -24,7 +24,7 @@ const _buildSearchQuery = (reqBody) => {
 
   const searchQuery = {
     'championshipRef': reqBody.championshipRef,
-    'unixDate': moment(todayWithNoHour, 'DD/MM/YYYY').format('X')
+    'unixDate': moment(todayWithNoHour, 'DD/MM/YYYY').subtract(21, 'days').format('X')
   }
 
   return searchQuery
