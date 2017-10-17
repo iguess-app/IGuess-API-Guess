@@ -3,7 +3,6 @@
 const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
-const fixtureSchema = require('../fixture/fixtureSchema')
 const teamEmbeddedSchema = require('../team/teamEmbeddedSchema')
 
 const Config = coincidents.Config
