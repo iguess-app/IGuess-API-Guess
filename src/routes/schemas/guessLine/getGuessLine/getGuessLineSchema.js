@@ -20,7 +20,7 @@ const response = Joi.object({
   matchDayPontuation: Joi.number().integer().required(),
   games: Joi.array().items({
     matchRef: Joi.string().length(ID_SIZE).required(),
-    gamePontuation: Joi.number().integer(),
+    matchPontuation: Joi.number().integer(),
     stadium: Joi.string(),
     homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
     awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),

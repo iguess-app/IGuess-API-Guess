@@ -1,18 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
-
 const Prediction = require('../../models/guessDB/predictionsModel')
 
 const getPredictions = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
 
   return Prediction.findOne(searchQuery)
-    .then((predictionsFound) => {
-      _checkErrors(predictionsFound, dictionary)
-
-      return predictionsFound
-    })
 }
 
 const getUniqueChampionshipPredictions = (request) => {
@@ -42,12 +35,6 @@ const _buildSearchQuery = (request) => {
   }
 
   return searchQuery
-}
-
-const _checkErrors = (predictionsFound, dictionary) => {
-  if (!predictionsFound) {
-    throw Boom.notFound(dictionary.guessLineNotFound)
-  }
 }
 
 module.exports = {

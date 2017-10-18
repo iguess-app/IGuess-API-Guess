@@ -18,7 +18,6 @@ const getGuessLine = (request, headers) => {
     .then((guessLine) => _getPontuationAndSomeNearMatchDay(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
     .then((promiseAllObj) => _buildResponseObj(promiseAllObj))
-
 }
 
 const _getPontuationAndSomeNearMatchDay = (guessLine, request, dictionary) => {
@@ -27,7 +26,7 @@ const _getPontuationAndSomeNearMatchDay = (guessLine, request, dictionary) => {
     userRef: request.userRef
   }
   return Promise.all([
-    getPontuationsRepository(repositoriesObj, dictionary),
+    getPontuationsRepository(repositoriesObj),
     getSomeNearMatchDayRepository(repositoriesObj, dictionary), 
     guessLine])
 }
@@ -49,19 +48,23 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
   Promise.map(predictionsPromiseArray, (matchAndPrediction) => {
     const prediction = matchAndPrediction[0]
     const match = matchAndPrediction[1]
-    //TODO: verificar se alguns campos existir antes de inserir no obj
-    //TODO: Fazer teste com prediction=undefined
 
-    return {
-      matchRef: prediction.matchRef,
-      gamePontuation: prediction.matchPontuation,
+     const matchObj = {
+      matchRef: match._id.toString(),
       homeTeamScore: match.homeTeamScore,
       awayTeamScore: match.awayTeamScore,
-      homeTeamScoreGuess: prediction.guess.homeTeamScoreGuess,
-      awayTeamScoreGuess: prediction.guess.awayTeamScoreGuess,
       homeTeam: match.homeTeam,
       awayTeam: match.awayTeam
     }
+    if (prediction) {
+      matchObj.awayTeamScoreGuess = prediction.guess.awayTeamScoreGuess
+      matchObj.homeTeamScoreGuess = prediction.guess.homeTeamScoreGuess
+      if (prediction.matchPontuation) {
+        matchObj.matchPontuation = prediction.matchPontuation
+      }
+    }
+
+    return matchObj
   })
 
 const _buildPredictionsPromiseArray = (matchDay, userRef, dictionary) => 
@@ -123,3 +126,4 @@ module.exports = getGuessLine
 
 
 //TODO: Added JSDoc to all this functions
+//TODO: Fazer teste com prediction=undefined
