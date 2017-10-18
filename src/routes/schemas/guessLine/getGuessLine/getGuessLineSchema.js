@@ -18,7 +18,7 @@ const response = Joi.object({
   championshipRef: Joi.string().length(ID_SIZE).required(),
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
-  games: Joi.array().items(Joi.object({
+  games: Joi.array().items({
     matchRef: Joi.string().length(ID_SIZE).required(),
     gamePontuation: Joi.number().integer(),
     stadium: Joi.string(),
@@ -28,7 +28,7 @@ const response = Joi.object({
     awayTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
     homeTeam: teamEmbeddedSchema.required().unknown(),
     awayTeam: teamEmbeddedSchema.required().unknown()
-  })).required()
+  }).required()
 })
 
 module.exports = {

@@ -24,7 +24,7 @@ const _buildSearchQuery = (reqBody) => {
 
   const searchQuery = {
     'championshipRef': reqBody.championshipRef,
-    'unixDate': moment(todayWithNoHour, 'DD/MM/YYYY').subtract(21, 'days').format('X')
+    'unixDate': moment(todayWithNoHour, 'DD/MM/YYYY').subtract(23, 'days').format('X')
   }
 
   return searchQuery
