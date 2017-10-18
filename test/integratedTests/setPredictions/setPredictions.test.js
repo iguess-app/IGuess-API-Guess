@@ -3,8 +3,7 @@ const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
 const injectedRequests = require('./injectedRequests')
-const app = require('../../../app')
-const server = app.configServer
+const server = require('../../../app')
 const statusCode = require('iguess-api-coincidents').Utils.statusUtils
 
 lab.experiment('Integrated Test ==> setPredictions', () => {
