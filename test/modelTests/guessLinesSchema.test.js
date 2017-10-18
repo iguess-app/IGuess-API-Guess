@@ -3,9 +3,8 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const app = require('../../app')
-const GuessLine = app.src.models.guessesLinesModel
-const serverErrors = app.coincidents.Utils.errorUtils.serverErrors
+const GuessLine = require('../../src/models/guessDB/guessesLinesModel')
+const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
 const guessLinesSchemas = JSON.parse(fs.readFileSync('test/modelTests/SchemaFiles/guessLineSchemasFile.json'))
 

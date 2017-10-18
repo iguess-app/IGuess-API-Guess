@@ -3,9 +3,8 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const app = require('../../app')
-const Prediction = app.src.models.predictionsModel
-const serverErrors = app.coincidents.Utils.errorUtils.serverErrors
+const Prediction = require('../../src/models/guessDB/predictionsModel')
+const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
 const predictionSchemas = JSON.parse(fs.readFileSync('test/modelTests/SchemaFiles/predictionSchemasFile.json'))
 

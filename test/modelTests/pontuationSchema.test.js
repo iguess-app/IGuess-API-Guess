@@ -3,9 +3,8 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const app = require('../../app')
-const Pontuation = app.src.models.pontuationsModel
-const serverErrors = app.coincidents.Utils.errorUtils.serverErrors
+const Pontuation = require('../../src/models/guessDB/pontuationsModel')
+const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
 const pontuationSchemas = JSON.parse(fs.readFileSync('test/modelTests/SchemaFiles/pontuationSchemasFile.json'))
 
