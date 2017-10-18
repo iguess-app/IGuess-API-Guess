@@ -63,3 +63,5 @@ module.exports = _saveUserPontuation
 
 /*eslint max-params: [2, 4]*/
 /*eslint no-magic-numbers: 0*/
+
+//TODO: refatorar toda essa funcao
