@@ -1,9 +1,13 @@
+'use strict'
+
 const Lab = require('lab')
+const Joi = require('joi')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../app')
+const schemaValidate = require('../../../src/routes/schemas/guessLine/setPredictions/setPredictionsSchemaResponse')
 const statusCode = require('iguess-api-coincidents').Utils.statusUtils
 
 lab.experiment('Integrated Test ==> setPredictions', () => {
@@ -12,8 +16,10 @@ lab.experiment('Integrated Test ==> setPredictions', () => {
     server.inject(injectedRequests.happyPathRequest)
     .then((response) => {
       const result = response.result
-      expect(result.predictionsSetted).to.be.equal(true)
-      done()
+      Joi.validate(result, schemaValidate, (err) => {
+        expect(err).to.be.equal(null)
+        done()
+      })
     })
   })
 

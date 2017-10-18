@@ -3,10 +3,10 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const Prediction = require('../../src/models/guessDB/predictionsModel')
+const Prediction = require('../../../src/models/guessDB/predictionsModel')
 const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
-const predictionSchemas = JSON.parse(fs.readFileSync('test/modelTests/SchemaFiles/predictionSchemasFile.json'))
+const predictionSchemas = JSON.parse(fs.readFileSync('test/unitTests/modelTests/SchemaFiles/predictionSchemasFile.json'))
 
 lab.experiment('Model Test ==> PredictionSchema Validator', () => {
 

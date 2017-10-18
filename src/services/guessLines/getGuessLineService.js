@@ -109,19 +109,6 @@ const _getMatchDayPontuation = (matchDayDate, userPontuation) => {
 
 module.exports = getGuessLine
 
-//TODO: Seguir passos:
-//se nao tiver nada
-//buscar alguma guessLine que o user esteja inserido
-//getLastRound
-//getPrediction daquelas matchIDs
-
-//se tiver championshipId:
-//getLastRound
-//getPrediction daquelas matchIDs
-
-//TODO: trocar nomenclatura de lastRound para nextMatchDay
-
-
 /*eslint no-magic-numbers: 0*/
 
 

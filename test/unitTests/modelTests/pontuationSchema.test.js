@@ -3,10 +3,10 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const Pontuation = require('../../src/models/guessDB/pontuationsModel')
+const Pontuation = require('../../../src/models/guessDB/pontuationsModel')
 const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
-const pontuationSchemas = JSON.parse(fs.readFileSync('test/modelTests/SchemaFiles/pontuationSchemasFile.json'))
+const pontuationSchemas = JSON.parse(fs.readFileSync('test/unitTests/modelTests/SchemaFiles/pontuationSchemasFile.json'))
 
 lab.experiment('Model Test ==> PontuationSchema Validator', () => {
 

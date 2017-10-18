@@ -2,7 +2,7 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const GuessLeague = require('../../src/models/guessDB/guessesLeaguesModel')
+const GuessLeague = require('../../../src/models/guessDB/guessesLeaguesModel')
 const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
 lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {

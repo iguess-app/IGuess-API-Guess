@@ -4,7 +4,7 @@ const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
 const schemasExample = require('./schemasExample')
-const schemas = require('../../../src/routes/schemas/guessLine/setPredictions')
+const schemas = require('../../../../src/routes/schemas/guessLine/setPredictions')
 
 lab.experiment('Schemas Test ==> setPredictions', () => {
 

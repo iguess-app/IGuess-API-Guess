@@ -3,10 +3,10 @@ const Lab = require('lab')
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
-const GuessLine = require('../../src/models/guessDB/guessesLinesModel')
+const GuessLine = require('../../../src/models/guessDB/guessesLinesModel')
 const serverErrors = require('iguess-api-coincidents').Utils.errorUtils.serverErrors
 
-const guessLinesSchemas = JSON.parse(fs.readFileSync('test/modelTests/SchemaFiles/guessLineSchemasFile.json'))
+const guessLinesSchemas = JSON.parse(fs.readFileSync('test/unitTests/modelTests/SchemaFiles/guessLineSchemasFile.json'))
 
 lab.experiment('Model Test ==> GuessLineSchema Validator', () => {
 
