@@ -18,10 +18,10 @@ lab.experiment('Model Test ==> PredictionSchema Validator', () => {
     })
   })
 
-  lab.test('PredictionSchema wrongChampionshipFixtureUserKey', (done) => {
-    const someErrorsSchema = new Prediction(predictionSchemas.wrongChampionshipFixtureUserKey)
+  lab.test('PredictionSchema wrongMatchUserRefKey', (done) => {
+    const someErrorsSchema = new Prediction(predictionSchemas.wrongMatchUserRefKey)
     someErrorsSchema.validate((err) => {
-      expect(err.errors.championshipFixtureUserKey.message).to.be.equal(String(serverErrors.notchampionshipFixtureUserKeyValid))
+      expect(err.errors.matchUserRef.message).to.be.equal(String(serverErrors.notchampionshipFixtureUserKeyValid))
       done()
     })
   })
@@ -29,11 +29,10 @@ lab.experiment('Model Test ==> PredictionSchema Validator', () => {
   lab.test('GuessLineSchema userData Wrong', (done) => {
     const guessesDataWrongSchema = new Prediction(predictionSchemas.guessesDataWrong)
     guessesDataWrongSchema.validate((err) => {
-      expect(err.errors['guesses.0.matchRef'].message).to.be.equal(String(serverErrors.notMongoIdValid))
-      expect(err.errors['guesses.1.matchRef'].message).to.be.equal(String(serverErrors.notMongoIdValid))
-      expect(err.errors['guesses.2.matchRef'].message).to.be.equal(String(serverErrors.notMongoIdValid))
-      expect(err.errors['guesses.2.homeTeamScoreGuess'].message).to.be.equal('Path `homeTeamScoreGuess` is required.')
-      expect(err.errors.fixturePontuation.message).to.be.equal('Cast to Number failed for value "Not a Number" at path "fixturePontuation"')
+      expect(err.errors.matchRef.message).to.be.equal(String(serverErrors.notMongoIdValid))
+      expect(err.errors.predictionSentDate.message).to.be.equal('Path `predictionSentDate` is required.')
+      expect(err.errors.championshipRef.message).to.be.equal('Path `championshipRef` is required.')
+      expect(err.errors.matchUserRef.message).to.be.equal('Path `matchUserRef` is required.')
       done()
     })
   })
