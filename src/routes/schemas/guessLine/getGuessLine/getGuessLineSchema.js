@@ -41,3 +41,5 @@ module.exports = {
   request,
   response
 }
+
+//TODO: Added hasNext hasPrevious

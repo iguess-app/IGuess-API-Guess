@@ -11,19 +11,19 @@ const config = coincidents.Config
 const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
 const getPredictionsRepository = require('../../repositories/guessLines/getPredictionsRepository')
 const getGuessLineRepository = require('../../repositories/guessLines/getGuessLineRepository')
-const getSomeNearMatchDayRepository = require('../../repositories/holi/getLastRoundRepository')
+const getSomeMatchDayRepository = require('../../repositories/holi/getLastRoundRepository')
 
 const getGuessLine = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   moment.locale(headers.language)
 
   return getGuessLineRepository(request, dictionary)
-    .then((guessLine) => _getPontuationAndSomeNearMatchDay(guessLine, request, dictionary))
+    .then((guessLine) => _getPontuationAndSomeMatchDay(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
     .then((promiseAllObj) => _buildResponseObj(promiseAllObj))
 }
 
-const _getPontuationAndSomeNearMatchDay = (guessLine, request, dictionary) => 
+const _getPontuationAndSomeMatchDay = (guessLine, request, dictionary) => 
   cacheManager.get(_buildPageCacheKey(request, guessLine))
     .then((cacheData) => {
       const repositoriesObj = {
@@ -35,7 +35,7 @@ const _getPontuationAndSomeNearMatchDay = (guessLine, request, dictionary) =>
 
       return Promise.all([
         getPontuationsRepository(repositoriesObj),
-        getSomeNearMatchDayRepository(repositoriesObj, dictionary), 
+        getSomeMatchDayRepository(repositoriesObj, dictionary), 
         guessLine])
     })
 
