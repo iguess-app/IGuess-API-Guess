@@ -17,7 +17,7 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
   lab.test('getGuessLine HappyPath', (done) => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
-        const result = response.result        
+        const result = response.result
         Joi.validate(result, schemaValidate, (err) => {
           expect(err).to.be.equal(null)
           done()

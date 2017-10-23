@@ -9,9 +9,8 @@ const queryUtils = coincidents.Utils.queryUtils
 
 const getLastRound = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
-  const sortQuery = {
-    unixDate: -1
-  }
+  const sortQuery = _buildSortQuery(request)
+
   return Round.findOne(searchQuery)
     .sort(sortQuery)
     .then((lastRound) => {
@@ -22,15 +21,39 @@ const getLastRound = (request, dictionary) => {
     .catch((err) => Boom.badData(err))
 }
 
-const _buildSearchQuery = (reqBody) => {
+const _buildSearchQuery = (request) => {
   const searchQuery = {
-    'championshipRef': reqBody.championshipRef,
-    'unixDate': {
-      $lte: moment().format('X')
-    }
+    'championshipRef': request.championshipRef,
+    'unixDate': _getOperatorQuery(request)
   }
   return searchQuery
 }
+
+const _buildSortQuery = (request) => {
+  if (request.page === 'next') {
+    return {
+      unixDate: 1
+    }
+  }
+  return {
+    unixDate: -1
+  }
+}
+
+const _buildLess = (currentDateUserPage) => ({
+  previous: {
+    $lt: currentDateUserPage
+  },
+  next: {
+    $gt: currentDateUserPage
+  },
+  near: {
+    $lte: moment().format('X')
+  }
+})
+
+const _getOperatorQuery = (request) => 
+  _buildLess(request.currentDateUserPage)[request.page]
 
 const _checkErrors = (lastRound, dictionary) => {
   if (!lastRound) {

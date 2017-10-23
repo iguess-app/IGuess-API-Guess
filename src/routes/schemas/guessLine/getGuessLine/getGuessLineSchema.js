@@ -11,10 +11,16 @@ const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
 
 const request = Joi.object({
   userRef: Joi.string().length(ID_SIZE).required(),
-  championshipRef: Joi.string().length(ID_SIZE)
+  championshipRef: Joi.string().length(ID_SIZE),
+  page: Joi.string().valid(['previous', 'next', 'near']).default('near')
 })
 
 const response = Joi.object({
+  date: Joi.string().required(),
+  page: Joi.object({
+    hasNext: Joi.bool(),
+    hasPrevious: Joi.bool()
+  }),
   championshipRef: Joi.string().length(ID_SIZE).required(),
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
@@ -35,3 +41,5 @@ module.exports = {
   request,
   response
 }
+
+//TODO: Added to response the week day name too
