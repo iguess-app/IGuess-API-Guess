@@ -16,6 +16,7 @@ server.route({
     validate: {
       query: availabilitySchema.request,
       headers: defaultHeaderSchema
-    }
+    },
+    response: availabilitySchema.response
   }
 })

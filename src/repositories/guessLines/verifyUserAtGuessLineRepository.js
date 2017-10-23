@@ -13,7 +13,7 @@ const verifyUserAtGuessLine = (request, dictionary) => {
       _checkErrors(guesslineFound, dictionary, request)
 
       return {
-        userRefAtGuessLineList: true
+        userRefAtGuessLineList: Boolean(guesslineFound)
       }
     })
 }
@@ -33,7 +33,7 @@ const _buildSearchQuery = (request) => {
 }
 
 const _checkErrors = (guesslineFound, dictionary, request) => {
-  if (!guesslineFound) {
+  if (!guesslineFound && !request.notBoomIfNotFound) {
     throw Boom.create(statusUtils.notFound, dictionary.notAtGuessLine, {
       request
     })
