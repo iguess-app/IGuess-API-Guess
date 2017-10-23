@@ -21,9 +21,9 @@ const _checkIfPontuationWillReturnsToo = (list, request) => {
   const getPontuationArrayPromise = list.map((guessLine) =>
     getPontuationsRepository(request, guessLine)
     .then((pontuationDoc) => {
-      guessLine._doc.pontuation = 0
+      guessLine.pontuation = 0
       if (pontuationDoc) {
-        guessLine._doc.pontuation = pontuationDoc.totalPontuation
+        guessLine.pontuation = pontuationDoc.totalPontuation
       }
 
       return guessLine

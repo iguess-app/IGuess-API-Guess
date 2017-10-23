@@ -1,6 +1,9 @@
 'use strict'
 
 const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
+
+const queryUtils = coincidents.Utils.queryUtils
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
@@ -22,17 +25,7 @@ const listGuessesLines = (request, dictionary) => {
   }
 
   return GuessLine.find(searchQuery, projectionQuery)
-    .then((guessLineFound) => {
-      _checkErrors(guessLineFound, request, dictionary)
-
-      return guessLineFound
-    })
-}
-
-const _checkErrors = (guessLineFound, request, dictionary) => {
-  if (!guessLineFound) {
-    throw Boom.notFound(dictionary.anyGuessLineFound)
-  }
+    .then((guessesLineFound) => guessesLineFound.map((guessLineFound) => queryUtils.makeObject(guessLineFound)))
 }
 
 module.exports = listGuessesLines

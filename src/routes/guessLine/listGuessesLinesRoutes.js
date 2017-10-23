@@ -15,6 +15,9 @@ server.route({
     validate: {
       query: listGuessesLinesSchema.request,
       headers: defaultHeaderSchema
+    },
+    response: {
+      schema: listGuessesLinesSchema.response
     }
   }
 })

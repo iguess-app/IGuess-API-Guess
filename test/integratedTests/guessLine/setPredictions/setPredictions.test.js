@@ -6,8 +6,8 @@ const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
 const injectedRequests = require('./injectedRequests')
-const server = require('../../../app')
-const schemaValidate = require('../../../src/routes/schemas/guessLine/setPredictions/setPredictionsSchemaResponse')
+const server = require('../../../../app')
+const schemaValidate = require('../../../../src/routes/schemas/guessLine/setPredictions/setPredictionsSchemaResponse')
 const statusCode = require('iguess-api-coincidents').Utils.statusUtils
 
 lab.experiment('Integrated Test ==> setPredictions', () => {

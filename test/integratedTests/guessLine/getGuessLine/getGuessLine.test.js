@@ -5,8 +5,8 @@ const Lab = require('lab')
 const coincidents = require('iguess-api-coincidents')
 
 const injectedRequests = require('./injectedRequests')
-const server = require('../../../app')
-const schemaValidate = require('../../../src/routes/schemas/guessLine/getGuessLine/getGuessLineSchema').response
+const server = require('../../../../app')
+const schemaValidate = require('../../../../src/routes/schemas/guessLine/getGuessLine/getGuessLineSchema').response
 
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
@@ -25,7 +25,7 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
       })
   })
 
-  lab.test('getGuessLine not Found', (done) => {
+  lab.test('getGuessLine not Found wrong ChampionshipRef', (done) => {
     server.inject(injectedRequests.guesslineNotFoundWrongChampionship)
       .then((response) => {
         const result = response.result
