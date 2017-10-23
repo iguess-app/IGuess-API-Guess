@@ -41,5 +41,3 @@ module.exports = {
   request,
   response
 }
-
-//TODO: Added to response the week day name too
