@@ -24,7 +24,7 @@ const getLastRound = (request, dictionary) => {
 const _buildSearchQuery = (request) => {
   const searchQuery = {
     'championshipRef': request.championshipRef,
-    'unixDate': _getOperatorQuery(request)
+    'unixDate': _getOperatorQuery(request.currentDateUserPage)[request.page]
   }
   return searchQuery
 }
@@ -40,7 +40,7 @@ const _buildSortQuery = (request) => {
   }
 }
 
-const _buildLess = (currentDateUserPage) => ({
+const _getOperatorQuery = (currentDateUserPage) => ({
   previous: {
     $lt: currentDateUserPage
   },
@@ -51,9 +51,6 @@ const _buildLess = (currentDateUserPage) => ({
     $lte: moment().format('X')
   }
 })
-
-const _getOperatorQuery = (request) => 
-  _buildLess(request.currentDateUserPage)[request.page]
 
 const _checkErrors = (lastRound, dictionary) => {
   if (!lastRound) {

@@ -39,7 +39,7 @@ Responsible to declare a collection pattern, indexes, requireds fields
 ##### Repositories
 Responsible by external connections, HTTP, SOAP, GraphQL, SQL, noSQL, etc.
 
-1. Anemic Models need to be avoided, it is possible elimine some layers if necessary
+1. Anemic Models need to be avoided, it is possible elimine this layers if necessary
 2. There are a Schema for each Collection at MongoDB
 
 ## Folders structure
