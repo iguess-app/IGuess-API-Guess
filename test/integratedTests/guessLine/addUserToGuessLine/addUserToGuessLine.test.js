@@ -33,7 +33,7 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
       })
   })
 
-  lab.test('addUserToGuessLine - Already Added', (done) => {
+  lab.test('addUserToGuessLine Failed - Already Added', (done) => {
     server.inject(injectedRequests.alreadyAdded)
       .then((response) => {
         const result = response.result
@@ -43,4 +43,13 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
       })
   })
 
+  lab.test('addUserToGuessLine Failed - GuessLine Inactive', (done) => {
+    server.inject(injectedRequests.guessLineInactive)
+      .then((response) => {
+        const result = response.result
+        expect(result.statusCode).to.be.equal(statusCode.unauthorized)
+        expect(result.message).to.be.equal(dictionary.guessLineInactive)
+        done()
+      })
+  })
 })

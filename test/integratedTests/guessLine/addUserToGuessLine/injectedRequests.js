@@ -20,9 +20,22 @@ const alreadyAdded = {
     'championshipRef': '5872a8d2ed1b02314e088291',
     'userRef': '59b54e44a7631d433470fee7'
   }
-};
+}
+
+const guessLineInactive = {
+  method: 'PATCH',
+  url: '/guessline/addUserToGuessLine',
+  headers: {
+    'content-type': 'application/json'
+  },
+  payload: {
+    'championshipRef': '59a8ae40bf3e53253bec3d22',
+    'userRef': '59b54e44a7631d433470fee7'
+  }
+}
 
 module.exports = {
   happyPathRequest,
-  alreadyAdded
+  alreadyAdded,
+  guessLineInactive
 }
