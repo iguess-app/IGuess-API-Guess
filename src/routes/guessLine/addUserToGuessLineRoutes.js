@@ -8,7 +8,7 @@ const addUserToGuessLineSchemaResponse = require('../schemas/guessLine/addUserTo
 
 server.route({
   path: '/guessline/addUserToGuessLine',
-  method: 'PUT',
+  method: 'PATCH',
   config: {
     handler: (request, reply) => {
       guessLineController.addUserToGuessLine(request, reply)

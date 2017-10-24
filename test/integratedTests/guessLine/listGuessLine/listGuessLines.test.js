@@ -12,9 +12,8 @@ const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const statusCode = coincidents.Utils.statusUtils
 
-
 lab.experiment('Integrated Test ==> listGuessLine', () => {
-  
+
   lab.test('listGuessLine HappyPath', (done) => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
@@ -59,3 +58,5 @@ lab.experiment('Integrated Test ==> listGuessLine', () => {
       })
   })
 })
+
+/*eslint no-magic-numbers: 0*/
