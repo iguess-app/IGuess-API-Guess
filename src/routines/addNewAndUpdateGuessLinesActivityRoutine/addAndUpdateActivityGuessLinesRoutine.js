@@ -1,18 +1,14 @@
 'use strict'
 
 const CronJob = require('cron').CronJob
-const coincidents = require('iguess-api-coincidents')
+const log = require('iguess-api-coincidents').Managers.logManager
 
 const cronTime = require('./cronTime')
-const getAllchampionshipRepository = require('../../repositories/holi/getAllChampionshipRepository')
-const createGuessLineRepository = require('../../repositories/guessLines/createGuessLineRepository')
-const updateGuessLineActivityRepository = require('../../repositories/guessLines/updateGuessLineActivityRepository')
-
-const log = coincidents.Managers.logManager
+const { getAllChampionshipRepository, createGuessLineRepository, updateGuessLineActivityRepository } = require('../../repositories')
 
 const getAllchampionshipFromHoli = () => {
   log.info('Add New and UpdateActivity Routine Started')
-  getAllchampionshipRepository()
+  getAllChampionshipRepository()
   .then((championships) => _addGuessLines(championships))
 }
 
