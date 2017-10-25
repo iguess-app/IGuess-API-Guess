@@ -1,18 +1,11 @@
 'use strict'
 
-const coincidents = require('iguess-api-coincidents')
+const Championship = require('../../models/holiDB/championshipModel')
 
-const requestManager = coincidents.Managers.requestManager
-const holiDomain = coincidents.Config.apis.holiUrl
+const getAllChampionship = (request) => {
+  const searchQuery = {}
 
-const getAllChampionship = (request, language = 'en-us') => {
-  const headersReq = {
-    language,
-    'content-type': 'application/json'
-  }
-  const urlReq = `${holiDomain}/championship/getAllchampionship`
-
-  return requestManager.get(urlReq, headersReq, request)
+  return Championship.find(searchQuery)
 }
 
 module.exports = getAllChampionship

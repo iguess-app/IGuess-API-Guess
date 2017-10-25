@@ -2,13 +2,13 @@
 
 const mongoose = require('mongoose')
 const coincidents = require('iguess-api-coincidents')
-const db = require('./connect')
-
-const optionsSchemas = require('../optionsSchemas/optionsSchemas')
 
 const Schema = mongoose.Schema
 const mongo = coincidents.Config.mongo
 const serverErrors = coincidents.Utils.errorUtils.serverErrors
+
+const optionsSchemas = require('../optionsSchemas/optionsSchemas')
+const db = require('./connect')
 
 const teamSchema = new Schema({
   teamRef: {
