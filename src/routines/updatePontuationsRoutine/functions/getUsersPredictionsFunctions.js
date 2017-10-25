@@ -1,24 +1,20 @@
 'use strict'
 
-const Prediction = require('../../../models/guessDB/predictionsModel')
+const Promise = require('bluebird')
 
-const getUsersPredictionsAndSetPontuations = (fixture) => {
-  const predictionsCursor = _getPredictions(fixture)
+const { getPredictionsRepository } = require('../../../repositories')
 
-  return {
-    predictionsCursor,
-    fixture
-  }
-}
+const getUsersPredictionsAndSetPontuations = (matchDay) => {
 
-const _getPredictions = (fixture) => {
-  const searchQuery = {
-    'championshipFixtureUserKey': {
-      '$regex': `${fixture.championshipRef}_${fixture.fixture}`
+  const matchDayPredictionArrayPromise = matchDay.games.map((matchObj) => {
+    const cursor = getPredictionsRepository.getPredictionByMatchRef(matchObj)
+    return {
+      cursor,
+      match: matchObj
     }
-  }
+  })
 
-  return Prediction.find(searchQuery).cursor()
+  return Promise.map(matchDayPredictionArrayPromise, (cursors) => cursors)
 }
 
 

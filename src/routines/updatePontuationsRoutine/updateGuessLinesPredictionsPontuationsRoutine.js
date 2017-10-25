@@ -6,24 +6,29 @@ const cronTime = require('./cronTime')
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
 
-const getAllChampionshipRepository = require('../../repositories/holi/getAllChampionshipRepository')
-const getLastRoundRepository = require('../../repositories/holi/getLastRoundRepository')
-const getFixtureByChampionshipRefAndDateRepository = require('../../repositories/holi/getFixtureByChampionshipRefAndDateRepository')
+const { getAllChampionshipRepository, getLastRoundRepository, getFixtureByChampionshipRefAndDateRepository } = require('../../repositories')
 
-const cronJob = () => new CronJob(cronTime, () => {
-
-  getAllChampionshipRepository({
+const fireRoutine = () => {
+  const filter = {
     onlyActive: true
-  }).then((championships) =>
-    championships.forEach((championship) => {
-      getLastRoundRepository({
-          championshipRef: championship._id
-        })
-        .then((fixture) => getUsersPredictionsFunctions(fixture))
-        .then((predictionsCursorAndFixtureObj) => compareScoreWithPredictionAndSave(predictionsCursorAndFixtureObj))
+  }
+  getAllChampionshipRepository(filter)
+    .then((championships) =>
+      championships.forEach((championship) => {
+        const championshipFilter = {
+          championshipRef: championship._id.toString()
+        }
+        getLastRoundRepository(championshipFilter)
+          .then((matchDay) => getUsersPredictionsFunctions(matchDay))
+          .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
+      })
+    )
+    .catch((err) => {
+      err
     })
-  )
-}, null, true, 'America/Sao_Paulo')
+}
+
+const cronJob = () => new CronJob(cronTime, fireRoutine, null, true, 'America/Sao_Paulo')
 
 const updatePredictionsPontuationWithFixtureForced = (request) => getFixtureByChampionshipRefAndDateRepository(request)
   .then((fixture) => getUsersPredictionsFunctions(fixture))

@@ -8,17 +8,9 @@ const getPredictions = (request, dictionary) => {
   return Prediction.findOne(searchQuery)
 }
 
-const getUniqueChampionshipPredictions = (request) => {
-  const searchQuery = _buildSearchQuery(request)
-
-  return Prediction.findOne(searchQuery)
-}
-
-const getAllUserFromAFixtureUsingCursor = (fixture) => {
+const getPredictionByMatchRef = (request) => {
   const searchQuery = {
-    'championshipFixtureUserKey': {
-      '$regex': `${fixture.championshipRef}_${fixture.fixture}`
-    }
+    'matchRef': request.matchRef ? request.matchRef : request._id.toString()
   }
 
   return Prediction.find(searchQuery).cursor()
@@ -39,6 +31,5 @@ const _buildSearchQuery = (request) => {
 
 module.exports = {
   getPredictions,
-  getUniqueChampionshipPredictions,
-  getAllUserFromAFixtureUsingCursor
+  getPredictionByMatchRef
 }

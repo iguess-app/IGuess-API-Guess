@@ -3,27 +3,38 @@
 const calculatePontuations = require('./calculatePontuationsFunction')
 const saveUserPontuation = require('./saveUserPontuation')
 
-const compareScoreWithPrediction = (predictionsCursorAndFixtureObj) => {
-  const predictionsCursor = predictionsCursorAndFixtureObj.predictionsCursor
-  const fixture = predictionsCursorAndFixtureObj.fixture
+const compareScoreWithPrediction = (predictionCursorAndMatchObjArray) => {
+  predictionCursorAndMatchObjArray.map((predictionCursorAndMatchObj) => {
 
-  predictionsCursor.on('data', (userPredictions) => {
-    let fixturePontuation = 0
-    fixture.games.forEach((game) => {
-      userPredictions.guesses.map((guess) => {
-        if (game._id === guess.matchRef) {
-          guess.pontuation = calculatePontuations(game, guess)
-          fixturePontuation += guess.pontuation
-        }
+    xablau(predictionCursorAndMatchObj)
+    .then(() => xablau())
 
-        return guess
-      })
-    })
-    userPredictions.fixturePontuation = fixturePontuation
-    userPredictions.save()
-    
-    saveUserPontuation(fixturePontuation, userPredictions, fixture)
+/*     predictionCursorAndMatchObj.cursor.on('data', (userPrediction) => {
+      let matchPontuation = 0
+      matchPontuation = calculatePontuations(predictionCursorAndMatchObj.match, userPrediction.guess) 
+
+      userPrediction.matchPontuation = matchPontuation
+      userPrediction.save()
+      
+      saveUserPontuation(userPrediction, predictionCursorAndMatchObj.match)
+    }) */
+
   })
 }
 
 module.exports = compareScoreWithPrediction
+
+
+const testNext = (predictionCursorAndMatchObj) => predictionCursorAndMatchObj.cursor.next()
+
+const xablau = (predictionCursorAndMatchObj) => 
+  testNext(predictionCursorAndMatchObj)
+  .then((userPrediction) => {
+    let matchPontuation = 0
+    matchPontuation = calculatePontuations(predictionCursorAndMatchObj.match, userPrediction.guess) 
+    userPrediction.matchPontuation = matchPontuation
+    return Promise.all([
+      userPrediction.save(),
+      saveUserPontuation(userPrediction, predictionCursorAndMatchObj.match)
+    ])
+  })

@@ -1,65 +1,69 @@
 'use strict'
 
 const Pontuation = require('../../../models/guessDB/pontuationsModel')
+const moment = require('moment')
 
-const _saveUserPontuation = (fixturePontuation, userPredictions, fixture) => {
+const saveUserPontuation = (userPrediction, match) => {
 
   const searchQuery = {
-    championshipUserKey: `${fixture.championshipRef}_${userPredictions.userRef}`
+    championshipUserKey: `${userPrediction.championshipRef}_${userPrediction.userRef}`
   }
-  Pontuation.findOne(searchQuery)
+  return Pontuation.findOne(searchQuery)
     .then((userPontuation) => {
+      const matchDayDate = moment(match.initTime).format('DD/MM/YYYY')
       if (!userPontuation) {
-        return _addNewUserPontuationDoc(fixturePontuation, userPredictions, fixture)
+        return _addNewUserPontuationDoc(userPrediction, matchDayDate)
       }
-      const pontuationByFixtureAlreadySettedIndex = userPontuation.pontuationByFixture.findIndex((fixtureSinglePontuation) => fixtureSinglePontuation.fixture === fixture.fixture)
-      if (_thereIsFixturePontuationAlready(pontuationByFixtureAlreadySettedIndex)) {
-        return _updateFixtureUserPontuation(userPontuation, pontuationByFixtureAlreadySettedIndex, fixturePontuation)
+      const pontuationByMatchDayAlreadySettedIndex = 
+        userPontuation.pontuationByMatchDay.findIndex((matchDayPontuation) => matchDayPontuation.day === moment(match.initTime).format('DD/MM/YYYY'))
+      if (_thereIsFixturePontuationAlready(pontuationByMatchDayAlreadySettedIndex)) {
+        return _updateFixtureUserPontuation(userPontuation, userPrediction, pontuationByMatchDayAlreadySettedIndex)
       }
 
-      return _createNewFixturePontuation(userPontuation, fixturePontuation, fixture)
+      return _createNewFixturePontuation(matchDayDate, userPrediction, userPontuation)
     })
 }
 
-const _addNewUserPontuationDoc = (fixturePontuation, userPredictions, fixture) => {
+const _addNewUserPontuationDoc = (userPrediction, matchDayDate) => {
   const newPontuationObj = {
-    championshipUserKey: `${fixture.championshipRef}_${userPredictions.userRef}`,
-    userRef: userPredictions.userRef,
-    championshipRef: fixture.championshipRef,
-    totalPontuation: fixturePontuation,
+    championshipUserKey: `${userPrediction.championshipRef}_${userPrediction.userRef}`,
+    userRef: userPrediction.userRef,
+    championshipRef: userPrediction.championshipRef,
+    totalPontuation: userPrediction.matchPontuation,
     pontuationByFixture: [{
-      fixture: fixture.fixture,
-      pontuation: fixturePontuation
+      day: matchDayDate,
+      pontuation: userPrediction.matchPontuation
     }]
   }
 
   return Pontuation.create(newPontuationObj)
 }
 
-const _thereIsFixturePontuationAlready = (pontuationByFixtureAlreadySettedIndex) => pontuationByFixtureAlreadySettedIndex >= 0
+const _thereIsFixturePontuationAlready = (pontuationByMatchDayAlreadySettedIndex) => pontuationByMatchDayAlreadySettedIndex >= 0
 
-const _updateFixtureUserPontuation = (userPontuation, pontuationByFixtureAlreadySettedIndex, fixturePontuation) => {
-  userPontuation.pontuationByFixture[pontuationByFixtureAlreadySettedIndex].pontuation = fixturePontuation
+const _updateFixtureUserPontuation = (userPontuation, userPrediction, pontuationByMatchDayAlreadySettedIndex) => {
+  userPontuation.pontuationByMatchDay[pontuationByMatchDayAlreadySettedIndex].pontuation+= userPontuation.matchPontuation
   userPontuation.totalPontuation = _calculateTotalPontuation(userPontuation)
 
   return userPontuation.save()
 }
 
-const _calculateTotalPontuation = (userPontuation) => userPontuation.pontuationByFixture
-  .reduce((prevValue, pontuationByFixture) => prevValue + pontuationByFixture.pontuation, 0)
+const _calculateTotalPontuation = (userPontuation) => 
+  userPontuation.pontuationByMatchDay
+    .reduce((prevValue, matchDayPontuation) => prevValue + matchDayPontuation.pontuation, 0)
 
-  const _createNewFixturePontuation = (userPontuation, fixturePontuation, fixture) => {
-  const newFixturePontuation = {
-    fixture: fixture.fixture,
-    pontuation: fixturePontuation
+  const _createNewFixturePontuation = (matchDayDate, userPrediction, userPontuation) => {
+  const newMatchDayPontuation = {
+    day: matchDayDate,
+    pontuation: userPrediction.matchPontuation
   }
-  userPontuation.pontuationByFixture.push(newFixturePontuation)
+  userPontuation.pontuationByMatchDay.push(newMatchDayPontuation)
   userPontuation.totalPontuation = _calculateTotalPontuation(userPontuation)
 
   return userPontuation.save()
 }
 
-module.exports = _saveUserPontuation
+module.exports = saveUserPontuation
 
 /*eslint max-params: [2, 4]*/
 /*eslint no-magic-numbers: 0*/
