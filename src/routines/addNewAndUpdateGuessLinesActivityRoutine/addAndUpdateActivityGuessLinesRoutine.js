@@ -1,32 +1,36 @@
 'use strict'
 
+const Promise = require('bluebird')
 const CronJob = require('cron').CronJob
 const log = require('iguess-api-coincidents').Managers.logManager
 
 const cronTime = require('./cronTime')
 const { getAllChampionshipRepository, createGuessLineRepository, updateGuessLineActivityRepository } = require('../../repositories')
 
-const getAllchampionshipFromHoli = () => {
+const fireRoutine = () => {
   log.info('Add New and UpdateActivity Routine Started')
-  getAllChampionshipRepository()
+  return getAllChampionshipRepository()
   .then((championships) => _addGuessLines(championships))
 }
 
-const _addGuessLines = (championships) => 
-  championships.forEach((championship) => {
-    createGuessLineRepository(championship)
-      .then((guessLine) => _updateChampionshipActivity(guessLine, championship))
+const _addGuessLines = (championships) => {
+  const guessesLineArrayPromise = championships.map((championship) => {
+    return createGuessLineRepository(championship)
+    .then((guessLine) => _updateChampionshipActivity(guessLine, championship))
   })
+  return Promise.all(guessesLineArrayPromise, (justReturn) => justReturn)
+}
 
 const _updateChampionshipActivity = (guessLine, championship) => {
   if (!guessLine.isNew) {
-    updateGuessLineActivityRepository(guessLine, championship)
+    return updateGuessLineActivityRepository(guessLine, championship)
   }
+  return guessLine
 }
 
-const cronJob = () => new CronJob(cronTime, getAllchampionshipFromHoli, null, true, 'America/Sao_Paulo')
+const cronJob = () => new CronJob(cronTime, fireRoutine, null, true, 'America/Sao_Paulo')
 
 module.exports = {
-  getAllchampionshipFromHoli,
+  fireRoutine,
   cronJob
 }
