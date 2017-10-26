@@ -3,8 +3,7 @@
 const Promise = require('bluebird')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-const getGuessLeagueRepository = require('../../repositories/guessLeagues/getGuessLeagueRepository')
-const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
+const { getPredictionsRepository, getGuessLeagueRepository } = require('../../repositories')
 
 const getGuessLeague = (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -16,12 +15,12 @@ const getGuessLeague = (payload, headers) => {
 
 const _getUsersPontuationsByGuessLeague = (guessLeague) => {
   const getPontuationArrayPromise = guessLeague.players.map((userRef) => {
-    const pontuationObj = {
+    const filter = {
       championshipRef: guessLeague.championship.championshipRef,
       userRef
     }
 
-    return getPontuationsRepository(pontuationObj)
+    return getPredictionsRepository.getTotalPontuation(filter)
       .then((userPontuation) => _joiPontuationAtGuessLeagueObj(userPontuation, userRef))
   })
 
@@ -30,11 +29,10 @@ const _getUsersPontuationsByGuessLeague = (guessLeague) => {
 }
 
 const _joiPontuationAtGuessLeagueObj = (userPontuation, userRef) => {
-  const ZERO_PONTUATION = 0
 
   return {
     userRef,
-    totalPontuation: userPontuation ? userPontuation.totalPontuation : ZERO_PONTUATION
+    totalPontuation: userPontuation
   }
 }
 

@@ -4,7 +4,6 @@ const addUserToGuessLineRepository = require('./addUserToGuessLineRepository')
 const createGuessLineRepository = require('./createGuessLineRepository')
 const getChampionshipAtGuessLineRepository = require('./getChampionshipAtGuessLineRepository')
 const getGuessLineRepository = require('./getGuessLineRepository')
-const getPontuationsRepository = require('./getPontuationsRepository')
 const getPredictionsRepository = require('./getPredictionsRepository')
 const listGuessesLinesRepository = require('./listGuessesLinesRepository')
 const setPredictionsRepository = require('./setPredictionsRepository')
@@ -16,7 +15,6 @@ module.exports= {
   createGuessLineRepository,
   getChampionshipAtGuessLineRepository,
   getGuessLineRepository,
-  getPontuationsRepository,
   getPredictionsRepository,
   listGuessesLinesRepository,
   setPredictionsRepository,

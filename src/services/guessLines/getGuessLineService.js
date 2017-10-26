@@ -8,10 +8,7 @@ const cacheManager = coincidents.Managers.cacheManager
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
-const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
-const getPredictionsRepository = require('../../repositories/guessLines/getPredictionsRepository')
-const getGuessLineRepository = require('../../repositories/guessLines/getGuessLineRepository')
-const getSomeMatchDayRepository = require('../../repositories/holi/getLastRoundRepository')
+const { getPredictionsRepository, getGuessLineRepository, getLastRoundRepository } = require('../../repositories')
 
 const getGuessLine = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -34,22 +31,28 @@ const _getPontuationAndSomeMatchDay = (guessLine, request, dictionary) =>
       }
 
       return Promise.all([
-        getPontuationsRepository(repositoriesObj),
-        getSomeMatchDayRepository(repositoriesObj, dictionary), 
+        getLastRoundRepository(repositoriesObj, dictionary), 
         guessLine])
     })
 
 
 const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchDayAndGuessLine, request, dictionary) => {
-  const userPontuation = pontuationAndMatchDayAndGuessLine[0]
-  const matchDay = pontuationAndMatchDayAndGuessLine[1]
-  const guessLine = pontuationAndMatchDayAndGuessLine[2]
+  const matchDay = pontuationAndMatchDayAndGuessLine[0]
+  const guessLine = pontuationAndMatchDayAndGuessLine[1]
   _setPaginationOnCache(matchDay, request, guessLine)
 
   const predictionsPromiseArray = _buildPredictionsPromiseArray(matchDay, request.userRef, dictionary)
   const games = _getMatchesArrayWithPredictionsAndResults(predictionsPromiseArray)
 
-  return Promise.all([games, guessLine, userPontuation, matchDay])
+  const filter = {
+    userRef: request.userRef,
+    unixDate: matchDay.unixDate,
+    championshipRef: guessLine.championship.championshipRef
+  }
+  const totalPontuation = getPredictionsRepository.getTotalPontuation(filter)
+  const matchDayPontuation = getPredictionsRepository.getPontuationByUnixDate(filter)
+
+  return Promise.all([games, guessLine, matchDay, totalPontuation, matchDayPontuation])
 }
 
 const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) => 
@@ -67,7 +70,7 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
     if (prediction) {
       matchObj.awayTeamScoreGuess = prediction.guess.awayTeamScoreGuess
       matchObj.homeTeamScoreGuess = prediction.guess.homeTeamScoreGuess
-      if (prediction.matchPontuation) {
+      if (Number.isInteger(prediction.matchPontuation)) {
         matchObj.matchPontuation = prediction.matchPontuation
       }
     }
@@ -91,29 +94,19 @@ const _buildPredictionsPromiseArray = (matchDay, userRef, dictionary) =>
 const _buildResponseObj = (promiseAllObj) => {
   const games = promiseAllObj[0]
   const guessLine = promiseAllObj[1]
-  const userPontuation = promiseAllObj[2]
-  const matchDay = promiseAllObj[3]
+  const matchDay = promiseAllObj[2]
+  const totalPontuation = promiseAllObj[3]
+  const matchDayPontuation = promiseAllObj[4]
 
   const responseObj = {
     championshipRef: guessLine.championship.championshipRef,
-    guessLinePontuation: userPontuation.totalPontuation,
-    matchDayPontuation: _getMatchDayPontuation(_buildMatchDayLikePontuationDocDate(matchDay), userPontuation),
+    guessLinePontuation: totalPontuation,
+    matchDayPontuation,
     date: _buildMatchDayLikeHumanDate(matchDay),
     games
   }
 
   return responseObj
-}
-
-const _getMatchDayPontuation = (matchDayDate, userPontuation) => {
-  //TODO: Fazer teste com pontuation not found
-  //TODO: Fazer teste com pontuation found
-  const MATCH_DAY_NOT_FOUND_PONTUATION = 0
-  const matchDayFound = userPontuation.pontuationByMatchDay.find((matchDayObj) => matchDayObj.day === matchDayDate)
-  if (matchDayFound) {
-    return matchDayFound.pontuation
-  }
-  return MATCH_DAY_NOT_FOUND_PONTUATION
 }
 
 const _setPaginationOnCache = (matchDay, request, guessLine) => {
@@ -126,7 +119,6 @@ const _setPaginationOnCache = (matchDay, request, guessLine) => {
 const PAGE_KEY_SUFFIX = 'roundPage'
 const _buildPageCacheKey = (request, guessLine) => request.userRef + guessLine.championship.championshipRef + PAGE_KEY_SUFFIX
 const _buildMatchDayLikeHumanDate = (matchDay) => `${moment(matchDay.unixDate, 'X').format('DD/MM')}, ${moment(matchDay.unixDate, 'X').format('dddd')}`
-const _buildMatchDayLikePontuationDocDate = (matchDay) => moment(matchDay.unixDate, 'X').format('DD/MM/YYYY')
 
 module.exports = getGuessLine
 

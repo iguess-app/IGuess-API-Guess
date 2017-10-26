@@ -3,8 +3,7 @@
 const Promise = require('bluebird')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-const listGuessesLinesRepository = require('../../repositories/guessLines/listGuessesLinesRepository')
-const getPontuationsRepository = require('../../repositories/guessLines/getPontuationsRepository')
+const { listGuessesLinesRepository, getPredictionsRepository } = require('../../repositories')
 
 const listGuessesLines = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -18,19 +17,18 @@ const _checkIfPontuationWillReturnsToo = (list, request) => {
     return list
   }
 
-  const getPontuationArrayPromise = list.map((guessLine) =>
-    getPontuationsRepository(request, guessLine)
-    .then((pontuationDoc) => {
-      guessLine.pontuation = 0
-      if (pontuationDoc) {
-        guessLine.pontuation = pontuationDoc.totalPontuation
-      }
+  const getPontuationArrayPromise = list.map((guessLine) => {
+    const filter = {
+      userRef: request.userRef,
+      championshipRef: guessLine.championship.championshipRef
+    }
+    return getPredictionsRepository.getTotalPontuation(filter)
+  })
 
-      return guessLine
-    })
-  )
-
-  return Promise.map(getPontuationArrayPromise, (justReturn) => justReturn)
+  return Promise.map(getPontuationArrayPromise, (pontuation, index) => {
+    list[index].pontuation = pontuation
+    return list[index]
+  })
 }
 
 module.exports = listGuessesLines

@@ -27,20 +27,26 @@ const getPredictionByUnixDate = (request) => {
 const getPontuationByUnixDate = (request) => {
   const searchQuery = {
     userRef: request.userRef,
+    championshipRef: request.championshipRef,
     matchInitTime: request.unixDate
   }
 
   return Prediction.find(searchQuery)
-    .then((predictions) => _sumAllPontuations(predictions))
+    .then((predictions) => 
+      _sumAllPontuations(predictions)
+    )
 }
 
 const getTotalPontuation = (request) => {
   const searchQuery = {
-    userRef: request.userRef
+    userRef: request.userRef,
+    championshipRef: request.championshipRef
   }
 
   return Prediction.find(searchQuery)
-    .then((predictions) => _sumAllPontuations(predictions))
+    .then((predictions) => 
+    _sumAllPontuations(predictions)
+  )
 }
 
 const _buildSearchQuery = (request) => {
@@ -59,7 +65,7 @@ const _buildSearchQuery = (request) => {
 const ZERO_PONTUATION = 0
 const _sumAllPontuations = (predictions) =>
   predictions.reduce((acumulator, prediction) => {
-    return acumulator + prediction.matchPontuation ? prediction.matchPontuation : ZERO_PONTUATION
+    return acumulator + (prediction.matchPontuation ? prediction.matchPontuation : ZERO_PONTUATION)
   }, ZERO_PONTUATION)
 
 
