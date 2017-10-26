@@ -16,6 +16,33 @@ const getPredictionByMatchRef = (request) => {
   return Prediction.find(searchQuery).cursor()
 }
 
+const getPredictionByUnixDate = (request) => {
+  const searchQuery = {
+    'matchInitTime': request.unixDate
+  }
+
+  return Prediction.find(searchQuery).cursor()
+}
+
+const getPontuationByUnixDate = (request) => {
+  const searchQuery = {
+    userRef: request.userRef,
+    matchInitTime: request.unixDate
+  }
+
+  return Prediction.find(searchQuery)
+    .then((predictions) => _sumAllPontuations(predictions))
+}
+
+const getTotalPontuation = (request) => {
+  const searchQuery = {
+    userRef: request.userRef
+  }
+
+  return Prediction.find(searchQuery)
+    .then((predictions) => _sumAllPontuations(predictions))
+}
+
 const _buildSearchQuery = (request) => {
   let searchQuery = {
     'userRef': request.userRef
@@ -29,7 +56,17 @@ const _buildSearchQuery = (request) => {
   return searchQuery
 }
 
+const ZERO_PONTUATION = 0
+const _sumAllPontuations = (predictions) =>
+  predictions.reduce((acumulator, prediction) => {
+    return acumulator + prediction.matchPontuation ? prediction.matchPontuation : ZERO_PONTUATION
+  }, ZERO_PONTUATION)
+
+
 module.exports = {
   getPredictions,
-  getPredictionByMatchRef
+  getPredictionByMatchRef,
+  getPredictionByUnixDate,
+  getPontuationByUnixDate,
+  getTotalPontuation
 }

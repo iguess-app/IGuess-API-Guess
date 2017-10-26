@@ -10,7 +10,8 @@ const getUsersPredictionsAndSetPontuations = (matchDay) => {
     const cursor = getPredictionsRepository.getPredictionByMatchRef(matchObj)
     return {
       cursor,
-      match: matchObj
+      match: matchObj,
+      matchDateUnixDate: matchDay.unixDate
     }
   })
 

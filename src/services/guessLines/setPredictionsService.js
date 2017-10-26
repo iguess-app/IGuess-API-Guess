@@ -1,15 +1,21 @@
 'use strict';
 
 const Boom = require('boom')
+const Promise = require('bluebird')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
 const setPredictionsRepository = require('../../repositories/guessLines/setPredictionsRepository')
+const { getMatchByRefRepository } = require('../../repositories')
 
 const setPredictions = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   _checkIfThereAreDuplicatedMatchRef(request.guesses, dictionary)
 
-  return setPredictionsRepository(request, dictionary)
+  return _joinMatchWithGuess(request.guesses)
+  .then((guessJoinedWithMatch) => {
+    request.guesses = guessJoinedWithMatch
+  })
+  .then(() => setPredictionsRepository(request, dictionary))
 }
 
 const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
@@ -18,6 +24,17 @@ const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
   if (thereAreDuplicated) {
     throw Boom.notAcceptable(dictionary.matchDuplicated)
   }
+}
+
+const _joinMatchWithGuess = (guesses) => {
+  const matchesPromiseArray = guesses.map((guess) => 
+    getMatchByRefRepository(guess)
+      .then((match) => 
+        Object.assign(guess, match)
+      ) 
+  )
+    
+  return Promise.map(matchesPromiseArray, (justReturn) => justReturn)
 }
 
 module.exports = setPredictions

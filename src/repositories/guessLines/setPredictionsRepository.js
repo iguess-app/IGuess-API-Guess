@@ -18,6 +18,7 @@ const setPredictions = (request, dictionary) => {
         if (matchPredictionFound) {
           matchPredictionFound.guess.homeTeamScoreGuess = guess.homeTeamScoreGuess
           matchPredictionFound.guess.awayTeamScoreGuess = guess.awayTeamScoreGuess
+          matchPredictionFound.matchInitTime = guess.initTimeUnixDate
           matchPredictionFound.predictionSentDate = moment().format()
 
           return matchPredictionFound.save()
@@ -28,6 +29,7 @@ const setPredictions = (request, dictionary) => {
           userRef: request.userRef,
           matchRef: guess.matchRef,
           championshipRef: request.championshipRef,
+          matchInitTime: guess.initTimeUnixDate,
           predictionSentDate: moment().format(),
           guess: {
             homeTeamScoreGuess: guess.homeTeamScoreGuess,

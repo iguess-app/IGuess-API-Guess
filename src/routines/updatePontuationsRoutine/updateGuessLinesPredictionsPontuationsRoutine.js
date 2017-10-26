@@ -14,17 +14,17 @@ const fireRoutine = () => {
   }
   getAllChampionshipRepository(filter)
     .then((championships) =>
-      championships.forEach((championship) => {
+      championships.map((championship) => {
         const championshipFilter = {
           championshipRef: championship._id.toString()
         }
-        getLastRoundRepository(championshipFilter)
+        return getLastRoundRepository(championshipFilter)
           .then((matchDay) => getUsersPredictionsFunctions(matchDay))
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
       })
     )
     .catch((err) => {
-      err
+      throw err
     })
 }
 

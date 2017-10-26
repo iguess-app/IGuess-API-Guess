@@ -51,6 +51,10 @@ const predictionsSchema = new Schema({
     type: Date,
     required: true
   },
+  matchInitTime: {
+    type: Number,
+    required: true
+  },
   guess: {
     type: guessSchema,
     required: true

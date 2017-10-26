@@ -24,7 +24,7 @@ const getLastRound = (request, dictionary) => {
 const _buildSearchQuery = (request) => {
   const searchQuery = {
     'championshipRef': request.championshipRef,
-    'unixDate': _getOperatorQuery(request.currentDateUserPage)[request.page ? request.page : 'near'] //1506826800
+    'unixDate': _getOperatorQuery(request.currentDateUserPage)[request.page ? request.page : 'near']
   }
   return searchQuery
 }
