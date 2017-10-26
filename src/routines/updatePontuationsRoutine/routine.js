@@ -23,9 +23,6 @@ const fireRoutine = () => {
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
       })
     )
-    .catch((err) => {
-      throw err
-    })
 }
 
 const cronJob = () => new CronJob(cronTime, fireRoutine, null, true, 'America/Sao_Paulo')
