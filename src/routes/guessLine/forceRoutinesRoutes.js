@@ -1,7 +1,7 @@
 'use strict'
 
 const addAndUpdateActivityGuessLinesRoutine = require('../../routines/addNewAndUpdateGuessLinesActivityRoutine/addAndUpdateActivityGuessLinesRoutine').getAllchampionshipFromHoli
-const updateGuessLinesPredictionsPontuationsRoutine = require('../../routines/updatePontuationsRoutine/updateGuessLinesPredictionsPontuationsRoutine').updatePredictionsPontuationWithFixtureForced
+const updateGuessLinesPredictionsPontuationsRoutine = require('../../routines/updatePontuationsRoutine/routine').updatePredictionsPontuationWithFixtureForced
 const server = require('../../../configServer')
 const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
 const updateGuessLinesPredictionsPontuationsSchemaRequest = require('../schemas/guessLine/forceRoutines/updateGuessLinesPredictionsPontuationsSchemaRequest')
