@@ -44,13 +44,12 @@ const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchDayAndGuessLin
   const userPontuation = pontuationAndMatchDayAndGuessLine[0]
   const matchDay = pontuationAndMatchDayAndGuessLine[1]
   const guessLine = pontuationAndMatchDayAndGuessLine[2]
-  const matchDayDate = _buildMatchDayDate(matchDay)
   _setPaginationOnCache(matchDay, request, guessLine)
 
   const predictionsPromiseArray = _buildPredictionsPromiseArray(matchDay, request.userRef, dictionary)
   const games = _getMatchesArrayWithPredictionsAndResults(predictionsPromiseArray)
 
-  return Promise.all([games, guessLine, userPontuation, matchDayDate])
+  return Promise.all([games, guessLine, userPontuation, matchDay])
 }
 
 const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) => 
@@ -93,13 +92,13 @@ const _buildResponseObj = (promiseAllObj) => {
   const games = promiseAllObj[0]
   const guessLine = promiseAllObj[1]
   const userPontuation = promiseAllObj[2]
-  const matchDayDate = promiseAllObj[3]
+  const matchDay = promiseAllObj[3]
 
   const responseObj = {
     championshipRef: guessLine.championship.championshipRef,
     guessLinePontuation: userPontuation.totalPontuation,
-    matchDayPontuation: _getMatchDayPontuation(matchDayDate, userPontuation),
-    date: matchDayDate,
+    matchDayPontuation: _getMatchDayPontuation(_buildMatchDayLikePontuationDocDate(matchDay), userPontuation),
+    date: _buildMatchDayLikeHumanDate(matchDay),
     games
   }
 
@@ -126,7 +125,8 @@ const _setPaginationOnCache = (matchDay, request, guessLine) => {
 
 const PAGE_KEY_SUFFIX = 'roundPage'
 const _buildPageCacheKey = (request, guessLine) => request.userRef + guessLine.championship.championshipRef + PAGE_KEY_SUFFIX
-const _buildMatchDayDate = (matchDay) => `${moment(matchDay.unixDate, 'X').format('DD/MM')}, ${moment(matchDay.unixDate, 'X').format('dddd')}`
+const _buildMatchDayLikeHumanDate = (matchDay) => `${moment(matchDay.unixDate, 'X').format('DD/MM')}, ${moment(matchDay.unixDate, 'X').format('dddd')}`
+const _buildMatchDayLikePontuationDocDate = (matchDay) => moment(matchDay.unixDate, 'X').format('DD/MM/YYYY')
 
 module.exports = getGuessLine
 
