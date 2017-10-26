@@ -1,6 +1,7 @@
 'use strict'
 
 const CronJob = require('cron').CronJob
+const log = require('iguess-api-coincidents').Managers.logManager
 
 const cronTime = require('./cronTime')
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
@@ -22,7 +23,7 @@ const fireRoutine = () => {
           .then((matchDay) => getUsersPredictionsFunctions(matchDay))
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
       })
-    )
+    ).catch((err) => log.error(err))
 }
 
 const cronJob = () => new CronJob(cronTime, fireRoutine, null, true, 'America/Sao_Paulo')
