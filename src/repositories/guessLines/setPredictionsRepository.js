@@ -38,7 +38,10 @@ const setPredictions = (request, dictionary) => {
         }
 
         return Prediction.create(newMatchPrediction)
-          .catch((err) => Log.error(err))
+      })
+      .then((prediction) => prediction.toJSON())
+      .catch((err) => {
+        Log.error(err)
       })
   })
 

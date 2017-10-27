@@ -4,17 +4,14 @@ const Boom = require('boom')
 const Promise = require('bluebird')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
-const setPredictionsRepository = require('../../repositories/guessLines/setPredictionsRepository')
-const { getMatchByRefRepository } = require('../../repositories')
+const { getMatchByRefRepository, setPredictionsRepository } = require('../../repositories')
 
 const setPredictions = (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   _checkIfThereAreDuplicatedMatchRef(request.guesses, dictionary)
 
-  return _joinMatchWithGuess(request.guesses)
-  .then((guessJoinedWithMatch) => {
-    request.guesses = guessJoinedWithMatch
-  })
+  return _joinMatchWithGuess(request.guesses, dictionary)
+  .then((guessJoinedWithMatch) => { request.guesses = guessJoinedWithMatch })
   .then(() => setPredictionsRepository(request, dictionary))
 }
 
@@ -26,9 +23,9 @@ const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
   }
 }
 
-const _joinMatchWithGuess = (guesses) => {
+const _joinMatchWithGuess = (guesses, dictionary) => {
   const matchesPromiseArray = guesses.map((guess) => 
-    getMatchByRefRepository(guess)
+    getMatchByRefRepository(guess, dictionary)
       .then((match) => 
         Object.assign(guess, match)
       ) 

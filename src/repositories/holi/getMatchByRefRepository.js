@@ -14,21 +14,21 @@ const getMatchByRefRepository = (request, dictionary) => {
 
   return Round.findOne(searchQuery)
     .then((matchDay) => {
-      _treatErrors(matchDay, dictionary)
+      _treatErrors(matchDay, dictionary, request.matchRef)
       return matchDay
     })
     .then((matchDay) => {
       let match = matchDay.games.find((game) => game.id === request.matchRef)
-      _treatErrors(match, dictionary)
+      _treatErrors(match, dictionary, request.matchRef)
       match = match.toJSON()
       match.initTimeUnixDate = matchDay.unixDate
       return match
     })
 }
 
-const _treatErrors = (matchDay, dictionary) => {
+const _treatErrors = (matchDay, dictionary, matchRef) => {
   if (!matchDay) {
-    throw Boom.notFound(dictionary.matchNotFound)
+    throw Boom.notFound(dictionary.matchNotFound, {matchRef})
   }
 }
 
