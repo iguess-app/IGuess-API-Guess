@@ -8,29 +8,25 @@ const happyPathRequest = {
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
     userRef: '591df6c78d1fdc0bb4eba371',
-    guesses: [{
-        matchRef: '59d1475c70dc031ae0973f5d',
-        homeTeamScoreGuess: 1,
-        awayTeamScoreGuess: 4
-      },
+    guesses: [
       {
-        matchRef: '59d1475c70dc031ae0973f18',
+        matchRef: '59d1475c70dc031ae0973f5b',
         homeTeamScoreGuess: 3,
         awayTeamScoreGuess: 0
       },
       {
-        matchRef: '59d1475c70dc031ae0973f17',
+        matchRef: '59d1475c70dc031ae0973f5a',
         homeTeamScoreGuess: 0,
         awayTeamScoreGuess: 1
       },
       {
-        matchRef: '59d1475c70dc031ae0973f19',
+        matchRef: '59d1475c70dc031ae0973f59',
         homeTeamScoreGuess: 4,
         awayTeamScoreGuess: 1
       }
     ]
   }
-};
+}
 
 const matchRefDuplicated = {
   method: 'PUT',
@@ -64,9 +60,59 @@ const matchRefDuplicated = {
       }
     ]
   }
-};
+}
+
+const someMatchOneHourLess = {
+  method: 'PUT',
+  url: '/guessline/setPredictions',
+  headers: {
+    'language': 'en-us',
+    'content-type': 'application/json'
+  },
+  payload: {
+    championshipRef: '5872a8d2ed1b02314e088291',
+    userRef: '591df6c78d1fdc0bb4eba371',
+    guesses: [{
+        matchRef: '59d1475c70dc031ae0973f53',
+        homeTeamScoreGuess: 1,
+        awayTeamScoreGuess: 4
+      },
+      {
+        matchRef: '59d1475c70dc031ae0973f58',
+        homeTeamScoreGuess: 3,
+        awayTeamScoreGuess: 0
+      }
+    ]
+  }
+}
+
+const allMatchOneHourLess = {
+  method: 'PUT',
+  url: '/guessline/setPredictions',
+  headers: {
+    'language': 'en-us',
+    'content-type': 'application/json'
+  },
+  payload: {
+    championshipRef: '5872a8d2ed1b02314e088291',
+    userRef: '591df6c78d1fdc0bb4eba371',
+    guesses: [{
+        matchRef: '59d1475c70dc031ae0973f53',
+        homeTeamScoreGuess: 1,
+        awayTeamScoreGuess: 4
+      },
+      {
+        matchRef: '59d1475c70dc031ae0973f51',
+        homeTeamScoreGuess: 3,
+        awayTeamScoreGuess: 0
+      }
+    ]
+  }
+}
 
 module.exports = {
   happyPathRequest,
-  matchRefDuplicated
+  matchRefDuplicated,
+  someMatchOneHourLess,
+  allMatchOneHourLess
 }

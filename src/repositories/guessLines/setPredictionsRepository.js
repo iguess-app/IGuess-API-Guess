@@ -6,7 +6,7 @@ const Log = require('iguess-api-coincidents').Managers.logManager
 
 const Prediction = require('../../models/guessDB/predictionsModel')
 
-const setPredictions = (request, dictionary) => {
+const setPredictions = (request) => {
 
   const setPredictionsPromiseArray = request.guesses.map((guess) => {
     const searchQuery = {
@@ -50,7 +50,13 @@ const setPredictions = (request, dictionary) => {
       matchRef: prediction.matchRef,
       prediction: prediction.guess
     }))
+    .then((predictionArraySetted) => _buildResponseBody(predictionArraySetted, request))
 }
+
+const _buildResponseBody = (predictionArraySetted, request) => ({
+    predictions: predictionArraySetted,
+    alertMessage: request.alertMessage ? request.alertMessage : ''
+  })
 
 module.exports = setPredictions
 
