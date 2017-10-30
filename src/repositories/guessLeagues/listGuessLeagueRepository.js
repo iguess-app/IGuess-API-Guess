@@ -1,8 +1,11 @@
 'use strict'
 
 const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
 
 const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
+
+const queryUtils = coincidents.Utils.queryUtils
 
 const listGuessLeagues = (request, dictionary) => {
 
@@ -21,13 +24,13 @@ const listGuessLeagues = (request, dictionary) => {
   return GuessLeague.find(searchQuery, projectionQuery)
     .then((guessesLeaguesFound) => {
       _checkErrors(guessesLeaguesFound, request, dictionary)
-
-      return guessesLeaguesFound
+      
+      return guessesLeaguesFound.map((guessLineFound) => queryUtils.makeObject(guessLineFound))
     })
 }
 
 const _checkErrors = (guessesLeaguesFound, request, dictionary) => {
-  if (!guessesLeaguesFound) {
+  if (!guessesLeaguesFound.length) {
     throw Boom.notFound(dictionary.anyGuessLeagueFound)
   }
 }

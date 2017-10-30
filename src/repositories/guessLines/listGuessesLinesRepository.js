@@ -1,13 +1,12 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
 const queryUtils = coincidents.Utils.queryUtils
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
-const listGuessesLines = (request, dictionary) => {
+const listGuessesLines = (request) => {
 
   const searchQuery = {
     usersAddedAtGuessLine: {

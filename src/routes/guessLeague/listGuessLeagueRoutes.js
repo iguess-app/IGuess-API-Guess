@@ -16,14 +16,9 @@ server.route({
     validate: {
       query: listGuessLeagueSchema.request,
       headers: defaultHeaderSchema
+    },
+    response: {
+      schema: listGuessLeagueSchema.response
     }
   }
 })
-
-
-//TODO adicionar schema de response
-
-
-//SEPARAR O LIST DO GET
-//NO LIST DEVOLVE SÓ O NOME E O CHAMP E DEVOLVE TODAS GLES
-//NO GET DEVOLVE SO UMA GLE E DEVOLVE TDS DETALHER COMO ESTAO AQUI
