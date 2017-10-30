@@ -22,15 +22,15 @@ const getGuessLeague = (request, dictionary) => {
   }
 
   return GuessLeague.findOne(searchQuery, projectionQuery)
-    .then((guessesLeaguesFound) => {
-      _checkErrors(guessesLeaguesFound, request, dictionary)
+    .then((guessLeagueFound) => {
+      _checkErrors(guessLeagueFound, request, dictionary)
 
-      return guessesLeaguesFound
+      return queryUtils.makeObject(guessLeagueFound)
     })
 }
 
-const _checkErrors = (guessesLeaguesFound, request, dictionary) => {
-  if (!guessesLeaguesFound) {
+const _checkErrors = (guessLeagueFound, request, dictionary) => {
+  if (!guessLeagueFound) {
     throw Boom.notFound(dictionary.anyGuessLeagueFound)
   }
 }

@@ -37,7 +37,7 @@ const _joiPontuationAtGuessLeagueObj = (userPontuation, userRef) => {
 }
 
 const _addPlayersArrayToGuessLeague = (guessLeague, playersArray) => {
-  guessLeague._doc.players = playersArray
+  guessLeague.players = playersArray
 
   return guessLeague
 }
