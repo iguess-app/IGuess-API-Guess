@@ -3,8 +3,8 @@
 const guessLeagueController = require('../../controllers/guessLeagueController')
 const server = require('../../../configServer')
 const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
-const putCaptainSchema = require('../schemas/guessLeague/administration/putCaptainSchema')
-const quitCaptainSchema = require('../schemas/guessLeague/administration/quitCaptainSchema')
+const putCaptainSchema = require('../schemas/guessLeague/captain/putCaptainSchema')
+const quitCaptainSchema = require('../schemas/guessLeague/captain/quitCaptainSchema')
 
 server.route({
   path: '/guessleague/putCaptain',

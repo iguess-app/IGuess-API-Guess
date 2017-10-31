@@ -1,6 +1,6 @@
 'use strict'
 
-const administrationsRoutes = require('./administrationsRoutes')
+const captainRoutes = require('./captainRoutes')
 const createGuessLeagueRoutes = require('./createGuessLeagueRoutes')
 const deleteGuessLeagueRoutes = require('./deleteGuessLeagueRoutes')
 const getGuessLeagueRoutes = require('./getGuessLeagueRoutes')
@@ -9,7 +9,7 @@ const listGuessLeagueRoutes = require('./listGuessLeagueRoutes')
 const quitGuessLeagueRoutes = require('./quitGuessLeagueRoutes')
 
 module.exports = {
-  administrationsRoutes,
+  captainRoutes,
   createGuessLeagueRoutes,
   deleteGuessLeagueRoutes,
   getGuessLeagueRoutes,

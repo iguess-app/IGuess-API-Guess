@@ -6,7 +6,7 @@ const coincidents = require('iguess-api-coincidents')
 
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
-const schemaValidate = require('../../../../src/routes/schemas/guessLeague/administration/putCaptainSchema').response
+const schemaValidate = require('../../../../src/routes/schemas/guessLeague/captain/putCaptainSchema').response
 const GuessLeague = require('../../../../src/models/guessDB/guessesLeaguesModel')
 
 const statusCode = coincidents.Utils.statusUtils
