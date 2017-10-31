@@ -8,7 +8,7 @@ const quitAdministrationSchema = require('../schemas/guessLeague/administration/
 
 server.route({
   path: '/guessleague/putAdministrator',
-  method: 'PUT',
+  method: 'PATCH',
   config: {
     handler: (request, reply) => {
 
@@ -26,7 +26,7 @@ server.route({
 
 server.route({
   path: '/guessleague/quitAdministrator',
-  method: 'PUT',
+  method: 'PATCH',
   config: {
     handler: (request, reply) => {
 
