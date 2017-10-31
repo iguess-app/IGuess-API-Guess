@@ -10,16 +10,17 @@ const verifyUserAtGuessLineRepository = require('../../repositories/guessLines/v
 const createGuessLeague = (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
 
-  _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary)
+  _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary, payload.userRef)
 
   return verifyUserAtGuessLineRepository(payload, dictionary)
     .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
     .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))
 }
 
-const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary) => {
+const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary, userRefCreator) => {
   const thereAreDuplicated = userRefInviteads.some((userRefInvited, currentIndex) => userRefInviteads.indexOf(userRefInvited) !== currentIndex)
-  if (thereAreDuplicated) {
+  const admInvitingHimself = userRefInviteads.some((userRefInvited) => userRefInvited === userRefCreator)
+  if (thereAreDuplicated || admInvitingHimself) {
     throw Boom.notAcceptable(dictionary.userRefDuplicated)
   }
 }
