@@ -18,7 +18,7 @@ lab.experiment('Integrated Test ==> putCaptain', () => {
 
   lab.before((done) => {
     const searchQuery = { _id: '59c05e253feecf1e2898a3fb' }
-    const updateQuery = { $pull: { administrators: '5932d84626fee5502cb422d6' } }
+    const updateQuery = { $pull: { captains: '5932d84626fee5502cb422d6' } }
     GuessLeague.update(searchQuery, updateQuery)
       .then(() => done())
   })

@@ -16,7 +16,7 @@ const quitCaptain = (request, dictionary) => {
     players: {
       $in: [request.userRef]
     },
-    administrators: {
+    captains: {
       $in: [request.userRef]
     }
   }
@@ -29,7 +29,7 @@ const quitCaptain = (request, dictionary) => {
     .then((guessLeagueFound) => {
       _checkErrors(guessLeagueFound, request, dictionary)
 
-      return _deleteAdministratorFromAdministratorsArray(guessLeagueFound, request).save()
+      return _deleteCaptainFromCaptainsArray(guessLeagueFound, request).save()
       .then(() => ({
         removedFromCaptain: true
       }))
@@ -41,15 +41,15 @@ const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
     throw Boom.notFound(dictionary.anyGuessLeagueFound)
   }
-  if (guessLeagueFound.administrators.length <= MINIMUM_NUMBER_OF_ADM_ALLOW) {
+  if (guessLeagueFound.captains.length <= MINIMUM_NUMBER_OF_ADM_ALLOW) {
     throw Boom.notFound(dictionary.tooFewAdms)
   }
 }
 
-const _deleteAdministratorFromAdministratorsArray = (guessLeagueFound, request) => {
+const _deleteCaptainFromCaptainsArray = (guessLeagueFound, request) => {
   const QUANTITY_TO_REMOVE = 1
-  const playerIndex = guessLeagueFound.administrators.findIndex((administrator) => administrator === request.userRef)
-  guessLeagueFound.administrators.splice(playerIndex, QUANTITY_TO_REMOVE)
+  const playerIndex = guessLeagueFound.captains.findIndex((captain) => captain === request.userRef)
+  guessLeagueFound.captains.splice(playerIndex, QUANTITY_TO_REMOVE)
 
   return guessLeagueFound
 }

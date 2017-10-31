@@ -33,7 +33,7 @@ const championshipSchema = new Schema({
 }, optionsSchemas._idAndVersionKeyDisable)
 
 const guessesLeaguesSchema = new Schema({
-  administrators: {
+  captains: {
     type: [{
       type: String,
       validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]

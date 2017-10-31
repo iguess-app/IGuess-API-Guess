@@ -23,7 +23,7 @@ const response = Joi.object({
     userRef: Joi.string().required().length(ID_SIZE),
     totalPontuation: Joi.number().required()
   })),
-  administrators: Joi.array().items(Joi.string().length(ID_SIZE))
+  captains: Joi.array().items(Joi.string().length(ID_SIZE))
 }).meta({
   className: 'Response'
 })

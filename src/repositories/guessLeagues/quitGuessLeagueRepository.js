@@ -30,7 +30,7 @@ const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
     throw Boom.notFound(dictionary.anyGuessLeagueFound)
   }
-  if (guessLeagueFound.administrators.includes(request.userRef)) {
+  if (guessLeagueFound.captains.includes(request.userRef)) {
     throw Boom.notAcceptable(dictionary.admNotQuitGle)
   }
   if (!guessLeagueFound.players.includes(request.userRef)) {

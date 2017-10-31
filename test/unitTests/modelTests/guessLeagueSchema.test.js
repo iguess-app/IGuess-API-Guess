@@ -22,7 +22,7 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
       'players': [
         '59b54e44a7631d433470fee7'
       ],
-      'administrators': [
+      'captains': [
         '59b54e44a7631d433470fee7'
       ]
     })
@@ -41,7 +41,7 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
       'players': [
         '59b54e44a7631d433470fee7'
       ],
-      'administrators': [
+      'captains': [
         '59b54e44a7631d433470fee7'
       ]
     })
@@ -67,7 +67,7 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
       'inviteads': []
     })
     losBlancos.validate((err) => {
-      expect(err.errors.administrators.message).to.be.equal('Path `administrators` is required.')
+      expect(err.errors.captains.message).to.be.equal('Path `captains` is required.')
       done()
     })
   })
@@ -87,7 +87,7 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
       'players': [
         '59b54e44a7631d433470fee7'
       ],
-      'administrators': [
+      'captains': [
         '59b54e44a7631d433470fee7'
       ]
     })
@@ -100,7 +100,7 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
   lab.test('GuessLeagueSchema with championship subSchema wrong', (done) => {
     const losBlancos = new GuessLeague({
       'guessLeagueName': 'losBlancos',
-      'administrator': 'cristianoRonaldo',
+      'captain': 'cristianoRonaldo',
       'championship': {
         'championshipRef': '5872a8d2ed1b02314e088291',
         'league': 'notObjectID',

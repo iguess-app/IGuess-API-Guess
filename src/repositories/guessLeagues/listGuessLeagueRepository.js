@@ -18,7 +18,7 @@ const listGuessLeagues = (request, dictionary) => {
   const projectionQuery = {
     inviteads: 0,
     players: 0,
-    administrators: 0
+    captains: 0
   }
 
   return GuessLeague.find(searchQuery, projectionQuery)

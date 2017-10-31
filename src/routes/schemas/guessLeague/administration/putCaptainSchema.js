@@ -15,7 +15,7 @@ const request = Joi.object({
 })
 
 const response = Joi.object({
-  newAdministratorSetted: Joi.bool().required()
+  newCaptainSetted: Joi.bool().required()
 }).meta({
   className: 'Response'
 })

@@ -18,7 +18,7 @@ const inviteToGuessLeagueRepository = (request, dictionary) => {
     inviteads: {
       $nin: request.userRefInviteads
     },
-    administrators: {
+    captains: {
       $in: [request.userRef]
     }
   }

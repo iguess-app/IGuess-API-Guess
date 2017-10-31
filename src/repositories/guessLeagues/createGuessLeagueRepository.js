@@ -15,7 +15,7 @@ const createGuessLeague = (request, championship) =>
 
 const _buildGuessLeagueObj = (request, championship) => ({
   guessLeagueName: request.guessLeagueName,
-  administrators: [
+  captains: [
     request.userRef
   ],
   inviteads: request.userRefInviteads,

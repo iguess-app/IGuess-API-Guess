@@ -28,7 +28,7 @@ const response = Joi.object({
   players: Joi.array().items(
     Joi.string().length(ID_SIZE).required()
   ),
-  administrators: Joi.array().items(
+  captains: Joi.array().items(
     Joi.string().length(ID_SIZE).required()
   )
 }).unknown().meta({
