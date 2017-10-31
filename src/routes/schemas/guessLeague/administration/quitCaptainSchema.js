@@ -13,7 +13,9 @@ const request = Joi.object({
   className: 'Request'
 })
 
-const response = Joi.object({}).unknown().meta({
+const response = Joi.object({
+  removedFromCaptain: Joi.bool().required()
+}).meta({
   className: 'Response'
 })
 

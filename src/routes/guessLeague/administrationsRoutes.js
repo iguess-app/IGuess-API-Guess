@@ -4,7 +4,7 @@ const guessLeagueController = require('../../controllers/guessLeagueController')
 const server = require('../../../configServer')
 const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
 const putAdministratorSchema = require('../schemas/guessLeague/administration/putAdministratorSchema')
-const quitAdministrationSchema = require('../schemas/guessLeague/administration/quitAdministrationSchema')
+const quitCaptainSchema = require('../schemas/guessLeague/administration/quitCaptainSchema')
 
 server.route({
   path: '/guessleague/putAdministrator',
@@ -25,19 +25,19 @@ server.route({
 })
 
 server.route({
-  path: '/guessleague/quitAdministrator',
+  path: '/guessleague/quitCaptain',
   method: 'PATCH',
   config: {
     handler: (request, reply) => {
 
-      guessLeagueController.quitAdministrator(request, reply)
+      guessLeagueController.quitCaptain(request, reply)
     },
     validate: {
-      payload: quitAdministrationSchema.request,
+      payload: quitCaptainSchema.request,
       headers: defaultHeaderSchema
     },
     response: {
-      schema: quitAdministrationSchema.response
+      schema: quitCaptainSchema.response
     }
   }
 })

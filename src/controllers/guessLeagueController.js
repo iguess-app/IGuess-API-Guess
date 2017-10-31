@@ -49,11 +49,11 @@ const putAdministrator = (request, reply) => {
     .catch((err) => reply(err))
 }
 
-const quitAdministrator = (request, reply) => {
+const quitCaptain = (request, reply) => {
   const payload = request.payload
   const headers = request.headers
 
-  guessLeaguesServices.quitAdministratorService(payload, headers)
+  guessLeaguesServices.quitCaptainService(payload, headers)
     .then((response) => reply(response))
     .catch((err) => reply(err))
 }
@@ -82,7 +82,7 @@ module.exports = {
   getGuessLeague,
   inviteToGuessLeague,
   putAdministrator,
-  quitAdministrator,
+  quitCaptain,
   quitGuessLeague,
   inviteResponse
 }

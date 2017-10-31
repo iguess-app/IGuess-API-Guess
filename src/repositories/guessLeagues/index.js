@@ -6,7 +6,7 @@ const inviteResponseRepository = require('./inviteResponseRepository')
 const inviteToGuessLeagueRepository = require('./inviteToGuessLeagueRepository')
 const listGuessLeagueRepository = require('./listGuessLeagueRepository')
 const putAdministratorRepository = require('./putAdministratorRepository')
-const quitAdministrationRepository = require('./quitAdministrationRepository')
+const quitCaptainRepository = require('./quitCaptainRepository')
 const quitGuessLeagueRepository = require('./quitGuessLeagueRepository')
 
 module.exports= {
@@ -16,6 +16,6 @@ module.exports= {
   inviteToGuessLeagueRepository,
   listGuessLeagueRepository,
   putAdministratorRepository,
-  quitAdministrationRepository,
+  quitCaptainRepository,
   quitGuessLeagueRepository
 }

@@ -9,7 +9,7 @@ const queryUtils = coincidents.Utils.queryUtils
 
 const MINIMUM_NUMBER_OF_ADM_ALLOW = 1
 
-const quitAdministration = (request, dictionary) => {
+const quitCaptain = (request, dictionary) => {
 
   const searchQuery = {
     _id: queryUtils.makeObjectId(request.guessLeagueRef),
@@ -30,6 +30,9 @@ const quitAdministration = (request, dictionary) => {
       _checkErrors(guessLeagueFound, request, dictionary)
 
       return _deleteAdministratorFromAdministratorsArray(guessLeagueFound, request).save()
+      .then(() => ({
+        removedFromCaptain: true
+      }))
     })
 }
 
@@ -51,4 +54,4 @@ const _deleteAdministratorFromAdministratorsArray = (guessLeagueFound, request) 
   return guessLeagueFound
 }
 
-module.exports = quitAdministration
+module.exports = quitCaptain
