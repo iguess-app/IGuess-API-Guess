@@ -2,7 +2,7 @@
 
 const happyPathRequest = {
   method: 'PATCH',
-  url: '/guessleague/putAdministrator',
+  url: '/guessleague/putCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
     'userRef': '59b54e44a7631d433470fee7',
@@ -12,7 +12,7 @@ const happyPathRequest = {
 
 const userInvitedIsAlreadyAdm = {
   method: 'PATCH',
-  url: '/guessleague/putAdministrator',
+  url: '/guessleague/putCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
     'userRef': '59b54e44a7631d433470fee7',
@@ -22,7 +22,7 @@ const userInvitedIsAlreadyAdm = {
 
 const userRefEqualUserRefToAdm = {
   method: 'PATCH',
-  url: '/guessleague/putAdministrator',
+  url: '/guessleague/putCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
     'userRef': '59b54e44a7631d433470fee7',

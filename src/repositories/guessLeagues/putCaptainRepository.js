@@ -6,7 +6,7 @@ const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const queryUtils = coincidents.Utils.queryUtils
 
-const putAdministrator = (request, dictionary) => {
+const putCaptain = (request, dictionary) => {
 
   const searchQuery = {
     _id: queryUtils.makeObjectId(request.guessLeagueRef),
@@ -41,4 +41,4 @@ const _checkErrors = (guessLeagueFound, request, dictionary) => {
   }
 }
 
-module.exports = putAdministrator
+module.exports = putCaptain

@@ -5,7 +5,7 @@ const getGuessLeagueService = require('./getGuessLeagueService')
 const inviteResponseService = require('./inviteResponseService')
 const inviteToGuessLeagueService = require('./inviteToGuessLeagueService')
 const listGuessLeagueService = require('./listGuessLeagueService')
-const putAdministratorService = require('./putAdministratorService')
+const putCaptainService = require('./putCaptainService')
 const quitCaptainService = require('./quitCaptainService')
 const quitGuessLeagueService = require('./quitGuessLeagueService')
 
@@ -15,7 +15,7 @@ module.exports = {
   inviteResponseService,
   inviteToGuessLeagueService,
   listGuessLeagueService,
-  putAdministratorService,
+  putCaptainService,
   quitCaptainService,
   quitGuessLeagueService
 }
