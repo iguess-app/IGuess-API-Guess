@@ -30,6 +30,9 @@ const putAdministrator = (request, dictionary) => {
 
       return guessLeagueFound.save()
     })
+    .then(() => ({
+      newAdministratorSetted: true
+    }))
 }
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
