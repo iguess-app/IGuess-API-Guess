@@ -16,6 +16,9 @@ server.route({
     validate: {
       payload: quitGuessLeagueSchema.request,
       headers: defaultHeaderSchema
+    },
+    response: {
+      schema: quitGuessLeagueSchema.response
     }
   }
 })
