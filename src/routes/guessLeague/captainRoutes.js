@@ -26,7 +26,7 @@ server.route({
 
 server.route({
   path: '/guessleague/quitCaptain',
-  method: 'PATCH',
+  method: 'DELETE',
   config: {
     handler: (request, reply) => {
 

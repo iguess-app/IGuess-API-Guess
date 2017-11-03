@@ -1,7 +1,7 @@
 'use strict'
 
 const happyPathRequest = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
@@ -10,7 +10,7 @@ const happyPathRequest = {
 }
 
  const noGuessLeagueFound = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a355',
@@ -19,7 +19,7 @@ const happyPathRequest = {
 }
 
 const noUserFoundAtGuessLeague = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
