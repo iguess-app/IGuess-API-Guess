@@ -14,7 +14,6 @@ const expect = Lab.expect
 const statusCode = coincidents.Utils.statusUtils
 const dictionary = coincidents.Translate.gate.selectLanguage()
 
-
 lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
 
   lab.before((done) => {
@@ -22,6 +21,10 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
       .then(() => done())
   })
 
+  /**
+   * IO Test
+   * This test need to have 591e5c3fa8634f1f9880e8ba at invitead array on guessLeague ObjectId("59c05e253feecf1e2898a3fb")
+   */
   lab.test('inviteToGuessLeague HappyPath', (done) => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
@@ -30,6 +33,16 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
           expect(err).to.be.equal(null)
           done()
         })
+      })
+  })
+
+  lab.test('inviteToGuessLeague duplicated Inviteads List', (done) => {
+    server.inject(injectedRequests.duplicatedInviteadsList)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.userRefDuplicated)
+        expect(response.statusCode).to.be.equal(statusCode.notAcceptable)
+        done()
       })
   })
 
