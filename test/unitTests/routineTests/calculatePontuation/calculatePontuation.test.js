@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const Lab = require('lab')
 const pontuationRules = require('iguess-api-coincidents').Config.pontuationRules
 
