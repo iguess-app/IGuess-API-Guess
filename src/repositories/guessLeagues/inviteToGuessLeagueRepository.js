@@ -24,17 +24,20 @@ const inviteToGuessLeagueRepository = (request, dictionary) => {
   }
 
   return GuessLeague.findOne(searchQuery)
-    .then((quessLeagueFound) => {
-      _checkErrors(quessLeagueFound, request, dictionary)
-      request.userRefInviteads.map((userRefInvited) => quessLeagueFound.inviteads.push(userRefInvited))
+    .then((guessLeagueFound) => {
+      _checkErrors(guessLeagueFound, request, dictionary)
+      request.userRefInviteads.map((userRefInvited) => guessLeagueFound.inviteads.push(userRefInvited))
 
-      return quessLeagueFound.save()
+      return guessLeagueFound.save()
     })
+    .then((guessLeagueUpdated) => ({
+      inviteads: guessLeagueUpdated.inviteads
+    }))
 }
 
 
-const _checkErrors = (quessLeagueFound, request, dictionary) => {
-  if (!quessLeagueFound) {
+const _checkErrors = (guessLeagueFound, request, dictionary) => {
+  if (!guessLeagueFound) {
     throw Boom.create(statusUtils.forbidden, dictionary.someWrongAtInvite, request)
   }
   //TODO: tornar esse erro mais intuitivo para o front

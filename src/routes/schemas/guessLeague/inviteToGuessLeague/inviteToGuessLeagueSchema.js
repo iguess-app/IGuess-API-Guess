@@ -17,7 +17,11 @@ const request = Joi.object({
   className: 'Request'
 })
 
-const response = Joi.object({}).unknown().meta({
+const response = Joi.object({
+  inviteads: Joi.array().items(
+    Joi.string().required().length(ID_SIZE)
+  )
+}).meta({
   className: 'Response'
 })
 

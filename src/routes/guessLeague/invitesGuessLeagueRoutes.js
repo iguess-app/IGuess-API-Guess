@@ -17,6 +17,9 @@ server.route({
     validate: {
       payload: inviteToGuessLeagueSchema.request,
       headers: defaultHeaderSchema
+    },
+    response: {
+      schema: inviteToGuessLeagueSchema.response
     }
   }
 })
@@ -32,6 +35,9 @@ server.route({
     validate: {
       payload: inviteResponseSchema.request,
       headers: defaultHeaderSchema
+    },
+    response: {
+      schema: inviteResponseSchema.response
     }
   }
 })
