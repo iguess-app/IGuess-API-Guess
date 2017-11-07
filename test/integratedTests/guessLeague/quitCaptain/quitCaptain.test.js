@@ -17,7 +17,12 @@ const expect = Lab.expect
 lab.experiment('Integrated Test ==> quitCaptain', () => {
 
   lab.before((done) => {
-    const searchQuery = { _id: '59c05e253feecf1e2898a3fb' }
+    const searchQuery = { 
+      _id: '59c05e253feecf1e2898a3fb',
+      captains: {
+        $nin: ['591e5c05a8634f1f9880e8ae']
+      }
+    }
     const updateQuery = { $push: { captains: '591e5c05a8634f1f9880e8ae' } }
     GuessLeague.update(searchQuery, updateQuery)
       .then(() => done())

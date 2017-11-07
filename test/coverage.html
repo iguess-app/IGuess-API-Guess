@@ -680,10 +680,6 @@
             <a href="#src/repositories/holi/getAllChampionshipRepository.js"><span class="dirname">src/repositories/holi/</span><span class="basename">getAllChampionshipRepository.js</span></a>
         </li>
         <li class="">
-            <span class="cov medium">64.29</span>
-            <a href="#src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js"><span class="dirname">src/repositories/holi/</span><span class="basename">getFixtureByChampionshipRefAndDateRepository.js</span></a>
-        </li>
-        <li class="">
             <span class="cov high">88.24</span>
             <a href="#src/repositories/holi/getLastRoundRepository.js"><span class="dirname">src/repositories/holi/</span><span class="basename">getLastRoundRepository.js</span></a>
         </li>
@@ -860,7 +856,7 @@
             <a href="#src/routines/updatePontuationsRoutine/cronTime.js"><span class="dirname">src/routines/updatePontuationsRoutine/</span><span class="basename">cronTime.js</span></a>
         </li>
         <li class="">
-            <span class="cov medium">54.84</span>
+            <span class="cov medium">59.26</span>
             <a href="#src/routines/updatePontuationsRoutine/routine.js"><span class="dirname">src/routines/updatePontuationsRoutine/</span><span class="basename">routine.js</span></a>
         </li>
         <li class="">
@@ -939,11 +935,11 @@
     </div>
     <div id="tests">
       <h1>Test Report</h1>
-      <div class="stats high">
+      <div class="stats low">
           <div class="failures">0</div>
-          <div class="skipped">0</div>
-          <div class="test-count">59</div>
-          <div class="duration">399</div>
+          <div class="skipped">1</div>
+          <div class="test-count">60</div>
+          <div class="duration">486</div>
       </div>
       <div id="filters">
           <input type="checkbox" checked="" onchange="filter(this)" value="success" id="show-success">
@@ -955,6 +951,8 @@
           <label for="show-Integrated_Test_&#x3D;&#x3D;&gt;_createGuessLeague">Integrated Test &#x3D;&#x3D;&gt; createGuessLeague</label>
           <input type="checkbox" checked="" onchange="filter(this)" value="Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLeague" id="show-Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLeague">
           <label for="show-Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLeague">Integrated Test &#x3D;&#x3D;&gt; getGuessLeague</label>
+          <input type="checkbox" checked="" onchange="filter(this)" value="Integrated_Test_&#x3D;&#x3D;&gt;_inviteToGuessLeague" id="show-Integrated_Test_&#x3D;&#x3D;&gt;_inviteToGuessLeague">
+          <label for="show-Integrated_Test_&#x3D;&#x3D;&gt;_inviteToGuessLeague">Integrated Test &#x3D;&#x3D;&gt; inviteToGuessLeague</label>
           <input type="checkbox" checked="" onchange="filter(this)" value="Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLeague" id="show-Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLeague">
           <label for="show-Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLeague">Integrated Test &#x3D;&#x3D;&gt; listGuessLeague</label>
           <input type="checkbox" checked="" onchange="filter(this)" value="Integrated_Test_&#x3D;&#x3D;&gt;_putCaptain" id="show-Integrated_Test_&#x3D;&#x3D;&gt;_putCaptain">
@@ -983,8 +981,8 @@
           <label for="show-Model_Test_&#x3D;&#x3D;&gt;_PredictionSchema_Validator">Model Test &#x3D;&#x3D;&gt; PredictionSchema Validator</label>
           <input type="checkbox" checked="" onchange="filter(this)" value="Schemas_Test_&#x3D;&#x3D;&gt;_setPredictions" id="show-Schemas_Test_&#x3D;&#x3D;&gt;_setPredictions">
           <label for="show-Schemas_Test_&#x3D;&#x3D;&gt;_setPredictions">Schemas Test &#x3D;&#x3D;&gt; setPredictions</label>
-          <input type="checkbox" checked="" onchange="filter(this)" value="Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation" id="show-Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation">
-          <label for="show-Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation</label>
+          <input type="checkbox" checked="" onchange="filter(this)" value="Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation" id="show-Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation">
+          <label for="show-Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation</label>
       </div>
       <table>
           <thead>
@@ -1000,7 +998,7 @@
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; createGuessLeague createGuessLeague HappyPath
                   
               </td>
-              <td class="test-duration">52</td>
+              <td class="test-duration">80</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_createGuessLeague success">
               <td class="test-id">2</td>
@@ -1035,378 +1033,385 @@
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLeague getGuessLeague happyPath WithOut guessLeague
                   
               </td>
-              <td class="test-duration">19</td>
+              <td class="test-duration">21</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLeague success">
               <td class="test-id">7</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLeague getGuessLeague noGuessLeagues
                   
               </td>
-              <td class="test-duration">5</td>
+              <td class="test-duration">4</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_inviteToGuessLeague success">
+              <td class="test-id">8</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; inviteToGuessLeague inviteToGuessLeague HappyPath
+                  
+              </td>
+              <td class="test-duration">0</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLeague success">
-              <td class="test-id">8</td>
+              <td class="test-id">9</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLeague listGuessLeague HappyPath
                   
               </td>
               <td class="test-duration">6</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLeague success">
-              <td class="test-id">9</td>
+              <td class="test-id">10</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLeague listGuessLeague anyGuessLeagueFound
                   
               </td>
               <td class="test-duration">5</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_putCaptain success">
-              <td class="test-id">10</td>
+              <td class="test-id">11</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; putCaptain putCaptain HappyPath
                   
               </td>
-              <td class="test-duration">8</td>
+              <td class="test-duration">9</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_putCaptain success">
-              <td class="test-id">11</td>
+              <td class="test-id">12</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; putCaptain putCaptain userRefIsNotAtGuessLeague
                   
               </td>
               <td class="test-duration">5</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_putCaptain success">
-              <td class="test-id">12</td>
+              <td class="test-id">13</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; putCaptain putCaptainuserRefEqualUserRefToAdm
                   
               </td>
-              <td class="test-duration">2</td>
-          </tr>
-          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitCaptain success">
-              <td class="test-id">13</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitCaptain quitCaptain HappyPath
-                  
-              </td>
-              <td class="test-duration">15</td>
+              <td class="test-duration">10</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitCaptain success">
               <td class="test-id">14</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitCaptain quitCaptain HappyPath
+                  
+              </td>
+              <td class="test-duration">6</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitCaptain success">
+              <td class="test-id">15</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitCaptain quitCaptain noGuessLeagueFound
                   
               </td>
               <td class="test-duration">3</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitCaptain success">
-              <td class="test-id">15</td>
+              <td class="test-id">16</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitCaptain quitCaptain noUserFoundAtGuessLeague
                   
               </td>
-              <td class="test-duration">3</td>
-          </tr>
-          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitGuessLeague success">
-              <td class="test-id">16</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague HappyPath
-                  
-              </td>
-              <td class="test-duration">11</td>
+              <td class="test-duration">2</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitGuessLeague success">
               <td class="test-id">17</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague adm Cant Quit
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague HappyPath
                   
               </td>
-              <td class="test-duration">7</td>
+              <td class="test-duration">12</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitGuessLeague success">
               <td class="test-id">18</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague Twice Invited (Duplicated Inviteads)
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague adm Cant Quit
                   
               </td>
-              <td class="test-duration">4</td>
+              <td class="test-duration">6</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitGuessLeague success">
               <td class="test-id">19</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague Twice Invited (Duplicated Inviteads)
+                  
+              </td>
+              <td class="test-duration">5</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_quitGuessLeague success">
+              <td class="test-id">20</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; quitGuessLeague quitGuessLeague Invitator User not at GuessLine
                   
               </td>
               <td class="test-duration">7</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_addUserToGuessLine success">
-              <td class="test-id">20</td>
+              <td class="test-id">21</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; addUserToGuessLine addUserToGuessLine - Success
                   
               </td>
-              <td class="test-duration">6</td>
-          </tr>
-          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_addUserToGuessLine success">
-              <td class="test-id">21</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; addUserToGuessLine addUserToGuessLine Failed - Already Added
-                  
-              </td>
-              <td class="test-duration">3</td>
+              <td class="test-duration">10</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_addUserToGuessLine success">
               <td class="test-id">22</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; addUserToGuessLine addUserToGuessLine Failed - Already Added
+                  
+              </td>
+              <td class="test-duration">2</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_addUserToGuessLine success">
+              <td class="test-id">23</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; addUserToGuessLine addUserToGuessLine Failed - GuessLine Inactive
                   
               </td>
-              <td class="test-duration">3</td>
-          </tr>
-          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLine success">
-              <td class="test-id">23</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLine getGuessLine HappyPath
-                  
-              </td>
-              <td class="test-duration">20</td>
+              <td class="test-duration">4</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLine success">
               <td class="test-id">24</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLine getGuessLine not Found wrong ChampionshipRef
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLine getGuessLine HappyPath
                   
               </td>
-              <td class="test-duration">6</td>
+              <td class="test-duration">22</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLine success">
               <td class="test-id">25</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLine getGuessLine not Found wrong ChampionshipRef
+                  
+              </td>
+              <td class="test-duration">5</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_getGuessLine success">
+              <td class="test-id">26</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; getGuessLine getGuessLine not Found
                   
               </td>
               <td class="test-duration">4</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLine success">
-              <td class="test-id">26</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLine listGuessLine HappyPath
-                  
-              </td>
-              <td class="test-duration">3</td>
-          </tr>
-          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLine success">
               <td class="test-id">27</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLine listGuessLine with Pontuation
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLine listGuessLine HappyPath
                   
               </td>
               <td class="test-duration">4</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLine success">
               <td class="test-id">28</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLine listGuessLine with Pontuation
+                  
+              </td>
+              <td class="test-duration">6</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLine success">
+              <td class="test-id">29</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLine listGuessLine with only Actives
                   
               </td>
               <td class="test-duration">2</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_listGuessLine success">
-              <td class="test-id">29</td>
+              <td class="test-id">30</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; listGuessLine listGuessLine with no guessLinesFound
                   
               </td>
               <td class="test-duration">4</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_Routine_-_Add_New_GuessLine_and_Update_Activity success">
-              <td class="test-id">30</td>
+              <td class="test-id">31</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; Routine - Add New GuessLine and Update Activity Check New GuessLine and Activity change
                   
               </td>
-              <td class="test-duration">18</td>
-          </tr>
-          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_setPredictions success">
-              <td class="test-id">31</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; setPredictions setPredictions HappyPath
-                  
-              </td>
-              <td class="test-duration">27</td>
+              <td class="test-duration">19</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_setPredictions success">
               <td class="test-id">32</td>
-              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; setPredictions setPredictions matchRefDuplicated
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; setPredictions setPredictions HappyPath
                   
               </td>
-              <td class="test-duration">2</td>
+              <td class="test-duration">30</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_setPredictions success">
               <td class="test-id">33</td>
+              <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; setPredictions setPredictions matchRefDuplicated
+                  
+              </td>
+              <td class="test-duration">3</td>
+          </tr>
+          <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_setPredictions success">
+              <td class="test-id">34</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; setPredictions setPredictions someMatchOneHourLess
                   
               </td>
               <td class="test-duration">9</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_setPredictions success">
-              <td class="test-id">34</td>
+              <td class="test-id">35</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; setPredictions setPredictions matchRefDuplicated
                   
               </td>
-              <td class="test-duration">8</td>
+              <td class="test-duration">6</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_userAtGuessLine success">
-              <td class="test-id">35</td>
+              <td class="test-id">36</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; userAtGuessLine userAtGuessLine True
                   
               </td>
               <td class="test-duration">4</td>
           </tr>
           <tr class="show Integrated_Test_&#x3D;&#x3D;&gt;_userAtGuessLine success">
-              <td class="test-id">36</td>
+              <td class="test-id">37</td>
               <td class="test-title">Integrated Test &#x3D;&#x3D;&gt; userAtGuessLine userAtGuessLine False
                   
               </td>
-              <td class="test-duration">2</td>
+              <td class="test-duration">3</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLeagueSchema_Validator success">
-              <td class="test-id">37</td>
+              <td class="test-id">38</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema HappyPath
                   
               </td>
               <td class="test-duration">2</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLeagueSchema_Validator success">
-              <td class="test-id">38</td>
+              <td class="test-id">39</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema withOut Championship Embedded
                   
               </td>
-              <td class="test-duration">2</td>
-          </tr>
-          <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLeagueSchema_Validator success">
-              <td class="test-id">39</td>
-              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema withOut inviteads
-                  
-              </td>
-              <td class="test-duration">0</td>
+              <td class="test-duration">1</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLeagueSchema_Validator success">
               <td class="test-id">40</td>
-              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema withOut guessLeagueName
+              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema withOut inviteads
                   
               </td>
               <td class="test-duration">1</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLeagueSchema_Validator success">
               <td class="test-id">41</td>
+              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema withOut guessLeagueName
+                  
+              </td>
+              <td class="test-duration">1</td>
+          </tr>
+          <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLeagueSchema_Validator success">
+              <td class="test-id">42</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLeagueSchema Validator GuessLeagueSchema with championship subSchema wrong
                   
               </td>
               <td class="test-duration">5</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLineSchema_Validator success">
-              <td class="test-id">42</td>
-              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLineSchema Validator GuessLineSchema HappyPath
-                  
-              </td>
-              <td class="test-duration">0</td>
-          </tr>
-          <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLineSchema_Validator success">
               <td class="test-id">43</td>
-              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLineSchema Validator GuessLineSchema userData Wrong
+              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLineSchema Validator GuessLineSchema HappyPath
                   
               </td>
               <td class="test-duration">1</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLineSchema_Validator success">
               <td class="test-id">44</td>
+              <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLineSchema Validator GuessLineSchema userData Wrong
+                  
+              </td>
+              <td class="test-duration">1</td>
+          </tr>
+          <tr class="show Model_Test_&#x3D;&#x3D;&gt;_GuessLineSchema_Validator success">
+              <td class="test-id">45</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; GuessLineSchema Validator GuessLineSchema championshipData Wrong
                   
               </td>
               <td class="test-duration">1</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_PredictionSchema_Validator success">
-              <td class="test-id">45</td>
+              <td class="test-id">46</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; PredictionSchema Validator PredictionSchema HappyPath
                   
               </td>
-              <td class="test-duration">1</td>
+              <td class="test-duration">2</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_PredictionSchema_Validator success">
-              <td class="test-id">46</td>
+              <td class="test-id">47</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; PredictionSchema Validator PredictionSchema wrongMatchUserRefKey
                   
               </td>
               <td class="test-duration">1</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_PredictionSchema_Validator success">
-              <td class="test-id">47</td>
+              <td class="test-id">48</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; PredictionSchema Validator GuessLineSchema userData Wrong
                   
               </td>
               <td class="test-duration">1</td>
           </tr>
           <tr class="show Model_Test_&#x3D;&#x3D;&gt;_PredictionSchema_Validator success">
-              <td class="test-id">48</td>
+              <td class="test-id">49</td>
               <td class="test-title">Model Test &#x3D;&#x3D;&gt; PredictionSchema Validator GuessLineSchema without UserRef
                   
               </td>
               <td class="test-duration">1</td>
           </tr>
           <tr class="show Schemas_Test_&#x3D;&#x3D;&gt;_setPredictions success">
-              <td class="test-id">49</td>
+              <td class="test-id">50</td>
               <td class="test-title">Schemas Test &#x3D;&#x3D;&gt; setPredictions setPredictions HappyPath
                   
               </td>
               <td class="test-duration">0</td>
           </tr>
           <tr class="show Schemas_Test_&#x3D;&#x3D;&gt;_setPredictions success">
-              <td class="test-id">50</td>
+              <td class="test-id">51</td>
               <td class="test-title">Schemas Test &#x3D;&#x3D;&gt; setPredictions setPredictions homeTeamScoreGuessTooLowSchema
                   
               </td>
-              <td class="test-duration">3</td>
+              <td class="test-duration">2</td>
           </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
-              <td class="test-id">51</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation home team winner (Hit the ScoreBoard)
-                  
-              </td>
-              <td class="test-duration">0</td>
-          </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
               <td class="test-id">52</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation away team winner (Hit the ScoreBoard)
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation home team winner (Hit the ScoreBoard)
                   
               </td>
               <td class="test-duration">0</td>
           </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
               <td class="test-id">53</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation tie (Hit the ScoreBoard)
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation away team winner (Hit the ScoreBoard)
                   
               </td>
-              <td class="test-duration">1</td>
+              <td class="test-duration">0</td>
           </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
               <td class="test-id">54</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation home team winner (Hit only the Winner)
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation tie (Hit the ScoreBoard)
                   
               </td>
-              <td class="test-duration">0</td>
+              <td class="test-duration">8</td>
           </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
               <td class="test-id">55</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation away team winner (Hit only the Winner)
-                  
-              </td>
-              <td class="test-duration">0</td>
-          </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
-              <td class="test-id">56</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation tie (Hit only the Winner)
-                  
-              </td>
-              <td class="test-duration">0</td>
-          </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
-              <td class="test-id">57</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation obj without game result yet
-                  
-              </td>
-              <td class="test-duration">0</td>
-          </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
-              <td class="test-id">58</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation away team winner (Hit nothing)
-                  
-              </td>
-              <td class="test-duration">0</td>
-          </tr>
-          <tr class="show Routine_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
-              <td class="test-id">59</td>
-              <td class="test-title">Routine Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation home team winner (Hit nothing)
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation home team winner (Hit only the Winner)
                   
               </td>
               <td class="test-duration">1</td>
+          </tr>
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+              <td class="test-id">56</td>
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation away team winner (Hit only the Winner)
+                  
+              </td>
+              <td class="test-duration">0</td>
+          </tr>
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+              <td class="test-id">57</td>
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation tie (Hit only the Winner)
+                  
+              </td>
+              <td class="test-duration">0</td>
+          </tr>
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+              <td class="test-id">58</td>
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation obj without game result yet
+                  
+              </td>
+              <td class="test-duration">0</td>
+          </tr>
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+              <td class="test-id">59</td>
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation away team winner (Hit nothing)
+                  
+              </td>
+              <td class="test-duration">1</td>
+          </tr>
+          <tr class="show Routine_Unit_Test_&#x3D;&#x3D;&gt;_calculate_Pontuation success">
+              <td class="test-id">60</td>
+              <td class="test-title">Routine Unit Test &#x3D;&#x3D;&gt; calculate Pontuation calculate Pontuation home team winner (Hit nothing)
+                  
+              </td>
+              <td class="test-duration">0</td>
           </tr>
           </tbody>
       </table>
@@ -1414,10 +1419,10 @@
     </div>    <div id="coverage">
         <h1>Code Coverage Report</h1>
         <div class="stats high">
-            <div class="percentage">94.66%</div>
-            <div class="sloc">2380</div>
-            <div class="hits">2253</div>
-            <div class="misses">127</div>
+            <div class="percentage">94.96%</div>
+            <div class="sloc">2360</div>
+            <div class="hits">2241</div>
+            <div class="misses">119</div>
         </div>
         <div id="filters">
           <input type="checkbox" checked="" onchange="filter(this)" value="generated" id="show-generated">
@@ -10371,142 +10376,6 @@
                 </table>
             </div>
             <div class="file ">
-                <h2 id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js">src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js </h2>
-                <div class="stats medium">
-                    <div class="percentage">64.29%</div>
-                    <div class="sloc">14</div>
-                    <div class="hits">9</div>
-                    <div class="misses">5</div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Line</th>
-                            <th>Lint</th>
-                            <th>Hits</th>
-                            <th>Source</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__1" class="hit">
-                          <td class="line" data-tooltip>1</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">&#x27;use strict&#x27;</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__2" class="hit">
-                          <td class="line" data-tooltip>2</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__3" class="hit">
-                          <td class="line" data-tooltip>3</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">const coincidents &#x3D; require(&#x27;iguess-api-coincidents&#x27;)</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__4" class="hit">
-                          <td class="line" data-tooltip>4</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__5" class="hit">
-                          <td class="line" data-tooltip>5</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">const requestManager &#x3D; coincidents.Managers.requestManager</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__6" class="hit">
-                          <td class="line" data-tooltip>6</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">const holiDomain &#x3D; coincidents.Config.apis.holiUrl</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__7" class="hit">
-                          <td class="line" data-tooltip>7</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__8" class="hit">
-                          <td class="line" data-tooltip>8</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">const getFixtureByChampionshipRefAndFixture &#x3D; (request, language &#x3D; &#x27;en-us&#x27;) &#x3D;&gt; {</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__9" class="chunks">
-                          <td class="line" data-tooltip>9</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"><div>  </div><div class="miss never" data-tooltip>const headersReq &#x3D; {</div></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__10" class="hit">
-                          <td class="line" data-tooltip>10</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">    language,</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__11" class="hit">
-                          <td class="line" data-tooltip>11</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">    &#x27;content-type&#x27;: &#x27;application/json&#x27;</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__12" class="chunks">
-                          <td class="line" data-tooltip>12</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"><div class="miss never" data-tooltip>  }</div></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__13" class="miss">
-                          <td class="line" data-tooltip>13</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source" data-tooltip>  const urlReq &#x3D; &#x60;${holiDomain}/fixture/getFixtureByChampionshipRefAndDate&#x60;</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__14" class="hit">
-                          <td class="line" data-tooltip>14</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__15" class="miss">
-                          <td class="line" data-tooltip>15</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source" data-tooltip>  return requestManager.get(urlReq, headersReq, request)</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__16" class="chunks">
-                          <td class="line" data-tooltip>16</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"><div>    .catch((err) &#x3D;&gt; </div><div class="miss never" data-tooltip>err.error</div><div>)</div></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__17" class="hit">
-                          <td class="line" data-tooltip>17</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">}</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__18" class="hit">
-                          <td class="line" data-tooltip>18</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/repositories/holi/getFixtureByChampionshipRefAndDateRepository.js__19" class="hit">
-                          <td class="line" data-tooltip>19</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">module.exports &#x3D; getFixtureByChampionshipRefAndFixture</td>
-                          
-                        </tr>        </tbody>
-                </table>
-            </div>
-            <div class="file ">
                 <h2 id="src/repositories/holi/getLastRoundRepository.js">src/repositories/holi/getLastRoundRepository.js </h2>
                 <div class="stats high">
                     <div class="percentage">88.24%</div>
@@ -11130,8 +10999,8 @@
                 <h2 id="src/repositories/holi/index.js">src/repositories/holi/index.js </h2>
                 <div class="stats high">
                     <div class="percentage">100%</div>
-                    <div class="sloc">11</div>
-                    <div class="hits">11</div>
+                    <div class="sloc">9</div>
+                    <div class="hits">9</div>
                     <div class="misses">0</div>
                 </div>
                 <table>
@@ -11167,58 +11036,46 @@
                           <td class="line" data-tooltip>4</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip>1</td>
-                          <td class="source">const getFixtureByChampionshipRefAndDateRepository &#x3D; require(&#x27;./getFixtureByChampionshipRefAndDateRepository&#x27;)</td>
+                          <td class="source">const getLastRoundRepository &#x3D; require(&#x27;./getLastRoundRepository&#x27;)</td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__5" class="hit">
                           <td class="line" data-tooltip>5</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip>1</td>
-                          <td class="source">const getLastRoundRepository &#x3D; require(&#x27;./getLastRoundRepository&#x27;)</td>
+                          <td class="source">const getMatchByRefRepository &#x3D; require(&#x27;./getMatchByRefRepository&#x27;)</td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__6" class="hit">
                           <td class="line" data-tooltip>6</td>
                           <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">const getMatchByRefRepository &#x3D; require(&#x27;./getMatchByRefRepository&#x27;)</td>
+                          <td class="hits" data-tooltip></td>
+                          <td class="source"></td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__7" class="hit">
                           <td class="line" data-tooltip>7</td>
                           <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
+                          <td class="hits" data-tooltip>1</td>
+                          <td class="source">module.exports&#x3D; {</td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__8" class="hit">
                           <td class="line" data-tooltip>8</td>
                           <td class="lint empty"></td>
-                          <td class="hits" data-tooltip>1</td>
-                          <td class="source">module.exports&#x3D; {</td>
+                          <td class="hits" data-tooltip></td>
+                          <td class="source">  getAllChampionshipRepository,</td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__9" class="hit">
                           <td class="line" data-tooltip>9</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">  getAllChampionshipRepository,</td>
+                          <td class="source">  getLastRoundRepository,</td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__10" class="hit">
                           <td class="line" data-tooltip>10</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">  getFixtureByChampionshipRefAndDateRepository,</td>
+                          <td class="source">  getMatchByRefRepository</td>
                           
                         </tr>            <tr id="src/repositories/holi/index.js__11" class="hit">
                           <td class="line" data-tooltip>11</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">  getLastRoundRepository,</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/index.js__12" class="hit">
-                          <td class="line" data-tooltip>12</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">  getMatchByRefRepository</td>
-                          
-                        </tr>            <tr id="src/repositories/holi/index.js__13" class="hit">
-                          <td class="line" data-tooltip>13</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
                           <td class="source">}</td>
@@ -17681,10 +17538,10 @@
             <div class="file ">
                 <h2 id="src/routines/updatePontuationsRoutine/routine.js">src/routines/updatePontuationsRoutine/routine.js </h2>
                 <div class="stats medium">
-                    <div class="percentage">54.84%</div>
-                    <div class="sloc">31</div>
-                    <div class="hits">17</div>
-                    <div class="misses">14</div>
+                    <div class="percentage">59.26%</div>
+                    <div class="sloc">27</div>
+                    <div class="hits">16</div>
+                    <div class="misses">11</div>
                 </div>
                 <table>
                     <thead>
@@ -17755,7 +17612,7 @@
                           <td class="line" data-tooltip>10</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip>1</td>
-                          <td class="source">const { getAllChampionshipRepository, getLastRoundRepository, getFixtureByChampionshipRefAndDateRepository } &#x3D; require(&#x27;../../repositories&#x27;)</td>
+                          <td class="source">const { getAllChampionshipRepository, getLastRoundRepository } &#x3D; require(&#x27;../../repositories&#x27;)</td>
                           
                         </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__11" class="hit">
                           <td class="line" data-tooltip>11</td>
@@ -17877,56 +17734,26 @@
                           <td class="hits" data-tooltip></td>
                           <td class="source"></td>
                           
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__31" class="chunks">
+                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__31" class="hit">
                           <td class="line" data-tooltip>31</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source"><div>const updatePredictionsPontuationWithFixtureForced &#x3D; (request) &#x3D;&gt; </div><div class="miss never" data-tooltip>getFixtureByChampionshipRefAndDateRepository(request)</div></td>
+                          <td class="source"></td>
                           
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__32" class="chunks">
+                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__32" class="hit">
                           <td class="line" data-tooltip>32</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"><div>  .then((fixture) &#x3D;&gt; </div><div class="miss never" data-tooltip>getUsersPredictionsFunctions(fixture)</div><div>)</div></td>
-                          
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__33" class="chunks">
-                          <td class="line" data-tooltip>33</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"><div class="miss never" data-tooltip>  .then((predictionsCursorAndFixtureObj) &#x3D;&gt; compareScoreWithPredictionAndSave(predictionsCursorAndFixtureObj))</div></td>
-                          
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__34" class="hit">
-                          <td class="line" data-tooltip>34</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__35" class="hit">
-                          <td class="line" data-tooltip>35</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
-                          
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__36" class="hit">
-                          <td class="line" data-tooltip>36</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip>1</td>
                           <td class="source">module.exports &#x3D; {</td>
                           
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__37" class="hit">
-                          <td class="line" data-tooltip>37</td>
-                          <td class="lint empty"></td>
-                          <td class="hits" data-tooltip></td>
-                          <td class="source">  updatePredictionsPontuationWithFixtureForced,</td>
-                          
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__38" class="hit">
-                          <td class="line" data-tooltip>38</td>
+                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__33" class="hit">
+                          <td class="line" data-tooltip>33</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
                           <td class="source">  cronJob</td>
                           
-                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__39" class="hit">
-                          <td class="line" data-tooltip>39</td>
+                        </tr>            <tr id="src/routines/updatePontuationsRoutine/routine.js__34" class="hit">
+                          <td class="line" data-tooltip>34</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
                           <td class="source">}</td>
