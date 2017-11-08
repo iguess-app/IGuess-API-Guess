@@ -8,7 +8,7 @@ const cronTime = require('./cronTime')
 const { getAllChampionshipRepository, createGuessLineRepository, updateGuessLineActivityRepository } = require('../../repositories')
 
 const fireRoutine = () => {
-  log.info('Add New and UpdateActivity Routine Started')
+  log.info('ROUTINE STARTED: Add New and UpdateActivity')
   return getAllChampionshipRepository()
   .then((championships) => _addGuessLines(championships))
 }

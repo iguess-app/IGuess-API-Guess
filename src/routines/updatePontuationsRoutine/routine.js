@@ -10,6 +10,7 @@ const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithP
 const { getAllChampionshipRepository, getLastRoundRepository } = require('../../repositories')
 
 const fireRoutine = () => {
+  log.info('ROUTINE STARTED: update Pontuations')
   const filter = {
     onlyActive: true
   }
