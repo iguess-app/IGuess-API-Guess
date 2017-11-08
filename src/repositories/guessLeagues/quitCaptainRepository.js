@@ -49,9 +49,14 @@ const _checkErrors = (guessLeagueFound, request, dictionary) => {
 const _deleteCaptainFromCaptainsArray = (guessLeagueFound, request) => {
   const QUANTITY_TO_REMOVE = 1
   const playerIndex = guessLeagueFound.captains.findIndex((captain) => captain === request.userRef)
-  guessLeagueFound.captains.splice(playerIndex, QUANTITY_TO_REMOVE)
+  if (_checkIfIsAtArray(playerIndex)) {
+    guessLeagueFound.captains.splice(playerIndex, QUANTITY_TO_REMOVE)
+  }
 
   return guessLeagueFound
 }
+
+const NOT_AT_ARRAY = -1
+const _checkIfIsAtArray = (index) => index !== NOT_AT_ARRAY
 
 module.exports = quitCaptain

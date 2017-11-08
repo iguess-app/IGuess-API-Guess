@@ -7,6 +7,9 @@ const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const queryUtils = coincidents.Utils.queryUtils
 
+const QUANTITY_TO_REMOVE = 1
+const NOT_AT_ARRAY = -1
+
 const quitGuessLeague = (request, dictionary) => {
   const searchQuery = {
     _id: queryUtils.makeObjectId(request.guessLeagueRef),
@@ -39,11 +42,15 @@ const _checkErrors = (guessLeagueFound, request, dictionary) => {
 }
 
 const _deleteUserFromPlayersArray = (guessLeagueFound, request) => {
-  const QUANTITY_TO_REMOVE = 1
-  const playerIndex = guessLeagueFound.players.findIndex((player) => player === request.userRef)
-  guessLeagueFound.players.splice(playerIndex, QUANTITY_TO_REMOVE)
 
+  const playerIndex = guessLeagueFound.players.findIndex((player) => player === request.userRef)
+  if (_checkIfIsAtArray(playerIndex)) {
+    guessLeagueFound.players.splice(playerIndex, QUANTITY_TO_REMOVE)
+  }
+  
   return guessLeagueFound
 }
+
+const _checkIfIsAtArray = (index) => index !== NOT_AT_ARRAY
 
 module.exports = quitGuessLeague
