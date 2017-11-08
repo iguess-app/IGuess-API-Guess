@@ -15,7 +15,7 @@ const dictionary = coincidents.Translate.gate.selectLanguage()
 
 const GuessLeague = require('../../../../src/models/guessDB/guessesLeaguesModel')
 
-lab.experiment.only('Integrated Test ==> inviteResponse', () => {
+lab.experiment('Integrated Test ==> inviteResponse', () => {
 
   lab.before((done) => {
     const searchQuery = {
