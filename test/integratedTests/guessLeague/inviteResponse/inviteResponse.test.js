@@ -23,6 +23,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
 
   /**
    * IO Test
+   * This test need to 591e5ccca8634f1f9880e8ca be at championship guessLine 5872a8d2ed1b02314e088291 
    * This test need to 591e5ccca8634f1f9880e8ca be at invitead array on guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    * This test need to 591e5ccca8634f1f9880e8ca be not at players array on guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    */
@@ -39,6 +40,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
 
   /**
    * IO Test
+   * This test need to 591e5cdaa8634f1f9880e8cc be at championship guessLine 5872a8d2ed1b02314e088291 
    * This test need to 591e5cdaa8634f1f9880e8cc be at invitead array on guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    */
   lab.test('[IO] inviteResponse (Reponse like Not) HappyPath', (done) => {
@@ -52,4 +54,61 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       })
   })
 
+  /**
+   * IO Test
+   * This test need to 591e5c36a8634f1f9880e8b8 does not be added at championship guessLine 5872a8d2ed1b02314e088291 
+   */
+  lab.test('[IO] inviteResponse user not At GuessLine', (done) => {
+    server.inject(injectedRequests.notAtGuessLine)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.notAtGuessLine)
+        expect(response.statusCode).to.be.equal(statusCode.notFound)
+        done()
+      })
+  })
+
+  /**
+   * IO Test
+   * This test need to 591e5c21a8634f1f9880e8b4 be at championship guessLine 5872a8d2ed1b02314e088291 
+   * This test need to 591e5c21a8634f1f9880e8b4 does not be at guessLeague ObjectId("59c05e253feecf1e2898a3fb") invitead list  
+   */
+  lab.test('[IO] inviteResponse user not At Invitead List', (done) => {
+    server.inject(injectedRequests.userNotAtInviteadsList)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(response.statusCode).to.be.equal(statusCode.forbidden)
+        done()
+      })
+  })
+
+  /**
+   * IO Test
+   * This test need to 59b54e44a7631d433470fee7 be at championship guessLine 5872a8d2ed1b02314e088291 
+   * This test need to 59b54e44a7631d433470fee7 be at guessLeague ObjectId("59c05e253feecf1e2898a3fb") player list  
+   */
+  lab.test('[IO] inviteResponse user already at players List', (done) => {
+    server.inject(injectedRequests.userAlreadyAtPlayersList)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(response.statusCode).to.be.equal(statusCode.forbidden)
+        done()
+      })
+  })
+
+  /**
+   * IO Test
+   * This test need to 591e5ccca8634f1f9880e8ca be at championship guessLine 5872a8d2ed1b02314e088291 
+   */
+  lab.test('[IO] inviteResponse guessLeague Not Found', (done) => {
+    server.inject(injectedRequests.guessLeagueNotFound)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(response.statusCode).to.be.equal(statusCode.forbidden)
+        done()
+      })
+  })
 })
