@@ -32,6 +32,10 @@ const inviteToGuessLeagueRepository = (request, dictionary) => {
 
       return guessLeagueFound.save()
     })
+    .then((guessLeagueUpdated) => ({
+      invitationResponded: true,
+      userAddedToGuessLeague: Boolean(guessLeagueUpdated.players.find((playerRef) => playerRef === request.userRef))
+    }))
 }
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {

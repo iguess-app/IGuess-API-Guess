@@ -16,8 +16,9 @@ const request = Joi.object({
 })
 
 const response = Joi.object({
-  
-}).unknown().meta({
+  invitationResponded: Joi.bool().required(),
+  userAddedToGuessLeague: Joi.bool().required()
+}).meta({
   className: 'Response'
 })
 

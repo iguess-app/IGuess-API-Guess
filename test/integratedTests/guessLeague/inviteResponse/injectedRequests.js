@@ -15,10 +15,10 @@ const happyPathResponseNotRequest = {
   method: 'PATCH',
   url: '/guessleague/inviteResponse',
   payload: {
-    'userRef': '591e5ccca8634f1f9880e8ca',
+    'userRef': '591e5cdaa8634f1f9880e8cc',
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
     'championshipRef': '5872a8d2ed1b02314e088291',
-    'response': true
+    'response': false
   }
 }
 
