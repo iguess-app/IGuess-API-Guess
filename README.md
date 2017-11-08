@@ -19,6 +19,8 @@ The Guess Microservice have a user to guessDB Read and Write and to the holiDB r
 * The file index.js is a pattern to export file
 * There are no console.log or console.error, all console used is from Pino, a NPM installed
 * The requires libs and variables at top file mandatorily need to follow the sequence: NPM modules, localFiles, Global Variables, Variables
+* To all tests that is IO (InputOutput) tests, you must comment a description about the IO, like if a document need to exist in a DB
+* To all IO tests, at test name it necessary to put [IO] at prefix
 
 ## Language
 All functions and variables need to be in English
