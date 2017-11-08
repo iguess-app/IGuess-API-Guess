@@ -15,7 +15,9 @@ const request = Joi.object({
   className: 'Request'
 })
 
-const response = Joi.object({}).unknown().meta({
+const response = Joi.object({
+  
+}).unknown().meta({
   className: 'Response'
 })
 

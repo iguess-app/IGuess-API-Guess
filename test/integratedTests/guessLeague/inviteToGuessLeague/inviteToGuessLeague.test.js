@@ -26,7 +26,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
    * This test need to have 59b54e44a7631d433470fee7 like a captain from guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    * This test need to have 591e5c3fa8634f1f9880e8ba at invitead array on guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    */
-  lab.test('inviteToGuessLeague HappyPath', (done) => {
+  lab.test('[IO] inviteToGuessLeague HappyPath', (done) => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -42,7 +42,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
    * This test need to have 59b54e44a7631d433470fee7 like a captain from guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    * This test need to 591e5c36a8634f1f9880e8b8 does not be added at championship guessLine 5872a8d2ed1b02314e088291 
    */
-  lab.test('inviteToGuessLeague not At GuessLine', (done) => {
+  lab.test('[IO] inviteToGuessLeague not At GuessLine', (done) => {
     server.inject(injectedRequests.notAtGuessLine)
       .then((response) => {
         const result = response.result
@@ -57,7 +57,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
    * This test need to have 59b54e44a7631d433470fee7 like a captain from guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    * This test need to 591e5c98a8634f1f9880e8c4 added at ObjectId("59c05e253feecf1e2898a3fb") GuessLeague inviteads array
    */
-  lab.test('inviteToGuessLeague already At Invitead List', (done) => {
+  lab.test('[IO] inviteToGuessLeague already At Invitead List', (done) => {
     server.inject(injectedRequests.alreadyAtInviteadList)
       .then((response) => {
         const result = response.result
@@ -72,7 +72,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
    * This test need to have 59b54e44a7631d433470fee7 like a captain from guessLeague ObjectId("59c05e253feecf1e2898a3fb")
    * This test need to 591e5bbba8634f1f9880e8aa added at ObjectId("59c05e253feecf1e2898a3fb") GuessLeague players array
    */
-  lab.test('inviteToGuessLeague already Add', (done) => {
+  lab.test('[IO] inviteToGuessLeague already Add', (done) => {
     server.inject(injectedRequests.alreadyAdd)
       .then((response) => {
         const result = response.result
@@ -89,7 +89,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
    * not added at captains array
    * And need to 591e5c63a8634f1f9880e8c0 be added at championship guessLine 5872a8d2ed1b02314e088291 
    */
-  lab.test('inviteToGuessLeague not Captain Try To Add', (done) => {
+  lab.test('[IO] inviteToGuessLeague not Captain Try To Add', (done) => {
     server.inject(injectedRequests.notCaptainTryToAdd)
       .then((response) => {
         const result = response.result
