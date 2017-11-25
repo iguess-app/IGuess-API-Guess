@@ -52,7 +52,7 @@ lab.experiment('Integrated Test ==> setPredictions', () => {
     })
   })
 
-  lab.test('setPredictions matchRefDuplicated', (done) => {
+  lab.test('setPredictions allMatchOneHourLess', (done) => {
     server.inject(injectedRequests.allMatchOneHourLess)
     .then((response) => {
       const result = response.result
