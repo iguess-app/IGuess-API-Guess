@@ -126,5 +126,4 @@ module.exports = getGuessLine
 /*eslint no-magic-numbers: 0*/
 
 
-//TODO: Added JSDoc to all this functions
 //TODO: Fazer teste com prediction=undefined

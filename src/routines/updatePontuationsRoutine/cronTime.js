@@ -1,9 +1,9 @@
 'use strict'
 
-//1am every day (São Paulo - Brazil)
+//every minute, with 0 seconds (São Paulo - Brazil)
 const Seconds = 0
-const Minutes = 0
-const Hours = 1
+const Minutes = '*'
+const Hours = '*'
 const fullHour = `${Seconds} ${Minutes} ${Hours}`
 const dayOfMonth = '*'
 const months = '*'
