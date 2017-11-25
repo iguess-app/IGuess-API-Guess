@@ -65,7 +65,8 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
       homeTeamScore: match.homeTeamScore,
       awayTeamScore: match.awayTeamScore,
       homeTeam: match.homeTeam,
-      awayTeam: match.awayTeam
+      awayTeam: match.awayTeam,
+      ended: match.ended
     }
     if (prediction) {
       matchObj.awayTeamScoreGuess = prediction.guess.awayTeamScoreGuess
