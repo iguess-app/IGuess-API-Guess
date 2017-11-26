@@ -1,16 +1,13 @@
 'use strict'
 
-const CronJob = require('cron').CronJob
 const log = require('iguess-api-coincidents').Managers.logManager
 
-const cronTime = require('./cronTime')
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
-
 const { getAllChampionshipRepository, getLastRoundRepository } = require('../../repositories')
 
 const fireRoutine = () => {
-  log.info('ROUTINE STARTED: update Pontuations')
+  log.info('==================> ROUTINE STARTED: update Pontuations <==================')
   const filter = {
     onlyActive: true
   }
@@ -27,9 +24,5 @@ const fireRoutine = () => {
     ).catch((err) => log.error(err))
 }
 
-const cronJob = () => new CronJob(cronTime, fireRoutine, null, true, 'America/Sao_Paulo')
-
-
-module.exports = {
-  cronJob
-}
+const TEN_SECONDS = 10000
+setInterval(fireRoutine, TEN_SECONDS)
