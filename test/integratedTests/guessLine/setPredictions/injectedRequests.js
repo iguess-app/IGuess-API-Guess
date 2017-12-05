@@ -3,11 +3,11 @@ const happyPathRequest = {
   url: '/guessline/setPredictions',
   headers: {
     'language': 'pt-br',
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    'token': '591df6c78d1fdc0bb4eba371'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
-    userRef: '591df6c78d1fdc0bb4eba371',
     guesses: [
       {
         matchRef: '59d1475c70dc031ae0973f5b',
@@ -33,11 +33,11 @@ const matchRefDuplicated = {
   url: '/guessline/setPredictions',
   headers: {
     'language': 'en-us',
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    'token': '591df6c78d1fdc0bb4eba371'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
-    userRef: '591df6c78d1fdc0bb4eba371',
     guesses: [{
         matchRef: '5872a51a4db3fb378bc7ee17',
         homeTeamScoreGuess: 1,
@@ -67,11 +67,11 @@ const someMatchOneHourLess = {
   url: '/guessline/setPredictions',
   headers: {
     'language': 'en-us',
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    'token': '591df6c78d1fdc0bb4eba371'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
-    userRef: '591df6c78d1fdc0bb4eba371',
     guesses: [{
         matchRef: '59d1475c70dc031ae0973f53',
         homeTeamScoreGuess: 1,
@@ -91,11 +91,11 @@ const allMatchOneHourLess = {
   url: '/guessline/setPredictions',
   headers: {
     'language': 'en-us',
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    'token': '591df6c78d1fdc0bb4eba371'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
-    userRef: '591df6c78d1fdc0bb4eba371',
     guesses: [{
         matchRef: '59d1475c70dc031ae0973f53',
         homeTeamScoreGuess: 1,

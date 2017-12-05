@@ -5,11 +5,14 @@ const Promise = require('bluebird')
 const moment = require('moment')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
+const sessionManager = require('../../managers/sessionManager')
 const { getMatchByRefRepository, setPredictionsRepository } = require('../../repositories')
 
-const setPredictions = (request, headers) => {
+const setPredictions = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   _checkIfThereAreDuplicatedMatchRef(request.guesses, dictionary)
+  const session = await sessionManager.getSession(headers.token, dictionary)
+  request.userRef = session.userRef
 
   return _joinMatchWithGuess(request.guesses, dictionary)
   .then((guessJoinedWithMatch) => { request.guesses = guessJoinedWithMatch })

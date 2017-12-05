@@ -4,6 +4,7 @@ const Lab = require('lab')
 const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/setPredictions/setPredictionsSchemaResponse')
@@ -21,44 +22,53 @@ lab.experiment('Integrated Test ==> setPredictions', () => {
       .then(() => done())
   })
 
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
+
   lab.test('setPredictions HappyPath', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)
     server.inject(injectedRequests.happyPathRequest)
-    .then((response) => {
-      const result = response.result
-      expect(result.alertMessage).to.be.equal('')
-      Joi.validate(result, schemaValidate, (err) => {
-        expect(err).to.be.equal(null)
-        done()
+      .then((response) => {
+        const result = response.result
+        expect(result.alertMessage).to.be.equal('')
+        Joi.validate(result, schemaValidate, (err) => {
+          expect(err).to.be.equal(null)
+          done()
+        })
       })
-    })
   })
 
   lab.test('setPredictions matchRefDuplicated', (done) => {
+    stubs.stubSessionRedis(injectedRequests.matchRefDuplicated.headers.token)
     server.inject(injectedRequests.matchRefDuplicated)
-    .then((response) => {
-      const result = response.result
-      expect(result.statusCode).to.be.equal(statusCode.notAcceptable)
-      expect(result.message).to.be.equal(dictionary.matchDuplicated)
-      done()
-    })
+      .then((response) => {
+        const result = response.result
+        expect(result.statusCode).to.be.equal(statusCode.notAcceptable)
+        expect(result.message).to.be.equal(dictionary.matchDuplicated)
+        done()
+      })
   })
 
-   lab.test('setPredictions someMatchOneHourLess', (done) => {
+  lab.test('setPredictions someMatchOneHourLess', (done) => {
+    stubs.stubSessionRedis(injectedRequests.someMatchOneHourLess.headers.token)
     server.inject(injectedRequests.someMatchOneHourLess)
-    .then((response) => {
-      const result = response.result
-      expect(result.alertMessage).to.be.equal(dictionary.someMatchesoneHourOff)
-      done()
-    })
+      .then((response) => {
+        const result = response.result
+        expect(result.alertMessage).to.be.equal(dictionary.someMatchesoneHourOff)
+        done()
+      })
   })
 
   lab.test('setPredictions allMatchOneHourLess', (done) => {
+    stubs.stubSessionRedis(injectedRequests.allMatchOneHourLess.headers.token)
     server.inject(injectedRequests.allMatchOneHourLess)
-    .then((response) => {
-      const result = response.result
-      expect(result.statusCode).to.be.equal(statusCode.unauthorized)
-      expect(result.message).to.be.equal(dictionary.allMatchesoneHourOff)
-      done()
-    })
+      .then((response) => {
+        const result = response.result
+        expect(result.statusCode).to.be.equal(statusCode.unauthorized)
+        expect(result.message).to.be.equal(dictionary.allMatchesoneHourOff)
+        done()
+      })
   })
 })
