@@ -2,8 +2,8 @@
 
 const Joi = require('joi')
 
-const defaultHeaderSchema = Joi.object({
+const defaultSessionHeaderSchema = Joi.object({
   language: Joi.string().default('en-us')
 }).unknown()
 
-module.exports = defaultHeaderSchema
+module.exports = defaultSessionHeaderSchema

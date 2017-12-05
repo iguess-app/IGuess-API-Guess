@@ -2,7 +2,7 @@
 
 const guessLeagueController = require('../../controllers/guessLeagueController')
 const server = require('../../../configServer')
-const defaultHeaderSchema = require('../schemas/defaultHeaderSchema')
+const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema')
 const createGuessLeagueSchema = require('../schemas/guessLeague/createGuessLeague/createGuessLeagueSchema')
 
 server.route({
@@ -15,7 +15,7 @@ server.route({
     },
     validate: {
       payload: createGuessLeagueSchema.request,
-      headers: defaultHeaderSchema
+      headers: defaultSessionHeaderSchema
     },
     response: {
       schema: createGuessLeagueSchema.response
