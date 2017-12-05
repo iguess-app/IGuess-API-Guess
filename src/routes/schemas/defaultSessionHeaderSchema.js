@@ -6,4 +6,12 @@ const defaultSessionHeaderSchema = Joi.object({
   language: Joi.string().default('en-us')
 }).unknown()
 
-module.exports = defaultSessionHeaderSchema
+const tempHeader = Joi.object({
+  language: Joi.string().default('en-us'),
+  token: Joi.string().required()
+}).unknown()
+
+module.exports = {
+  defaultSessionHeaderSchema,
+  tempHeader
+}

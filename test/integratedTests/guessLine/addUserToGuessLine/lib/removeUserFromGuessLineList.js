@@ -9,7 +9,7 @@ const removeUserFromGuessLineList = () => {
   const searchQuery = {
     'championship.championshipRef': happyPathRequest.payload.championshipRef,
     'usersAddedAtGuessLine': {
-      '$in': [happyPathRequest.payload.userRef]
+      '$in': [happyPathRequest.headers.token]
     }
   }
   return GuessLine.findOne(searchQuery)

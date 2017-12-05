@@ -2,7 +2,7 @@
 
 const guessLeagueController = require('../../controllers/guessLeagueController')
 const server = require('../../../configServer')
-const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema')
+const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').defaultSessionHeaderSchema
 const inviteToGuessLeagueSchema = require('../schemas/guessLeague/inviteToGuessLeague/inviteToGuessLeagueSchema')
 const inviteResponseSchema = require('../schemas/guessLeague/inviteResponse/inviteResponseSchema')
 

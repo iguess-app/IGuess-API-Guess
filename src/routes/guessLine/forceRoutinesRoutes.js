@@ -3,7 +3,7 @@
 const addAndUpdateActivityGuessLinesRoutine = require('../../routines/addNewAndUpdateGuessLinesActivityRoutine/addAndUpdateActivityGuessLinesRoutine').getAllchampionshipFromHoli
 const updateGuessLinesPredictionsPontuationsRoutine = require('../../routines/updatePontuationsRoutine/routine').updatePredictionsPontuationWithFixtureForced
 const server = require('../../../configServer')
-const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema')
+const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').defaultSessionHeaderSchema
 const updateGuessLinesPredictionsPontuationsSchemaRequest = require('../schemas/guessLine/forceRoutines/updateGuessLinesPredictionsPontuationsSchemaRequest')
 
 server.route({

@@ -2,7 +2,7 @@
 
 const guessLineController = require('../../controllers/guessLineController')
 const server = require('../../../configServer')
-const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema')
+const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').defaultSessionHeaderSchema
 const listGuessesLinesSchema = require('../schemas/guessLine/getGuessLine/listGuessesLinesSchema')
 
 server.route({

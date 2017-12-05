@@ -4,6 +4,7 @@ const Joi = require('joi')
 const Lab = require('lab')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('./lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/addUserToGuessLine/addUserToGuessLineSchemaResponse').schema
@@ -16,12 +17,17 @@ const dictionary = coincidents.Translate.gate.selectLanguage()
 
 lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
 
-   lab.before((done) => {
+  lab.before((done) => {
     removeUserFromGuessLineList()
     .then(() => done())
   })
 
+  lab.afterEach((done) => {
+    stubs.restoreStub()
+    done()
+  })
   lab.test('addUserToGuessLine - Success', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -34,6 +40,7 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
   })
 
   lab.test('addUserToGuessLine Failed - Already Added', (done) => {
+    stubs.stubSessionRedis(injectedRequests.alreadyAdded.headers.token)
     server.inject(injectedRequests.alreadyAdded)
       .then((response) => {
         const result = response.result
@@ -44,6 +51,7 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
   })
 
   lab.test('addUserToGuessLine Failed - GuessLine Inactive', (done) => {
+    stubs.stubSessionRedis(injectedRequests.guessLineInactive.headers.token)
     server.inject(injectedRequests.guessLineInactive)
       .then((response) => {
         const result = response.result

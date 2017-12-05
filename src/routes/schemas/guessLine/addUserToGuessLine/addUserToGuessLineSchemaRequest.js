@@ -7,8 +7,7 @@ const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
 
 const addUserToGuessLineSchemaRequest = Joi.object({
-  championshipRef: Joi.string().length(ID_SIZE).required(),
-  userRef: Joi.string().length(ID_SIZE).required()
+  championshipRef: Joi.string().length(ID_SIZE).required()
 })
 
 module.exports = addUserToGuessLineSchemaRequest
