@@ -10,7 +10,6 @@ const ID_SIZE = Config.mongo.idStringSize
 const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
 
 const request = Joi.object({
-  userRef: Joi.string().length(ID_SIZE).required(),
   championshipRef: Joi.string().length(ID_SIZE),
   page: Joi.string().valid(['previous', 'next', 'near']).default('near')
 })

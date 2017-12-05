@@ -4,15 +4,18 @@ const coincidents = require('iguess-api-coincidents')
 const moment = require('moment')
 const Promise = require('bluebird')
 
+const sessionManager = require('../../managers/sessionManager')
+const { getPredictionsRepository, getGuessLineRepository, getLastRoundRepository } = require('../../repositories')
+
 const cacheManager = coincidents.Managers.cacheManager
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
-const { getPredictionsRepository, getGuessLineRepository, getLastRoundRepository } = require('../../repositories')
-
-const getGuessLine = (request, headers) => {
+const getGuessLine = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   moment.locale(headers.language)
+  const session = await sessionManager.getSession(headers.token, dictionary)
+  request.userRef = session.userRef
 
   return getGuessLineRepository(request, dictionary)
     .then((guessLine) => _getPontuationAndSomeMatchDay(guessLine, request, dictionary))
