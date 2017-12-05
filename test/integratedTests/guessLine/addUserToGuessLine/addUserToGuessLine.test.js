@@ -4,7 +4,7 @@ const Joi = require('joi')
 const Lab = require('lab')
 const coincidents = require('iguess-api-coincidents')
 
-const stubs = require('./lib/stubs')
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/addUserToGuessLine/addUserToGuessLineSchemaResponse').schema
@@ -19,13 +19,14 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
 
   lab.before((done) => {
     removeUserFromGuessLineList()
-    .then(() => done())
+      .then(() => done())
   })
 
   lab.afterEach((done) => {
-    stubs.restoreStub()
+    stubs.restoreSessionRedisStub()
     done()
   })
+
   lab.test('addUserToGuessLine - Success', (done) => {
     stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)
     server.inject(injectedRequests.happyPathRequest)

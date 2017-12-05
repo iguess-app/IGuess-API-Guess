@@ -2,7 +2,7 @@
 
 const guessLineController = require('../../controllers/guessLineController')
 const server = require('../../../configServer')
-const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').defaultSessionHeaderSchema
+const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').tempHeader
 const availabilitySchema = require('../schemas/guessLine/availability/availabilitySchema')
 
 server.route({
@@ -10,7 +10,6 @@ server.route({
   method: 'GET',
   config: {
     handler: (request, reply) => {
-
       guessLineController.userAtGuessLine(request, reply)
     },
     validate: {

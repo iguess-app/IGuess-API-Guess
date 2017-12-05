@@ -2,8 +2,8 @@
 
 const Joi = require('joi')
 const Lab = require('lab')
-const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/availability/availabilitySchema').response.schema
@@ -12,8 +12,14 @@ const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 
 lab.experiment('Integrated Test ==> userAtGuessLine', () => {
+  
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
 
   lab.test('userAtGuessLine True', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequestUserAtGuessLine.headers.token)
     server.inject(injectedRequests.happyPathRequestUserAtGuessLine)
       .then((response) => {
         const result = response.result
@@ -26,6 +32,7 @@ lab.experiment('Integrated Test ==> userAtGuessLine', () => {
   })
 
   lab.test('userAtGuessLine False', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathUserIsntAtGuessLine.headers.token)
     server.inject(injectedRequests.happyPathUserIsntAtGuessLine)
       .then((response) => {
         const result = response.result

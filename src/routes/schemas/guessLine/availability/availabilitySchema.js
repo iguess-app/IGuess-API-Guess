@@ -15,8 +15,6 @@ const request = Joi.object({
 const response = {
   schema: Joi.object({
     userRefAtGuessLineList: Joi.bool().required()
-  }).meta({
-    className: 'Response'
   })
 }
 
