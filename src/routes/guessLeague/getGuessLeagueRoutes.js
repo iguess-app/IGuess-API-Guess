@@ -16,6 +16,9 @@ server.route({
     validate: {
       query: getGuessLeagueSchema.request,
       headers: defaultSessionHeaderSchema
+    },
+    response: {
+      schema: getGuessLeagueSchema.response
     }
   }
 })

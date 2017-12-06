@@ -12,8 +12,9 @@ const createGuessLeague = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
   const session = await sessionManager.getSession(headers.token, dictionary)
   payload.userRef = session.userRef
-  _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary, payload.userRef)
 
+  _checkIfThereAreDuplicatedUserRefInvited(payload.userRefInviteads, dictionary, payload.userRef)
+  
   return verifyUserAtGuessLineRepository(payload, dictionary)
     .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
     .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))

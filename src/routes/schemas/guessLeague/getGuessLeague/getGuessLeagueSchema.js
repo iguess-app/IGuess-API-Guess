@@ -9,10 +9,7 @@ const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
 
 const request = Joi.object({
-  userRef: Joi.string().required().length(ID_SIZE),
   guessLeagueRef: Joi.string().length(ID_SIZE)
-}).meta({
-  className: 'Request'
 })
 
 const response = Joi.object({
@@ -24,8 +21,6 @@ const response = Joi.object({
     totalPontuation: Joi.number().required()
   })),
   captains: Joi.array().items(Joi.string().length(ID_SIZE))
-}).meta({
-  className: 'Response'
 })
 
 module.exports = {

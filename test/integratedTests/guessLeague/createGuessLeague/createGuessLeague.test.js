@@ -30,7 +30,6 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
     done()
   })
 
-
   lab.test('createGuessLeague HappyPath', (done) => {
     stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)    
     server.inject(injectedRequests.happyPathRequest)

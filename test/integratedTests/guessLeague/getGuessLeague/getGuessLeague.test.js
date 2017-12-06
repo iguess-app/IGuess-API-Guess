@@ -4,6 +4,7 @@ const Joi = require('joi')
 const Lab = require('lab')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/getGuessLeague/getGuessLeagueSchema').response
@@ -15,7 +16,13 @@ const dictionary = coincidents.Translate.gate.selectLanguage()
 
 lab.experiment('Integrated Test ==> getGuessLeague', () => {
 
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
+
   lab.test('getGuessLeague HappyPath', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)    
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -27,6 +34,7 @@ lab.experiment('Integrated Test ==> getGuessLeague', () => {
   })
 
   lab.test('getGuessLeague happyPath WithOut guessLeague', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathWithOutGuessLeague.headers.token)    
     server.inject(injectedRequests.happyPathWithOutGuessLeague)
       .then((response) => {
         const result = response.result
@@ -38,6 +46,7 @@ lab.experiment('Integrated Test ==> getGuessLeague', () => {
   })
 
   lab.test('getGuessLeague noGuessLeagues', (done) => {
+    stubs.stubSessionRedis(injectedRequests.noGuessLeagues.headers.token)    
     server.inject(injectedRequests.noGuessLeagues)
       .then((response) => {
         const result = response.result

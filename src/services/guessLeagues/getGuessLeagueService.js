@@ -3,10 +3,13 @@
 const Promise = require('bluebird')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
+const sessionManager = require('../../managers/sessionManager')
 const { getPredictionsRepository, getGuessLeagueRepository } = require('../../repositories')
 
-const getGuessLeague = (payload, headers) => {
+const getGuessLeague = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
+  const session = await sessionManager.getSession(headers.token, dictionary)
+  payload.userRef = session.userRef
 
   return getGuessLeagueRepository(payload, dictionary)
     .then((guessesLeagues) => _getUsersPontuationsByGuessLeague(guessesLeagues))
