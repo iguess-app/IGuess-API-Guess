@@ -21,7 +21,7 @@ module.exports = () => {
 }
 
 const _doHappyPathReponseYesPreTest = (guessLeagueFound) => {
-  const happyPathYesResponseUserRef = injectedRequests.happyPathResponseYesRequest.payload.userRef
+  const happyPathYesResponseUserRef = injectedRequests.happyPathResponseYesRequest.headers.token
   const index = guessLeagueFound.players.findIndex((playerRef) => happyPathYesResponseUserRef === playerRef)
   if (index !== NOT_AT_ARRAY) {
     guessLeagueFound.players.splice(index, QUANTITY_TO_REMOVE)
@@ -33,7 +33,7 @@ const _doHappyPathReponseYesPreTest = (guessLeagueFound) => {
 }
 
 const _doHappyPathReponseNotPreTest = (guessLeagueFound) => {
-  const happyPathNotResponseUserRef = injectedRequests.happyPathResponseNotRequest.payload.userRef
+  const happyPathNotResponseUserRef = injectedRequests.happyPathResponseNotRequest.headers.token
   if (guessLeagueFound.inviteads.indexOf(happyPathNotResponseUserRef) === NOT_AT_ARRAY) {
     guessLeagueFound.inviteads.push(happyPathNotResponseUserRef)
   }
