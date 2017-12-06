@@ -14,10 +14,9 @@ const createGuessLeague = (request, reply) => {
 }
 
 const listGuessLeagues = (request, reply) => {
-  const payload = request.query
   const headers = request.headers
 
-  guessLeaguesServices.listGuessLeagueService(payload, headers)
+  guessLeaguesServices.listGuessLeagueService(headers)
     .then((response) => reply(response))
     .catch((err) => reply(err))
 }

@@ -4,6 +4,7 @@ const Joi = require('joi')
 const Lab = require('lab')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/listGuessLeague/listGuessLeagueSchema').response
@@ -15,7 +16,13 @@ const dictionary = coincidents.Translate.gate.selectLanguage()
 
 lab.experiment('Integrated Test ==> listGuessLeague', () => {
 
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
+  
   lab.test('listGuessLeague HappyPath', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)    
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -27,6 +34,7 @@ lab.experiment('Integrated Test ==> listGuessLeague', () => {
   })
 
   lab.test('listGuessLeague anyGuessLeagueFound', (done) => {
+    stubs.stubSessionRedis(injectedRequests.anyGuessLeagueFound.headers.token)    
     server.inject(injectedRequests.anyGuessLeagueFound)
       .then((response) => {
         const result = response.result
