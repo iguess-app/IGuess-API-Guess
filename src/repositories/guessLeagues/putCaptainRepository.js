@@ -11,11 +11,11 @@ const putCaptain = (request, dictionary) => {
   const searchQuery = {
     _id: queryUtils.makeObjectId(request.guessLeagueRef),
     players: {
-      $in: [request.userRef, request.userRefToAdm]
+      $in: [request.userRef, request.userRefToCaptain]
     },
     captains: {
       $in: [request.userRef],
-      $nin: [request.userRefToAdm]
+      $nin: [request.userRefToCaptain]
     }
   }
 
@@ -26,7 +26,7 @@ const putCaptain = (request, dictionary) => {
   return GuessLeague.findOne(searchQuery, projectionQuery)
     .then((guessLeagueFound) => {
       _checkErrors(guessLeagueFound, request, dictionary)
-      guessLeagueFound.captains.push(request.userRefToAdm)
+      guessLeagueFound.captains.push(request.userRefToCaptain)
 
       return guessLeagueFound.save()
     })

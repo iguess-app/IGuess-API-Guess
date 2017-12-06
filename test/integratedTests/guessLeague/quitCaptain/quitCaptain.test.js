@@ -4,6 +4,7 @@ const Lab = require('lab')
 const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/captain/quitCaptainSchema').response
@@ -28,7 +29,13 @@ lab.experiment('Integrated Test ==> quitCaptain', () => {
       .then(() => done())
   })
 
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
+
   lab.test('quitCaptain HappyPath', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)    
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -41,6 +48,7 @@ lab.experiment('Integrated Test ==> quitCaptain', () => {
   })
 
   lab.test('quitCaptain noGuessLeagueFound', (done) => {
+    stubs.stubSessionRedis(injectedRequests.noGuessLeagueFound.headers.token)    
     server.inject(injectedRequests.noGuessLeagueFound)
       .then((response) => {
         const result = response.result
@@ -51,6 +59,7 @@ lab.experiment('Integrated Test ==> quitCaptain', () => {
   })
 
   lab.test('quitCaptain noUserFoundAtGuessLeague', (done) => {
+    stubs.stubSessionRedis(injectedRequests.noUserFoundAtGuessLeague.headers.token)    
     server.inject(injectedRequests.noUserFoundAtGuessLeague)
       .then((response) => {
         const result = response.result

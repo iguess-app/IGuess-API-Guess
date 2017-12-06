@@ -5,8 +5,10 @@ const happyPathRequest = {
   url: '/guessleague/putCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
-    'userRef': '59b54e44a7631d433470fee7',
-    'userRefToAdm': '5932d84626fee5502cb422d6'
+    'userRefToCaptain': '5932d84626fee5502cb422d6'
+  },
+  headers: {
+    token: '59b54e44a7631d433470fee7'
   }
 }
 
@@ -15,23 +17,27 @@ const userInvitedIsAlreadyAdm = {
   url: '/guessleague/putCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
-    'userRef': '59b54e44a7631d433470fee7',
-    'userRefToAdm': '591df6c78d1fdc0bb4eba371'
+    'userRefToCaptain': '591df6c78d1fdc0bb4eba371'
+  },
+  headers: {
+    token: '59b54e44a7631d433470fee7'
   }
 }
 
-const userRefEqualUserRefToAdm = {
+const userRefEqualuserRefToCaptain = {
   method: 'PATCH',
   url: '/guessleague/putCaptain',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb',
-    'userRef': '59b54e44a7631d433470fee7',
-    'userRefToAdm': '59b54e44a7631d433470fee7'
+    'userRefToCaptain': '59b54e44a7631d433470fee7'
+  },
+  headers: {
+    token: '59b54e44a7631d433470fee7'
   }
 }
 
 module.exports = {
   happyPathRequest,
   userInvitedIsAlreadyAdm,
-  userRefEqualUserRefToAdm
+  userRefEqualuserRefToCaptain
 }

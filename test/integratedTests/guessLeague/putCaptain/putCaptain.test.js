@@ -4,6 +4,7 @@ const Lab = require('lab')
 const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/captain/putCaptainSchema').response
@@ -23,7 +24,13 @@ lab.experiment('Integrated Test ==> putCaptain', () => {
       .then(() => done())
   })
 
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
+
   lab.test('putCaptain HappyPath', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)    
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -35,24 +42,26 @@ lab.experiment('Integrated Test ==> putCaptain', () => {
       })
   })
 
-     lab.test('putCaptain userRefIsNotAtGuessLeague', (done) => {
-      server.inject(injectedRequests.userInvitedIsAlreadyAdm)
-        .then((response) => {
-          const result = response.result
-          expect(result.message).to.be.equal(dictionary.anyGuessLeagueFound)
-          expect(response.statusCode).to.be.equal(statusCode.notFound)
-          done()
-        })
-    })
+  lab.test('putCaptain userRefIsNotAtGuessLeague', (done) => {
+    stubs.stubSessionRedis(injectedRequests.userInvitedIsAlreadyAdm.headers.token)    
+    server.inject(injectedRequests.userInvitedIsAlreadyAdm)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.anyGuessLeagueFound)
+        expect(response.statusCode).to.be.equal(statusCode.notFound)
+        done()
+      })
+  })
 
-    lab.test('putCaptainuserRefEqualUserRefToAdm', (done) => {
-      server.inject(injectedRequests.userRefEqualUserRefToAdm)
-        .then((response) => {
-          const result = response.result
-          expect(result.message).to.be.equal(dictionary.youCantBeTheUserAndUserAdm)
-          expect(response.statusCode).to.be.equal(statusCode.conflict)
-          done()
-        })
-    })
+  lab.test('putCaptainuserRefEqualuserRefToCaptain', (done) => {
+    stubs.stubSessionRedis(injectedRequests.userRefEqualuserRefToCaptain.headers.token)    
+    server.inject(injectedRequests.userRefEqualuserRefToCaptain)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.youCantBeTheUserAndUserAdm)
+        expect(response.statusCode).to.be.equal(statusCode.conflict)
+        done()
+      })
+  })
 
 })
