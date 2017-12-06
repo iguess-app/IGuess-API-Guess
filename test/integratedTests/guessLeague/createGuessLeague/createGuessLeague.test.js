@@ -4,6 +4,7 @@ const Lab = require('lab')
 const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
+const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/createGuessLeague/createGuessLeagueSchema').response
@@ -24,7 +25,14 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       .then(() => done())
   })
 
+  lab.afterEach((done) => {
+    stubs.restoreSessionRedisStub()
+    done()
+  })
+
+
   lab.test('createGuessLeague HappyPath', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)    
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
@@ -37,6 +45,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
   })
 
   lab.test('createGuessLeague Twice Invited (Adm inviting himself)', (done) => {
+    stubs.stubSessionRedis(injectedRequests.admInvitingHimself.headers.token)    
     server.inject(injectedRequests.admInvitingHimself)
       .then((response) => {
         const result = response.result
@@ -47,6 +56,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
   })
 
   lab.test('createGuessLeague Twice Invited (Duplicated Inviteads)', (done) => {
+    stubs.stubSessionRedis(injectedRequests.duplicatedInviteads.headers.token)    
     server.inject(injectedRequests.duplicatedInviteads)
       .then((response) => {
         const result = response.result
@@ -57,6 +67,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
   })
 
   lab.test('createGuessLeague Invitator User not at GuessLine', (done) => {
+    stubs.stubSessionRedis(injectedRequests.invitatorUserNotAtGussLine.headers.token)    
     server.inject(injectedRequests.invitatorUserNotAtGussLine)
       .then((response) => {
         const result = response.result

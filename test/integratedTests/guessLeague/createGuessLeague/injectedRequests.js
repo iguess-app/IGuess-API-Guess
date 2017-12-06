@@ -6,8 +6,11 @@ const happyPathRequest = {
   payload: {
     'guessLeagueName': 'Integrated Test GuessLeague',
     'championshipRef': '5872a8d2ed1b02314e088291',
-    'userRef': '59b54e44a7631d433470fee7',
+
     'userRefInviteads': []
+  },
+  headers: {
+    'token': '59b54e44a7631d433470fee7'
   }
 }
 
@@ -17,10 +20,12 @@ const admInvitingHimself = {
   payload: {
     'guessLeagueName': 'Integrated Test GuessLeague',
     'championshipRef': '5872a8d2ed1b02314e088291',
-    'userRef': '59b54e44a7631d433470fee7',
     'userRefInviteads': [
       '59b54e44a7631d433470fee7'
     ]
+  },
+  headers: {
+    'token': '59b54e44a7631d433470fee7'
   }
 }
 
@@ -30,12 +35,14 @@ const duplicatedInviteads = {
   payload: {
     'guessLeagueName': 'Integrated Test GuessLeague',
     'championshipRef': '5872a8d2ed1b02314e088291',
-    'userRef': '59b54e44a7631d433470fee7',
     'userRefInviteads': [
       '59b54e44a7631d433470fee8',
       '59b54e44a7631d433470fee9',
       '59b54e44a7631d433470fee9'
     ]
+  },
+  headers: {
+    'token': '59b54e44a7631d433470fee7'
   }
 }
 
@@ -45,10 +52,12 @@ const invitatorUserNotAtGussLine = {
   payload: {
     'guessLeagueName': 'Integrated Test GuessLeague',
     'championshipRef': '5872a8d2ed1b02314e088295',
-    'userRef': '59b54e44a7631d433470fee7',
     'userRefInviteads': [
       '59b54e44a7631d433470fee8'
     ]
+  },
+  headers: {
+    'token': '59b54e44a7631d433470fee7'
   }
 }
 
