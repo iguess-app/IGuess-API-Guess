@@ -10,11 +10,8 @@ const ID_SIZE = Config.mongo.idStringSize
 const MAX_GROUP_SIZE = Config.guess.maxGuessLeagueGroupNameSize
 
 const request = Joi.object({
-  guessLeagueName: Joi.string().max(MAX_GROUP_SIZE).required(),
-  championshipRef: Joi.string().length(ID_SIZE).required(),
-  userRefInviteads: Joi.array().items(
-    Joi.string().length(ID_SIZE)
-  ).required()
+  guessLeagueRef: Joi.string().length(ID_SIZE),
+  newName: Joi.string().max(MAX_GROUP_SIZE)
 })
 
 const response = Joi.object({

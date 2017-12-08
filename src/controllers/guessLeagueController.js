@@ -75,6 +75,15 @@ const inviteResponse = (request, reply) => {
     .catch((err) => reply(err))
 }
 
+const editGuessLeague = (request, reply) => {
+  const payload = request.payload
+  const headers = request.headers
+
+  guessLeaguesServices.editGuessLeague(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
+
 module.exports = {
   createGuessLeague,
   listGuessLeagues,
@@ -83,5 +92,6 @@ module.exports = {
   putCaptain,
   quitCaptain,
   quitGuessLeague,
-  inviteResponse
+  inviteResponse,
+  editGuessLeague
 }
