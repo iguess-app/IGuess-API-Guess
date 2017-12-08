@@ -44,9 +44,36 @@ const admCantQuit = {
   }
 }
 
+const createGuessLeague = {
+  method: 'POST',
+  url: '/guessleague/createGuessLeague',
+  payload: {
+    'guessLeagueName': 'Last player to quit test',
+    'championshipRef': '5872a8d2ed1b02314e088291',
+
+    'userRefInviteads': []
+  },
+  headers: {
+    'token': '59b54e44a7631d433470fee7'
+  }
+}
+
+const lastPlayerToQuit = {
+  method: 'PATCH',
+  url: '/guessleague/quitGuessLeague',
+  payload: {
+    'guessLeagueRef': 'SET DYNAMICALLY'
+  },
+  headers: {
+    'token': '59b54e44a7631d433470fee7'
+  }
+}
+
 module.exports = {
   happyPathRequest,
   guessLeagueRefnotFound,
   userRefIsNotAtGuessLeague,
-  admCantQuit
+  admCantQuit,
+  createGuessLeague,
+  lastPlayerToQuit
 }

@@ -9,6 +9,7 @@ const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/quitGuessLeague/quitGuessLeagueSchema').response
 const GuessLeague = require('../../../../src/models/guessDB/guessesLeaguesModel')
+const createGuessLeagueAndGetQuitRequest = require('./lib/createGuessLeagueBeforeTest')
 
 const statusCode = coincidents.Utils.statusUtils
 const dictionary = coincidents.Translate.gate.selectLanguage()
@@ -76,5 +77,21 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
         done()
       })
   })
-  
+
+
+  /**
+   * This test depends of create GuessLeague work in
+   */
+  lab.test('quitGuessLeague last player at guessLeague', (done) => {
+    stubs.stubSessionRedis(injectedRequests.lastPlayerToQuit.headers.token)
+    createGuessLeagueAndGetQuitRequest()
+      .then((request) => {
+        server.inject(request)
+          .then((response) => {
+            const result = response.result
+            expect(result.removed).to.be.equal(true)
+            done()
+          })
+      })    
+  })
 })
