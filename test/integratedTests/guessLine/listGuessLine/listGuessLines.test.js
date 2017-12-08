@@ -67,6 +67,18 @@ lab.experiment('Integrated Test ==> listGuessLine', () => {
         done()
       })
   })
+
+  lab.test('listGuessLine passing flag list all', (done) => {
+    stubs.stubSessionRedis(injectedRequests.listAllGuessLine.headers.token)
+    server.inject(injectedRequests.listAllGuessLine)
+      .then((response) => {
+        const result = response.result
+        Joi.validate(result, schemaValidate, (err) => {
+          expect(err).to.be.equal(null)
+          done()
+        })
+      })
+  })
 })
 
 /*eslint no-magic-numbers: 0*/

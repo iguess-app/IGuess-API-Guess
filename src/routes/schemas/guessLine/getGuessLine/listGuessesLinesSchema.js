@@ -4,10 +4,17 @@ const Joi = require('joi')
 
 const championshipEmbbededSchema = require('../../embeddedSchemas/championshipEmbeddedSchema')
 
-const request = Joi.object({
+const listToUserAddedAtGuessLines = Joi.object({
   onlyActive: Joi.bool().default(false),
   showPontuation: Joi.bool().default(false)
 })
+
+const listAllGuessLines = Joi.object({
+  listAll: Joi.bool().required(),
+  showPontuation: Joi.bool().only(false).default(false)
+})
+
+const request = Joi.alternatives().try(listToUserAddedAtGuessLines, listAllGuessLines)
 
 const response = Joi.array().items(
   Joi.object({

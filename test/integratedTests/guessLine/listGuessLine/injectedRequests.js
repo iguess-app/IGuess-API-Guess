@@ -30,9 +30,18 @@ const noGuessLinesFound = {
   }
 }
 
+const listAllGuessLine = {
+  method: 'GET',
+  url: '/guessline/listGuessesLines?listAll=true',
+  headers: {
+    token: '59bddea6e7c8a12658c0c033'
+  }
+}
+
 module.exports = {
   happyPathRequest,
   happyPathWithPontuation,
   happyPathOnlyActive,
-  noGuessLinesFound
+  noGuessLinesFound,
+  listAllGuessLine
 }
