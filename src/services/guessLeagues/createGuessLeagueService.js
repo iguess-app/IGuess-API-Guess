@@ -4,9 +4,9 @@ const Boom = require('boom')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
 const sessionManager = require('../../managers/sessionManager')
-const createGuessLeagueRepository = require('../../repositories/guessLeagues/createGuessLeagueRepository')
-const getChampionshipAtGuessLineRepository = require('../../repositories/guessLines/getChampionshipAtGuessLineRepository')
-const verifyUserAtGuessLineRepository = require('../../repositories/guessLines/verifyUserAtGuessLineRepository')
+const { verifyUserAtGuessLineRepository, getChampionshipAtGuessLineRepository, createGuessLeagueRepository } = require('../../repositories')
+const getUsersPontuationsByGuessLeague = require('./commonFunctions/getUsersPontuationsByGuessLeague')
+const orderUsersArrayByPontuation = require('./commonFunctions/orderUsersArrayByPontuation')
 
 const createGuessLeague = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -18,6 +18,8 @@ const createGuessLeague = async (payload, headers) => {
   return verifyUserAtGuessLineRepository(payload, dictionary)
     .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
     .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))
+    .then((guessesLeagues) => getUsersPontuationsByGuessLeague(guessesLeagues))
+    .then((guessesLeagues) => orderUsersArrayByPontuation(guessesLeagues))
 }
 
 const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary, userRefCreator) => {

@@ -24,8 +24,10 @@ const response = Joi.object({
   inviteads: Joi.array().items(
     Joi.string().length(ID_SIZE)
   ),
-  players: Joi.array().items(
-    Joi.string().length(ID_SIZE).required()
+  players: Joi.array().items(Joi.object({
+    userRef: Joi.string().length(ID_SIZE).required(),
+    totalPontuation: Joi.number()
+  })
   ),
   captains: Joi.array().items(
     Joi.string().length(ID_SIZE).required()
