@@ -9,6 +9,7 @@ const queryUtils = coincidents.Utils.queryUtils
 
 const getMatchByRefRepository = (request, dictionary) => {
   const searchQuery = {
+    'championshipRef': request.championshipRef,
     'games._id': queryUtils.makeObjectId(request.matchRef)
   }
 

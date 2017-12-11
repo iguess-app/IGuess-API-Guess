@@ -14,7 +14,7 @@ const setPredictions = async (request, headers) => {
   const session = await sessionManager.getSession(headers.token, dictionary)
   request.userRef = session.userRef
 
-  return _joinMatchWithGuess(request.guesses, dictionary)
+  return _joinMatchWithGuess(request, dictionary)
   .then((guessJoinedWithMatch) => { request.guesses = guessJoinedWithMatch })
   .then(() => _checkOneHourRule(request, dictionary))
   .then((predictionsRequestFiltered) => setPredictionsRepository(predictionsRequestFiltered, dictionary))
@@ -28,13 +28,12 @@ const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
   }
 }
 
-const _joinMatchWithGuess = (guesses, dictionary) => {
-  const matchesPromiseArray = guesses.map((guess) => 
-    getMatchByRefRepository(guess, dictionary)
-      .then((match) => 
-        Object.assign(guess, match)
-      ) 
-  )
+const _joinMatchWithGuess = (request, dictionary) => {
+  const matchesPromiseArray = request.guesses.map((guess) => {
+    guess.championshipRef = request.championshipRef
+    return getMatchByRefRepository(guess, dictionary)
+      .then((match) => Object.assign(guess, match)) 
+  })
     
   return Promise.map(matchesPromiseArray, (justReturn) => justReturn)
 }
