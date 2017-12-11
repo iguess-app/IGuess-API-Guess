@@ -4,8 +4,8 @@ const happyPathRequest = {
   headers: {
     'content-type': 'application/json',
     'token': '591e5c4fa8634f1f9880e8bc',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -23,8 +23,8 @@ const alreadyAdded = {
   headers: {
     'content-type': 'application/json',
     'token': '59b54e44a7631d433470fee7',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -42,8 +42,8 @@ const guessLineInactive = {
   headers: {
     'content-type': 'application/json',
     'token': '59b54e44a7631d433470fee7',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',

@@ -11,8 +11,8 @@ const happyPathRequest = {
   },
   headers: {
     'token': '59b54e44a7631d433470fee7',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -33,8 +33,8 @@ const admInvitingHimself = {
   },
   headers: {
     'token': '59b54e44a7631d433470fee7',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -57,8 +57,8 @@ const duplicatedInviteads = {
   },
   headers: {
     'token': '59b54e44a7631d433470fee7',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -79,8 +79,8 @@ const invitatorUserNotAtGussLine = {
   },
   headers: {
     'token': '59b54e44a7631d433470fee7',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',

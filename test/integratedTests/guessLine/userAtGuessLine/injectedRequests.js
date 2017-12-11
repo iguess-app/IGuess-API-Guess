@@ -3,8 +3,8 @@ const happyPathRequestUserAtGuessLine = {
   url: '/guessline/userAtGuessLine?userRef=59bddea6e7c8a12658c0c08a&championshipRef=5872a8d2ed1b02314e088291',
   headers: {
     'token': '59bddea6e7c8a12658c0c08a',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -18,8 +18,8 @@ const happyPathUserIsntAtGuessLine = {
   url: '/guessline/userAtGuessLine?userRef=59bddea6e7c8a12658c0c044&championshipRef=5872a8d2ed1b02314e088291',
   headers: {
     'token': '59bddea6e7c8a12658c0c044',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',

@@ -8,8 +8,8 @@ const happyPathRequest = {
   },
   headers: {
     token: '591e5c05a8634f1f9880e8ae',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -26,8 +26,8 @@ const happyPathRequest = {
   },
   headers: {
     token: '591e5c05a8634f1f9880e8ae',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
@@ -44,8 +44,8 @@ const noUserFoundAtGuessLeague = {
   },
   headers: {
     token: '591e5c05a8634f1f9880e888',
-    'request_id': 'postmanRequest',
-    'hardware_fingerprint': 'postmanRequest',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',
     'os_version': '7.0.1',
     'app_version': '1.0.0',
