@@ -13,6 +13,17 @@ const optionsSchemaNoIdNoVersion = {
   _id: false
 }
 
+const datePeriodSchema = new Schema({
+  initDate: {
+    type: Date,
+    required: true
+  },
+  finalDate: {
+    type: Date,
+    required: true
+  }
+})
+
 const championshipSchema = new Schema({
   championshipRef: {
     type: String,
@@ -32,6 +43,9 @@ const championshipSchema = new Schema({
   championship: {
     type: String,
     required: true
+  },
+  date: {
+    type: datePeriodSchema
   }
 }, optionsSchemaNoIdNoVersion)
 

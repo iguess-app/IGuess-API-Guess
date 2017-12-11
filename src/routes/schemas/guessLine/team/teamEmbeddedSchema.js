@@ -11,7 +11,11 @@ const teamEmbbededSchema = Joi.object({
   league: Joi.string().length(ID_SIZE).required(),
   fullName: Joi.string().required(),
   shortName: Joi.string().required(),
-  logo: Joi.string().allow('')
+  logo: Joi.object({
+    mini: Joi.string(),
+    small: Joi.string(),
+    normal: Joi.string()
+  })
 })
 
 module.exports = teamEmbbededSchema

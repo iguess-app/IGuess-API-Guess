@@ -8,6 +8,7 @@ const mongo = coincidents.Config.mongo
 const serverErrors = coincidents.Utils.errorUtils.serverErrors
 
 const optionsSchemas = require('../optionsSchemas/optionsSchemas')
+const logoSchema = require('../subValidations/logo')
 const db = require('./connect')
 
 const teamSchema = new Schema({
@@ -30,8 +31,7 @@ const teamSchema = new Schema({
     required: true
   },
   logo: {
-    type: String,
-    default: ''
+    type: logoSchema
   },
   apiFootballName: {
     type: String,

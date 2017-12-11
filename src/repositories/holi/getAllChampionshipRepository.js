@@ -8,7 +8,11 @@ const getAllChampionship = (request) => {
     searchQuery.championshipActive = request.onlyActive
   }
 
-  return Championship.find(searchQuery)
+  const projectionQuery = {
+    date: 0
+  }
+
+  return Championship.find(searchQuery, projectionQuery)
 }
 
 module.exports = getAllChampionship

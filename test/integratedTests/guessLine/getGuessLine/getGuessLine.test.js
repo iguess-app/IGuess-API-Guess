@@ -25,6 +25,7 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
+       
         Joi.validate(result, schemaValidate, (err) => {
           expect(err).to.be.equal(null)
           done()
