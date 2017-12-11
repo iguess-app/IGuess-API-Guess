@@ -7,7 +7,14 @@ const happyPathRequest = {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb'
   },
   headers: {
-    token: '591e5c05a8634f1f9880e8ae'
+    token: '591e5c05a8634f1f9880e8ae',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -18,7 +25,14 @@ const happyPathRequest = {
     'guessLeagueRef': '59c05e253feecf1e2898a355'
   },
   headers: {
-    token: '591e5c05a8634f1f9880e8ae'
+    token: '591e5c05a8634f1f9880e8ae',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -29,7 +43,14 @@ const noUserFoundAtGuessLeague = {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb'
   },
   headers: {
-    token: '591e5c05a8634f1f9880e888'
+    token: '591e5c05a8634f1f9880e888',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 

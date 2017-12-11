@@ -9,7 +9,14 @@ const happyPathResponseYesRequest = {
     'response': true
   },
   headers: {
-    token: '591e5ccca8634f1f9880e8ca'
+    token: '591e5ccca8634f1f9880e8ca',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -22,7 +29,14 @@ const happyPathResponseNotRequest = {
     'response': false
   },
   headers: {
-    token: '591e5cdaa8634f1f9880e8cc'
+    token: '591e5cdaa8634f1f9880e8cc',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -35,7 +49,14 @@ const notAtGuessLine = {
     'response': true
   },
   headers: {
-    token: '591e5c36a8634f1f9880e8b8'
+    token: '591e5c36a8634f1f9880e8b8',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -48,7 +69,14 @@ const userNotAtInviteadsList = {
     'response': true
   },
   headers: {
-    token: '591e5c21a8634f1f9880e8b4'
+    token: '591e5c21a8634f1f9880e8b4',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -61,7 +89,14 @@ const userAlreadyAtPlayersList = {
     'response': true
   },
   headers: {
-    token: '59b54e44a7631d433470fee7'
+    token: '59b54e44a7631d433470fee7',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -74,7 +109,14 @@ const guessLeagueNotFound = {
     'response': true
   },
   headers: {
-    token: '591e5ccca8634f1f9880e8ca'
+    token: '591e5ccca8634f1f9880e8ca',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 

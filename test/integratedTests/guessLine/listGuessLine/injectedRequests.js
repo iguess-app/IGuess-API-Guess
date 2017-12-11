@@ -2,7 +2,14 @@ const happyPathRequest = {
   method: 'GET',
   url: '/guessline/listGuessesLines',
   headers: {
-    token: '59bddea6e7c8a12658c0c08a'
+    token: '59bddea6e7c8a12658c0c08a',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -10,7 +17,14 @@ const happyPathWithPontuation = {
   method: 'GET',
   url: '/guessline/listGuessesLines?&showPontuation=true',
   headers: {
-    token: '59bddea6e7c8a12658c0c08a'
+    token: '59bddea6e7c8a12658c0c08a',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -18,7 +32,14 @@ const happyPathOnlyActive = {
   method: 'GET',
   url: '/guessline/listGuessesLines?onlyActive=true',
   headers: {
-    token: '59bddea6e7c8a12658c0c0bb'
+    token: '59bddea6e7c8a12658c0c0bb',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -26,7 +47,14 @@ const noGuessLinesFound = {
   method: 'GET',
   url: '/guessline/listGuessesLines',
   headers: {
-    token: '59bddea6e7c8a12658c0c033'
+    token: '59bddea6e7c8a12658c0c033',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 
@@ -34,7 +62,14 @@ const listAllGuessLine = {
   method: 'GET',
   url: '/guessline/listGuessesLines?listAll=true',
   headers: {
-    token: '59bddea6e7c8a12658c0c033'
+    token: '59bddea6e7c8a12658c0c033',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   }
 }
 

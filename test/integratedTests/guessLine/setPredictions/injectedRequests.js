@@ -4,7 +4,14 @@ const happyPathRequest = {
   headers: {
     'language': 'pt-br',
     'content-type': 'application/json',
-    'token': '591df6c78d1fdc0bb4eba371'
+    'token': '591df6c78d1fdc0bb4eba371',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
@@ -34,7 +41,14 @@ const matchRefDuplicated = {
   headers: {
     'language': 'en-us',
     'content-type': 'application/json',
-    'token': '591df6c78d1fdc0bb4eba371'
+    'token': '591df6c78d1fdc0bb4eba371',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
@@ -68,7 +82,14 @@ const someMatchOneHourLess = {
   headers: {
     'language': 'en-us',
     'content-type': 'application/json',
-    'token': '591df6c78d1fdc0bb4eba371'
+    'token': '591df6c78d1fdc0bb4eba371',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
@@ -92,7 +113,14 @@ const allMatchOneHourLess = {
   headers: {
     'language': 'en-us',
     'content-type': 'application/json',
-    'token': '591df6c78d1fdc0bb4eba371'
+    'token': '591df6c78d1fdc0bb4eba371',
+    'request_id': 'postmanRequest',
+    'hardware_fingerprint': 'postmanRequest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
   },
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',

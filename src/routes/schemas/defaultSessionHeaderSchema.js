@@ -3,15 +3,18 @@
 const Joi = require('joi')
 
 const defaultSessionHeaderSchema = Joi.object({
-  language: Joi.string().default('en-us')
-}).unknown()
-
-const tempHeader = Joi.object({
   language: Joi.string().default('en-us'),
-  token: Joi.string().required()
+  request_id: Joi.string().required(),
+  hardware_fingerprint: Joi.string().required(),
+  platform: Joi.string().required(),
+  os_version: Joi.string().required(),
+  app_version: Joi.string().required(),
+  phone_model: Joi.string().required(),
+  phone_fabricator: Joi.string().required()
 }).unknown()
 
 module.exports = {
-  defaultSessionHeaderSchema,
-  tempHeader
+  defaultSessionHeaderSchema
 }
+
+/*eslint camelcase:0 */
