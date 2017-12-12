@@ -9,7 +9,11 @@ const queryUtils = coincidents.Utils.queryUtils
 
 const editGuessLeague = (request, dictionary) => {
   const _id = queryUtils.makeObjectId(request.guessLeagueRef)
-  return GuessLeague.findById(_id)
+  const searchQuery = {
+    _id,
+    players: request.userRef
+  }
+  return GuessLeague.findOne(searchQuery)
     .then((guessLeagueFound) => _checkErrors(guessLeagueFound, dictionary))
     .then((guessLeagueFound) => _modifyGuessLeagueAndSave(guessLeagueFound, request))
 }
