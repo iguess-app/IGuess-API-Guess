@@ -3,6 +3,7 @@
 const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
+const championshipEmbedded = require('../../embeddedSchemas/championshipEmbeddedSchema')
 const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
 
@@ -13,10 +14,13 @@ const request = Joi.object({
   guessLeagueRef: Joi.string().required().length(ID_SIZE),
   championshipRef: Joi.string().required().length(ID_SIZE)
 })
+
 const response = Joi.object({
   inviteads: Joi.array().items(
     Joi.string().required().length(ID_SIZE)
-  )
+  ),
+  championship: championshipEmbedded,
+  guessLeagueRef: Joi.string().required().length(ID_SIZE)
 })
 
 module.exports = {

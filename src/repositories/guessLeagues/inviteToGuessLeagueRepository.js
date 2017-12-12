@@ -30,9 +30,14 @@ const inviteToGuessLeagueRepository = (request, dictionary) => {
 
       return guessLeagueFound.save()
     })
-    .then((guessLeagueUpdated) => ({
-      inviteads: guessLeagueUpdated.inviteads
-    }))
+    .then((guessLeagueUpdated) => {
+      const guessLeagueFiltered = guessLeagueUpdated.toJSON()
+      return {
+        guessLeagueRef: guessLeagueFiltered._id.toString(),
+        championship: guessLeagueFiltered.championship,
+        inviteads: guessLeagueFiltered.inviteads
+      }
+    })
 }
 
 
