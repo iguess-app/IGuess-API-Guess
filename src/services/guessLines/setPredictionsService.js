@@ -11,7 +11,7 @@ const { getMatchByRefRepository, setPredictionsRepository } = require('../../rep
 const setPredictions = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   _checkIfThereAreDuplicatedMatchRef(request.guesses, dictionary)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  const session = await sessionManager.getSession(headers, dictionary)
   request.userRef = session.userRef
 
   return _joinMatchWithGuess(request, dictionary)

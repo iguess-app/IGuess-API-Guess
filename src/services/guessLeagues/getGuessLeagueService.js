@@ -9,7 +9,7 @@ const orderUsersArrayByPontuation = require('./commonFunctions/orderUsersArrayBy
 
 const getGuessLeague = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  const session = await sessionManager.getSession(headers, dictionary)
   payload.userRef = session.userRef
 
   return getGuessLeagueRepository(payload, dictionary)

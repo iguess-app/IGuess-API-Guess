@@ -4,10 +4,15 @@ const sinon = require('sinon')
 
 const sessionManager = require('../../src/managers/sessionManager')
 
-const stubSessionRedis = (userRef) => 
+const stubSessionRedis = (userRef) => {
+  const stubResponseObj = {
+    hardwareFingerPrint: 'integratedTest',
+    userRef
+  }
   sinon.stub(sessionManager, 'getSession')
-    .withArgs(userRef)
-    .returns(Promise.resolve({userRef}))  
+  .returns(Promise.resolve(stubResponseObj))  
+}
+  
 
 const restoreSessionRedisStub = () => sessionManager.getSession.restore()
 

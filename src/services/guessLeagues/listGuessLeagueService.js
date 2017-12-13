@@ -7,7 +7,7 @@ const listGuessLeagueRepository = require('../../repositories/guessLeagues/listG
 
 const listGuessLeagues = async (headers) => {
   const dictionary = selectLanguage(headers.language)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  const session = await sessionManager.getSession(headers, dictionary)
 
   return listGuessLeagueRepository(session, dictionary)
 }

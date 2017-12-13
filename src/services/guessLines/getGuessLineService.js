@@ -14,7 +14,7 @@ const config = coincidents.Config
 const getGuessLine = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   moment.locale(headers.language)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  const session = await sessionManager.getSession(headers, dictionary)
   request.userRef = session.userRef
 
   return getGuessLineRepository(request, dictionary)

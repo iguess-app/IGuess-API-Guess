@@ -7,7 +7,7 @@ const verifyUserAtGuessLineRepository = require('../../repositories/guessLines/v
 
 const userAtGuessLine = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  await sessionManager.getSession(headers, dictionary)
 
   return verifyUserAtGuessLineRepository(request, dictionary)
 }

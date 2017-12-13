@@ -4,11 +4,10 @@ const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
 const cacheManager = coincidents.Managers.cacheManager
-const SESSION_TIME = coincidents.Config.redis.sessionTime
 
-const getSession = async (token, dictionary) => {
-  const session = await cacheManager.get(token)
-  if (session) {
+const getSession = async (headers, dictionary) => {    
+  const session = await cacheManager.get(headers.token)
+  if (session && session.hardwareFingerPrint === headers.hardware_fingerprint) {
     return session
   }
 

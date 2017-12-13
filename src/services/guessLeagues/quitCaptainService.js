@@ -7,7 +7,7 @@ const { quitCaptainRepository } = require('../../repositories')
 
 const quitCaptain = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  const session = await sessionManager.getSession(headers, dictionary)
   payload.userRef = session.userRef
 
   return quitCaptainRepository(payload, dictionary)

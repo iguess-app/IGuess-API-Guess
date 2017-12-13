@@ -8,7 +8,7 @@ const { listGuessesLinesRepository, getPredictionsRepository } = require('../../
 
 const listGuessesLines = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
-  const session = await sessionManager.getSession(headers.token, dictionary)
+  const session = await sessionManager.getSession(headers, dictionary)
   request.userRef = session.userRef
 
   return listGuessesLinesRepository(request, dictionary)
