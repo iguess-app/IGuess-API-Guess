@@ -1,7 +1,7 @@
 'use strict'
 
 const happyPathRequest = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitGuessLeague',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb'
@@ -19,7 +19,7 @@ const happyPathRequest = {
 }
 
 const guessLeagueRefnotFound = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitGuessLeague',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3f9'
@@ -37,7 +37,7 @@ const guessLeagueRefnotFound = {
 }
 
 const userRefIsNotAtGuessLeague = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitGuessLeague',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb'
@@ -55,7 +55,7 @@ const userRefIsNotAtGuessLeague = {
 }
 
 const admCantQuit = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitGuessLeague',
   payload: {
     'guessLeagueRef': '59c05e253feecf1e2898a3fb'
@@ -94,7 +94,7 @@ const createGuessLeague = {
 }
 
 const lastPlayerToQuit = {
-  method: 'PATCH',
+  method: 'DELETE',
   url: '/guessleague/quitGuessLeague',
   payload: {
     'guessLeagueRef': 'SET DYNAMICALLY'

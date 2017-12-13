@@ -7,7 +7,7 @@ const quitGuessLeagueSchema = require('../schemas/guessLeague/quitGuessLeague/qu
 
 server.route({
   path: '/guessleague/quitGuessLeague',
-  method: 'PATCH',
+  method: 'DELETE',
   config: {
     handler: (request, reply) => {
 

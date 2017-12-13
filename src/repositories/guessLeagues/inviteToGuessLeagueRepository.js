@@ -35,7 +35,7 @@ const inviteToGuessLeagueRepository = (request, dictionary) => {
       return {
         guessLeagueRef: guessLeagueFiltered._id.toString(),
         championship: guessLeagueFiltered.championship,
-        inviteads: guessLeagueFiltered.inviteads
+        inviteads: request.userRefInviteads
       }
     })
 }
