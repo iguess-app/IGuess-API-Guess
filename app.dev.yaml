@@ -1,0 +1,21 @@
+service: guess
+runtime: nodejs
+env: flex
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 3
+  cool_down_period_sec: 120
+  cpu_utilization:
+    target_utilization: 0.7
+env_variables:
+  ENV: dev
+  REDIS_KEY: wAMK4Hig
+  REDIS_HOST: 35.199.64.70
+  REDIS_PORT: 6379
+  REDIS_EXPIRE_TIME: 60
+  SESSION_REDIS_EXPIRE_TIME: 900
+  MONGO_ATLAS: 1
+  MONGO_PERSONALDB_ADDRESS: mongodb://apiPersonalGG:58veNFJOLJefwOtA@personaldev-shard-00-00-ocyje.mongodb.net:27017,personaldev-shard-00-01-ocyje.mongodb.net:27017,personaldev-shard-00-02-ocyje.mongodb.net:27017/personalDB?ssl=true&replicaSet=PersonalDev-shard-0&authSource=admin
+  MONGO_HOLIDB_ADDRESS: mongodb://apiPersonalGG:58veNFJOLJefwOtA@personaldev-shard-00-00-ocyje.mongodb.net:27017,personaldev-shard-00-01-ocyje.mongodb.net:27017,personaldev-shard-00-02-ocyje.mongodb.net:27017/holiDB?ssl=true&replicaSet=PersonalDev-shard-0&authSource=admin
+  MONGO_GUESSDB_ADDRESS: mongodb://apiPersonalGG:58veNFJOLJefwOtA@personaldev-shard-00-00-ocyje.mongodb.net:27017,personaldev-shard-00-01-ocyje.mongodb.net:27017,personaldev-shard-00-02-ocyje.mongodb.net:27017/guessDB?ssl=true&replicaSet=PersonalDev-shard-0&authSource=admin
+
