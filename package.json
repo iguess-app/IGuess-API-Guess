@@ -11,7 +11,7 @@
     "test-cov-html": "set MONGO_DB=guessDBtest&&set HOLI_DB=holiDBtest&&set ENV=test&&set MONGO_PERSONALDB_ADDRESS=&&set MONGO_HOLIDB_ADDRESS=&&set MONGO_GUESSDB_ADDRESS=&&lab -r html -o test/coverage.html"
   },
   "engines": {
-    "node": "8.2.1"
+    "node": "8.2.0"
   },
   "author": "{{Lucas Alves L.A.}}",
   "dependencies": {
