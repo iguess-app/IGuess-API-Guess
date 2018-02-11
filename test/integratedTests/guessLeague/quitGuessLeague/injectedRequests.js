@@ -100,7 +100,7 @@ const lastPlayerToQuit = {
     'guessLeagueRef': 'SET DYNAMICALLY'
   },
   headers: {
-    'token': '59b54e44a7631d433470fee7',
+    'token': '5932d84626fee5502cb422d6',
     'request_id': 'integratedTest',
     'hardware_fingerprint': 'integratedTest',
     'platform': 'Android',

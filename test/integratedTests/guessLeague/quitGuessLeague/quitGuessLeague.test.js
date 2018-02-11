@@ -78,7 +78,6 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
       })
   })
 
-
   /**
    * This test depends of create GuessLeague work in
    */
