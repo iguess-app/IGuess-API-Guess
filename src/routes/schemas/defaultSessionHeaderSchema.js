@@ -10,7 +10,8 @@ const defaultSessionHeaderSchema = Joi.object({
   os_version: Joi.string().required(),
   app_version: Joi.string().required(),
   phone_model: Joi.string().required(),
-  phone_fabricator: Joi.string().required()
+  phone_fabricator: Joi.string().required(),
+  token: Joi.string().required()
 }).unknown()
 
 module.exports = {
