@@ -13,9 +13,9 @@ const addUserToGuessLine = (request, dictionary) => {
     'championship.championshipRef': request.championshipRef
   }
 
-  return _countHowManyGuessLineActivatedTheUserHas(request) 
+  return _countHowManyGuessLineActivatedTheUserHas(request)
     .then((userGuessLineActivatedNumber) => _verifyIfIsAllowToAddTheUserToAnotherGuessLine(userGuessLineActivatedNumber, request, dictionary))
-    .then(() => GuessLine.findOne(searchQuery)) 
+    .then(() => GuessLine.findOne(searchQuery))
     .then((guessLineFound) => {
       _checkErrors(guessLineFound, request, dictionary)
       guessLineFound.usersAddedAtGuessLine.push(request.userRef)
@@ -37,12 +37,12 @@ const _countHowManyGuessLineActivatedTheUserHas = (request) => {
     },
     guessLineActive: true
   }
-  
+
   return GuessLine.find(searchQuery).count()
 }
 
 const _verifyIfIsAllowToAddTheUserToAnotherGuessLine = (userGuessLineActivatedNumber, request, dictionary) => {
-   if (userGuessLineActivatedNumber >= MAX_GUESSLINES_FREE_ALLOW && _userNotPremium(request)) {
+  if (userGuessLineActivatedNumber >= MAX_GUESSLINES_FREE_ALLOW && _userNotPremium(request)) {
     throw Boom.forbidden(dictionary.noMoreGuessLineAllowed)
   }
 }
