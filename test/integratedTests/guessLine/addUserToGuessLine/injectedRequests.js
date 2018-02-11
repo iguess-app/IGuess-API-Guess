@@ -17,6 +17,25 @@ const happyPathRequest = {
   }
 };
 
+const maxAllowedExplode = {
+  method: 'PATCH',
+  url: '/guessline/addUserToGuessLine',
+  headers: {
+    'content-type': 'application/json',
+    'token': '591e5c21a8634f1f9880e8b4',
+    'request_id': 'integratedTest',
+    'hardware_fingerprint': 'integratedTest',
+    'platform': 'Android',
+    'os_version': '7.0.1',
+    'app_version': '1.0.0',
+    'phone_model': 'XT-1792',
+    'phone_fabricator': 'Motorola'
+  },
+  payload: {
+    'championshipRef': '5872a8d2ed1b02314e088291'
+  }
+}
+
 const alreadyAdded = {
   method: 'PATCH',
   url: '/guessline/addUserToGuessLine',
@@ -57,6 +76,7 @@ const guessLineInactive = {
 
 module.exports = {
   happyPathRequest,
+  maxAllowedExplode,
   alreadyAdded,
   guessLineInactive
 }

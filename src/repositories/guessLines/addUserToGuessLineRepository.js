@@ -1,8 +1,11 @@
 'use strict'
 
 const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
+
+const MAX_GUESSLINES_FREE_ALLOW = coincidents.Config.guess.maxGuessLinesFreeAllow
 
 const addUserToGuessLine = (request, dictionary) => {
 
@@ -10,7 +13,9 @@ const addUserToGuessLine = (request, dictionary) => {
     'championship.championshipRef': request.championshipRef
   }
 
-  return GuessLine.findOne(searchQuery)
+  return _countHowManyGuessLineActivatedTheUserHas(request) 
+    .then((userGuessLineActivatedNumber) => _verifyIfIsAllowToAddTheUserToAnotherGuessLine(userGuessLineActivatedNumber, request, dictionary))
+    .then(() => GuessLine.findOne(searchQuery)) 
     .then((guessLineFound) => {
       _checkErrors(guessLineFound, request, dictionary)
       guessLineFound.usersAddedAtGuessLine.push(request.userRef)
@@ -23,6 +28,29 @@ const addUserToGuessLine = (request, dictionary) => {
           userAddedToGuessLine: false
         }))
     })
+}
+
+const _countHowManyGuessLineActivatedTheUserHas = (request) => {
+  const searchQuery = {
+    usersAddedAtGuessLine: {
+      $in: [request.userRef]
+    },
+    guessLineActive: true
+  }
+  
+  return GuessLine.find(searchQuery).count()
+}
+
+const _verifyIfIsAllowToAddTheUserToAnotherGuessLine = (userGuessLineActivatedNumber, request, dictionary) => {
+   if (userGuessLineActivatedNumber >= MAX_GUESSLINES_FREE_ALLOW && _userNotPremium(request)) {
+    throw Boom.forbidden(dictionary.noMoreGuessLineAllowed)
+  }
+}
+
+const _userNotPremium = () => {
+  //TODO: Get dynamically if the user is premium or not
+  const TEMP_RESPONSE_UNTIL_DOES_NOT_HAVE_THE_DATE = true
+  return TEMP_RESPONSE_UNTIL_DOES_NOT_HAVE_THE_DATE
 }
 
 const _checkErrors = (guessLineFound, request, dictionary) => {
