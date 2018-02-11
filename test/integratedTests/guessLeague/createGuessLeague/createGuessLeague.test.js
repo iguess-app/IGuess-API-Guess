@@ -43,6 +43,18 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       })
   })
 
+  /*This test depends of userRef '59b54e44a7631d433470fee7' to be at least on five guessLeagues like player */
+  lab.test('createGuessLeague max guessLeague allowed explode', (done) => {
+    stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplode.headers.token)    
+    server.inject(injectedRequests.maxGuessLeagueExplode)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.noMoreGuessLeagueAllowed)
+        expect(response.statusCode).to.be.equal(statusCode.forbidden)
+        done()
+      })
+  })
+
   lab.test('createGuessLeague Twice Invited (Adm inviting himself)', (done) => {
     stubs.stubSessionRedis(injectedRequests.admInvitingHimself.headers.token)    
     server.inject(injectedRequests.admInvitingHimself)
