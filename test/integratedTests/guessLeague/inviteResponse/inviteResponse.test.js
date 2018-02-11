@@ -95,8 +95,8 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
 
   /**
    * IO Test
-   * This test need to 59b54e44a7631d433470fee7 be at championship guessLine 5872a8d2ed1b02314e088291 
-   * This test need to 59b54e44a7631d433470fee7 be at guessLeague ObjectId("59c05e253feecf1e2898a3fb") player list  
+   * This test need to 59bddea6e7c8a12658c0c08a be at championship guessLine 5872a8d2ed1b02314e088291 
+   * This test need to 59bddea6e7c8a12658c0c08a be at guessLeague ObjectId("59c05e253feecf1e2898a3fb") player list  
    */
   lab.test('[IO] inviteResponse user already at players List', (done) => {
     stubs.stubSessionRedis(injectedRequests.userAlreadyAtPlayersList.headers.token)    
@@ -104,6 +104,23 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(response.statusCode).to.be.equal(statusCode.forbidden)
+        done()
+      })
+  })
+
+
+  /**
+   * IO Test
+   * This test need to 59b54e44a7631d433470fee7 be at championship guessLine 5872a8d2ed1b02314e088291 
+   * This test need to 59b54e44a7631d433470fee7 be at guessLeague ObjectId("59c05e253feecf1e2898a3fb") player list  
+   */
+  lab.test('[IO] inviteResponse user has more than max allowed guessLeague and are not premium', (done) => {
+    stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplode.headers.token)    
+    server.inject(injectedRequests.maxGuessLeagueExplode)
+      .then((response) => {
+        const result = response.result
+        expect(result.message).to.be.equal(dictionary.noMoreGuessLeagueAllowed)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
