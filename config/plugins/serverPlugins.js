@@ -1,18 +1,17 @@
+'use strict'
+
 const hapiPino = require('hapi-pino')
-const plugins = []
+const coincidents = require('iguess-api-coincidents')
 
-const log = require('iguess-api-coincidents').Managers.logManager
+const config = coincidents.Config
 
-const logEventsArray = ['onPostStart', 'onPostStop', 'response', 'request-error']
 const hapiPinoPlugin = {
   register: hapiPino,
   options: {
-    prettyPrint: true,
+    prettyPrint: !config.isProd(),
     logPayload: true,
-    logEvents: log.isLoggableEnv() ? logEventsArray : false
+    logEvents: ['onPostStart', 'onPostStop', 'response', 'request-error']
   }
 }
-plugins.push(hapiPinoPlugin)
 
-
-module.exports = plugins
+module.exports = [].concat(hapiPinoPlugin)
