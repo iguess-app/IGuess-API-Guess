@@ -21,7 +21,7 @@
     "consign": "0.1.2",
     "cron": "^1.2.1",
     "hapi": "16.6.0",
-    "hapi-pino": "1.7.0",
+    "hapi-pino": "^2.2.0",
     "iguess-api-coincidents": "git+https://github.com/LuhalvesBR/iGuess-API-Coincidents.git",
     "joi": "10.1.0",
     "jsonwebtoken": "7.2.1",
