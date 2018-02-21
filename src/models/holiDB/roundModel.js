@@ -63,6 +63,13 @@ const gamesSchema = new Schema({
     required: true,
     default: false
   },
+  started: {
+    type: Boolean,
+    default: false
+  },
+  minutes: {
+    type: String
+  },
   stadium: {
     type: String
   }

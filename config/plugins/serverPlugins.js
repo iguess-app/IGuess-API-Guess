@@ -10,7 +10,7 @@ const hapiPinoPlugin = {
   options: {
     prettyPrint: !config.isProd(),
     logPayload: true,
-    logEvents: ['onPostStart', 'onPostStop', 'response', 'request-error']
+    logEvents: config.isTest() ? false : ['onPostStart', 'onPostStop', 'response', 'request-error']
   }
 }
 
