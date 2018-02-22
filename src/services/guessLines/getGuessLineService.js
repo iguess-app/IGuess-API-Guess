@@ -112,7 +112,7 @@ const _buildResponseObj = (promiseAllObj) => {
   const matchDayPontuation = promiseAllObj[4]
 
   const responseObj = {
-    championshipRef: guessLine.championship.championshipRef,
+    championship: guessLine.championship.toObject(),
     guessLinePontuation: totalPontuation,
     matchDayPontuation,
     date: _buildMatchDayLikeHumanDate(matchDay),

@@ -4,6 +4,7 @@ const Joi = require('joi')
 const coincidents = require('iguess-api-coincidents')
 
 const teamEmbeddedSchema = require('../team/teamEmbeddedSchema')
+const championshipEmbeddedSchema = require('../../embeddedSchemas/championshipEmbeddedSchema')
 
 const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
@@ -20,7 +21,7 @@ const response = Joi.object({
     hasNext: Joi.bool(),
     hasPrevious: Joi.bool()
   }),
-  championshipRef: Joi.string().length(ID_SIZE).required(),
+  championship: championshipEmbeddedSchema,
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
   games: Joi.array().items({
