@@ -11,6 +11,10 @@ const cacheManager = coincidents.Managers.cacheManager
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
+const MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH = config.guess.maxTimeToSendPredictBeforeTheMatch.value
+const MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT = config.guess.maxTimeToSendPredictBeforeTheMatch.unit
+const PAGE_KEY_SUFFIX = 'roundPage'
+
 const getGuessLine = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   moment.locale(headers.language)
@@ -71,8 +75,11 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
       awayTeam: match.awayTeam,
       ended: match.ended,
       started: match.started,
-      minutes: match.minutes
+      minutes: match.minutes,
+      initHour: _getInitTimeHour(match.initTime),
+      allowToPredict: _checkIfAllowPredict(match.initTime)
     }
+
     if (prediction) {
       matchObj.awayTeamScoreGuess = prediction.guess.awayTeamScoreGuess
       matchObj.homeTeamScoreGuess = prediction.guess.homeTeamScoreGuess
@@ -122,13 +129,17 @@ const _setPaginationOnCache = (matchDay, request, guessLine) => {
   cacheManager.set(_buildPageCacheKey(request, guessLine), paginationData, config.redis.sessionTime)
 }
 
-const PAGE_KEY_SUFFIX = 'roundPage'
 const _buildPageCacheKey = (request, guessLine) => request.userRef + guessLine.championship.championshipRef + PAGE_KEY_SUFFIX
-const _buildMatchDayLikeHumanDate = (matchDay) => `${moment(matchDay.unixDate, 'X').format('DD/MM')}, ${moment(matchDay.unixDate, 'X').format('dddd')}`
+
+const _buildMatchDayLikeHumanDate = (matchDay) => `${moment(matchDay.unixDate, 'X').format('DD MMMM')}, ${moment(matchDay.unixDate, 'X').format('dddd')}`
+
+const _getInitTimeHour = (initTime) => `${moment(initTime).format('HH')}h ${moment(initTime).format('mm')}m`
+
+const _checkIfAllowPredict = (initTime) => 
+  moment()
+    .add(MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH, MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT)
+    .isBefore(moment(initTime)) 
 
 module.exports = getGuessLine
 
 /*eslint no-magic-numbers: 0*/
-
-
-//TODO: Fazer teste com prediction=undefined

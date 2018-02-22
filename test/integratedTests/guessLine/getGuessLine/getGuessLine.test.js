@@ -53,5 +53,6 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
       })
   })
 
-  //TODO: Adicionar um cenario de teste que devolve um guessLine matchDay com match in live e devolva os minutes e o started=true
+  //TODO: Adicionar um cenario de teste que devolve um guessLine matchDay com match in live e devolva os minutes e o started=true e allowToPredict=false
+  //TODO: fazer um que fixe o allowToPredict=true
 })
