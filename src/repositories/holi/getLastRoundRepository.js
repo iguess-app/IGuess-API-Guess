@@ -1,11 +1,11 @@
 'use strict'
 
 const coincidents = require('iguess-api-coincidents')
-const moment = require('moment')
 const Boom = require('boom')
 
 const Round = require('../../models/holiDB/roundModel')
 const queryUtils = coincidents.Utils.queryUtils
+const { dateManager } = coincidents.Managers
 
 const getLastRound = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
@@ -48,7 +48,7 @@ const _getOperatorQuery = (currentDateUserPage) => ({
     $gt: currentDateUserPage
   },
   near: {
-    $lte: moment().format('X')
+    $lte: dateManager.getUTCToday('X')
   }
 })
 

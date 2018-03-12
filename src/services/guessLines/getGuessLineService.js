@@ -7,7 +7,7 @@ const Promise = require('bluebird')
 const sessionManager = require('../../managers/sessionManager')
 const { getPredictionsRepository, getGuessLineRepository, getLastRoundRepository } = require('../../repositories')
 
-const cacheManager = coincidents.Managers.cacheManager
+const { cacheManager, dateManager } = coincidents.Managers
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
@@ -17,14 +17,13 @@ const PAGE_KEY_SUFFIX = 'roundPage'
 
 const getGuessLine = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
-  moment.locale(headers.language)
   const session = await sessionManager.getSession(headers, dictionary)
   request.userRef = session.userRef
 
   return getGuessLineRepository(request, dictionary)
     .then((guessLine) => _getPontuationAndSomeMatchDay(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
-    .then((promiseAllObj) => _buildResponseObj(promiseAllObj))
+    .then((promiseAllObj) => _buildResponseObj(promiseAllObj, headers.language))
 }
 
 const _getPontuationAndSomeMatchDay = (guessLine, request, dictionary) => 
@@ -104,7 +103,7 @@ const _buildPredictionsPromiseArray = (matchDay, userRef, dictionary) =>
   })
 
 
-const _buildResponseObj = (promiseAllObj) => {
+const _buildResponseObj = (promiseAllObj, language) => {
   const games = promiseAllObj[0]
   const guessLine = promiseAllObj[1]
   const matchDay = promiseAllObj[2]
@@ -115,7 +114,7 @@ const _buildResponseObj = (promiseAllObj) => {
     championship: guessLine.championship.toObject(),
     guessLinePontuation: totalPontuation,
     matchDayPontuation,
-    date: _buildMatchDayLikeHumanDate(matchDay),
+    date: _buildMatchDayLikeHumanDate(matchDay, language),
     games
   }
 
@@ -131,9 +130,19 @@ const _setPaginationOnCache = (matchDay, request, guessLine) => {
 
 const _buildPageCacheKey = (request, guessLine) => request.userRef + guessLine.championship.championshipRef + PAGE_KEY_SUFFIX
 
-const _buildMatchDayLikeHumanDate = (matchDay) => `${moment(matchDay.unixDate, 'X').format('DD MMMM')}, ${moment(matchDay.unixDate, 'X').format('dddd')}`
+const _buildMatchDayLikeHumanDate = (matchDay, language) => {
+  const date = dateManager.getUTCDate(matchDay.date, '', 'DD MMMM', language)
+  const weekDay = dateManager.getUTCDate(matchDay.date, '', 'dddd', language)
 
-const _getInitTimeHour = (initTime) => `${moment(initTime).format('HH')}h ${moment(initTime).format('mm')}m`
+  return `${date}, ${weekDay}`
+}
+
+const _getInitTimeHour = (initTime) => {
+  const hour = dateManager.getUTCDate(initTime, '', 'HH')
+  const min = dateManager.getUTCDate(initTime, '', 'mm')
+
+  return `${hour}h ${min}m`
+}
 
 const _checkIfAllowPredict = (initTime) => 
   moment()
