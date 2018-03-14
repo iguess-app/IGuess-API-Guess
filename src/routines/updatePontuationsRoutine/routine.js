@@ -6,6 +6,8 @@ const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFun
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
 const { getAllChampionshipRepository, getLastRoundRepository } = require('../../repositories')
 
+const TEN_SECONDS = 10000
+
 const fireRoutine = () => {
   log.info('==================> ROUTINE STARTED: update Pontuations <==================')
   const filter = {
@@ -21,8 +23,8 @@ const fireRoutine = () => {
           .then((matchDay) => getUsersPredictionsFunctions(matchDay))
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
       })
-    ).catch((err) => log.error(err))
+    )
+    .catch((err) => log.error(err))
 }
 
-const TEN_SECONDS = 10000
 setInterval(fireRoutine, TEN_SECONDS)

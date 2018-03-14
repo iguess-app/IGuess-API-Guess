@@ -8,16 +8,17 @@ const cronTime = require('./cronTime')
 const { getAllChampionshipRepository, createGuessLineRepository, updateGuessLineActivityRepository } = require('../../repositories')
 
 const fireRoutine = () => {
-  log.info('ROUTINE STARTED: Add New and UpdateActivity')
+  log.info('==================> ROUTINE STARTED: Add New and UpdateActivity <==================')
+  
   return getAllChampionshipRepository()
   .then((championships) => _addGuessLines(championships))
 }
 
 const _addGuessLines = (championships) => {
-  const guessesLineArrayPromise = championships.map((championship) => {
-    return createGuessLineRepository(championship)
-    .then((guessLine) => _updateChampionshipActivity(guessLine, championship))
-  })
+  const guessesLineArrayPromise = championships.map((championship) => 
+    createGuessLineRepository(championship)
+      .then((guessLine) => _updateChampionshipActivity(guessLine, championship))
+  )
   return Promise.all(guessesLineArrayPromise, (justReturn) => justReturn)
 }
 
