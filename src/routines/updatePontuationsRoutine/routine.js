@@ -1,6 +1,6 @@
 'use strict'
 
-const log = require('iguess-api-coincidents').Managers.logManager
+const { log } = require('iguess-api-coincidents').Managers
 
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')

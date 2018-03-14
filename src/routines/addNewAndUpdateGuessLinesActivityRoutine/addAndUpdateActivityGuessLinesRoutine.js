@@ -2,7 +2,7 @@
 
 const Promise = require('bluebird')
 const CronJob = require('cron').CronJob
-const log = require('iguess-api-coincidents').Managers.logManager
+const { log } = require('iguess-api-coincidents').Managers
 
 const cronTime = require('./cronTime')
 const { getAllChampionshipRepository, createGuessLineRepository, updateGuessLineActivityRepository } = require('../../repositories')

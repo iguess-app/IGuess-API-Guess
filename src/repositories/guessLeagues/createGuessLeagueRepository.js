@@ -6,7 +6,7 @@ const coincidents = require('iguess-api-coincidents')
 const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
 const queryUtils = coincidents.Utils.queryUtils
-const log = coincidents.Managers.logManager
+const { log } = coincidents.Managers
 const MAX_GUESSLEAGUES_FREE_ALLOW = coincidents.Config.guess.maxGuessLeagueFreeAllow
 
 const createGuessLeague = (request, championship, dictionary) =>

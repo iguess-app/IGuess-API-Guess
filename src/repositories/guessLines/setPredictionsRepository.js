@@ -1,8 +1,7 @@
 'use strict'
 
 const Promise = require('bluebird')
-const log = require('iguess-api-coincidents').Managers.logManager
-const { dateManager } = require('iguess-api-coincidents').Managers
+const { dateManager, log } = require('iguess-api-coincidents').Managers
 
 const Prediction = require('../../models/guessDB/predictionsModel')
 

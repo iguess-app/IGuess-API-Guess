@@ -4,7 +4,7 @@ const coincidents = require('iguess-api-coincidents')
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
-const log = coincidents.Managers.logManager
+const { log } = coincidents.Managers
 
 const createGuessLine = (championship) => {
   const searchQuery = {
