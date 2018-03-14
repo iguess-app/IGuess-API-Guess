@@ -25,7 +25,7 @@ const response = Joi.object({
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
   games: Joi.array().items({
-    initHour: Joi.string().required(),
+    initTime: Joi.date().required(),
     allowToPredict: Joi.bool().required(),
     minutes: Joi.string(),
     started: Joi.bool().required(),

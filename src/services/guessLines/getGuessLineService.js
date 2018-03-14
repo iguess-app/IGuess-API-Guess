@@ -75,7 +75,7 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
       ended: match.ended,
       started: match.started,
       minutes: match.minutes,
-      initHour: _getInitTimeHour(match.initTime),
+      initTime: match.initTime,
       allowToPredict: _checkIfAllowPredict(match.initTime)
     }
 
@@ -135,13 +135,6 @@ const _buildMatchDayLikeHumanDate = (matchDay, language) => {
   const weekDay = dateManager.getUTCDate(matchDay.date, '', 'dddd', language)
 
   return `${date}, ${weekDay}`
-}
-
-const _getInitTimeHour = (initTime) => {
-  const hour = dateManager.getUTCDate(initTime, '', 'HH')
-  const min = dateManager.getUTCDate(initTime, '', 'mm')
-
-  return `${hour}h ${min}m`
 }
 
 const _checkIfAllowPredict = (initTime) => 
