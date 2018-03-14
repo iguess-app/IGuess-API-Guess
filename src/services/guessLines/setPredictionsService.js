@@ -8,6 +8,7 @@ const coincidents = require('iguess-api-coincidents')
 const sessionManager = require('../../managers/sessionManager')
 const { getMatchByRefRepository, setPredictionsRepository } = require('../../repositories')
 
+const { dateManager } = coincidents.Managers
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
@@ -45,7 +46,7 @@ const _joinMatchWithGuess = (request, dictionary) => {
 }
 
 const _checkOneHourRule = (request, dictionary) => { 
-  const nowUnixDate = Number(moment().format('x'))
+  const nowUnixDate = Number(dateManager.getUTCToday('x'))
   const onlyOneHourRuleAccepted = request.guesses.filter((guess) => {
     const oneHourBeforeTheMatchUnixDate = _getOneHourBeforeTheMatchInUnixDate(guess.initTime)
     return nowUnixDate < oneHourBeforeTheMatchUnixDate
@@ -64,9 +65,10 @@ const _checkOneHourRule = (request, dictionary) => {
 }
 
 const _getOneHourBeforeTheMatchInUnixDate = (initTime) => 
-  Number(moment(initTime)
-    .subtract(MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH, MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT)
-    .format('x')
+  Number(
+    moment(initTime)
+      .subtract(MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH, MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT)
+      .format('x')
   )
 
 module.exports = setPredictions

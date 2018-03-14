@@ -1,8 +1,8 @@
 'use strict'
 
-const moment = require('moment')
 const Promise = require('bluebird')
-const Log = require('iguess-api-coincidents').Managers.logManager
+const log = require('iguess-api-coincidents').Managers.logManager
+const { dateManager } = require('iguess-api-coincidents').Managers
 
 const Prediction = require('../../models/guessDB/predictionsModel')
 
@@ -19,7 +19,7 @@ const setPredictions = (request) => {
           matchPredictionFound.guess.homeTeamScoreGuess = guess.homeTeamScoreGuess
           matchPredictionFound.guess.awayTeamScoreGuess = guess.awayTeamScoreGuess
           matchPredictionFound.matchInitTime = guess.initTimeUnixDate
-          matchPredictionFound.predictionSentDate = moment().format()
+          matchPredictionFound.predictionSentDate = dateManager.getUTCToday()
 
           return matchPredictionFound.save()
         }
@@ -30,7 +30,7 @@ const setPredictions = (request) => {
           matchRef: guess.matchRef,
           championshipRef: request.championshipRef,
           matchInitTime: guess.initTimeUnixDate,
-          predictionSentDate: moment().format(),
+          predictionSentDate: dateManager.getUTCToday(),
           guess: {
             homeTeamScoreGuess: guess.homeTeamScoreGuess,
             awayTeamScoreGuess: guess.awayTeamScoreGuess
@@ -41,7 +41,7 @@ const setPredictions = (request) => {
       })
       .then((prediction) => prediction.toJSON())
       .catch((err) => {
-        Log.error(err)
+        log.error(err)
       })
   })
 
