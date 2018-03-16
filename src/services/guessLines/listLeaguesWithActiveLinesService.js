@@ -31,5 +31,3 @@ const getActivedLinesByLeague = (leagues) => {
 module.exports = listLeaguesWithActiveLines
 
 /*eslint no-magic-numbers: 0*/
-
-//TODO: Added Integrated Test to listLeaguesWithActiveLines
