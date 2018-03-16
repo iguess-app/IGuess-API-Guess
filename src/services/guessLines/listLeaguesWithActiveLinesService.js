@@ -17,7 +17,7 @@ const listLeaguesWithActiveLines = async (headers) => {
 const getActivedLinesByLeague = (leagues) => {
   
   const promiseArray = leagues.map((league) => 
-    Promise.all([countActivedLinesRepository(league._id), league])
+    Promise.all([countActivedLinesRepository(league.leagueRef), league])
   )
 
   return Promise.map(promiseArray, (leagueWithLineNumber) => {
