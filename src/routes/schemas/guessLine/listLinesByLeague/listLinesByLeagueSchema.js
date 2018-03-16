@@ -11,7 +11,7 @@ const request = Joi.object({
 })
 
 const response = Joi.array().items({
-  _id: Joi.object().required(),
+  championshipRef: Joi.object().required(),
   championship: Joi.string().required(),
   season: Joi.string().required()
 })

@@ -26,6 +26,12 @@ const _treatErrors = (leagues, dictionary) => {
   return leagues
 }
 
-const _cleanObj = (leagues) => leagues.map((league) => league.toJSON())
+const _cleanObj = (leagues) => 
+  leagues.map((league) => {
+    const cleanObj = league.toJSON()
+    cleanObj.leagueRef = cleanObj._id
+    Reflect.deleteProperty(cleanObj, '_id')
+    return cleanObj
+  })
 
 module.exports = listLeaguesWithActiveLines

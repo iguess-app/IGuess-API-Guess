@@ -18,6 +18,12 @@ const listLeaguesWithActiveLines = (payload) => {
     .then((championships) => _cleanObj(championships))
 }
 
-const _cleanObj = (championships) => championships.map((championship) => championship.toJSON())
+const _cleanObj = (championships) => 
+  championships.map((championship) => {
+    const cleanObj = championship.toJSON()
+    cleanObj.championshipRef = cleanObj._id
+    Reflect.deleteProperty(cleanObj, '_id')
+    return cleanObj
+  })
 
 module.exports = listLeaguesWithActiveLines

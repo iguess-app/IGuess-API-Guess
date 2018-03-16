@@ -3,7 +3,7 @@
 const Joi = require('joi')
 
 const response = Joi.array().items({
-  _id: Joi.object().required(),
+  leagueRef: Joi.object().required(),
   country: Joi.string().required(),
   name: Joi.string().required(),
   association: Joi.string().required(),
