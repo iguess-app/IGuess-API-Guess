@@ -6,6 +6,7 @@ const listUserGuessesLinesService = require('./listUserGuessesLinesService')
 const setPredictionsService = require('./setPredictionsService')
 const userAtGuessLineService = require('./userAtGuessLineService')
 const listLeaguesWithActiveLinesService = require('./listLeaguesWithActiveLinesService')
+const listLinesByLeagueService = require('./listLinesByLeagueService')
 
 module.exports = {
   addUserToGuessLineService,
@@ -13,5 +14,6 @@ module.exports = {
   listUserGuessesLinesService,
   setPredictionsService,
   userAtGuessLineService,
-  listLeaguesWithActiveLinesService
+  listLeaguesWithActiveLinesService,
+  listLinesByLeagueService
 }

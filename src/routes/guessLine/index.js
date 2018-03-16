@@ -7,6 +7,7 @@ const getGuessLineRoutes = require('./getGuessLineRoutes')
 const listUserGuessesLinesRoutes = require('./listUserGuessesLinesRoutes')
 const setPredictionsRoutes = require('./setPredictionsRoutes')
 const listLeaguesWithActiveLinesRoutes = require('./listLeaguesWithActiveLinesRoutes')
+const listLinesByLeagueRoutes = require('./listLinesByLeagueRoutes')
 
 module.exports = {
   addUserToGuessLineRoutes,
@@ -15,5 +16,6 @@ module.exports = {
   getGuessLineRoutes,
   listUserGuessesLinesRoutes,
   setPredictionsRoutes,
-  listLeaguesWithActiveLinesRoutes
+  listLeaguesWithActiveLinesRoutes,
+  listLinesByLeagueRoutes
 }
