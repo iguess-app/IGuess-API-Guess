@@ -18,10 +18,7 @@ const request = Joi.object({
 const response = Joi.object({
   date: Joi.string().required(),
   weekDay: Joi.string().required(),
-  page: Joi.object({
-    hasNext: Joi.bool(),
-    hasPrevious: Joi.bool()
-  }),
+  matchDayUnixDateIndicator: Joi.number().required(),
   championship: championshipEmbeddedSchema,
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
@@ -47,5 +44,3 @@ module.exports = {
   request,
   response
 }
-
-//TODO: Added hasNext hasPrevious

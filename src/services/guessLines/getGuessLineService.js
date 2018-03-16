@@ -116,6 +116,7 @@ const _buildResponseObj = (promiseAllObj, language) => {
     matchDayPontuation,
     date: _buildMatchDayLikeHumanDate(matchDay, language),
     weekDay: _getWeekDay(matchDay, language),
+    matchDayUnixDateIndicator: matchDay.unixDate,
     games
   }
 
