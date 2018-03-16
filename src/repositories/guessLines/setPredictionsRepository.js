@@ -58,5 +58,3 @@ const _buildResponseBody = (predictionArraySetted, request) => ({
   })
 
 module.exports = setPredictions
-
-//TODO: Mesmo que uma prediction falhar, fazer as outras darem certo
