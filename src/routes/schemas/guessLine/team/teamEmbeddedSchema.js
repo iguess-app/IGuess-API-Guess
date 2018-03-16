@@ -12,9 +12,9 @@ const teamEmbbededSchema = Joi.object({
   fullName: Joi.string().required(),
   shortName: Joi.string().required(),
   logo: Joi.object({
-    mini: Joi.string(),
-    small: Joi.string(),
-    normal: Joi.string()
+    mini: Joi.string().allow(''),
+    small: Joi.string().allow(''),
+    normal: Joi.string().allow('')
   })
 })
 

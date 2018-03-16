@@ -9,6 +9,8 @@ const listGuessesLinesRepository = require('./listGuessesLinesRepository')
 const setPredictionsRepository = require('./setPredictionsRepository')
 const updateGuessLineActivityRepository = require('./updateGuessLineActivityRepository')
 const verifyUserAtGuessLineRepository = require('./verifyUserAtGuessLineRepository')
+const listLeaguesWithActiveLinesRepository = require('./listLeaguesWithActiveLinesRepository')
+const countActivedLinesRepository = require('./countActivedLinesRepository')
 
 module.exports= {
   addUserToGuessLineRepository,
@@ -19,5 +21,7 @@ module.exports= {
   listGuessesLinesRepository,
   setPredictionsRepository,
   updateGuessLineActivityRepository,
-  verifyUserAtGuessLineRepository
+  verifyUserAtGuessLineRepository,
+  listLeaguesWithActiveLinesRepository,
+  countActivedLinesRepository
 }

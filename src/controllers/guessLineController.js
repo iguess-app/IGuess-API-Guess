@@ -47,10 +47,19 @@ const userAtGuessLine = (request, reply) => {
     .catch((err) => reply(err))
 }
 
+const listLeaguesWithActiveLines = (request, reply) => {
+  const headers = request.headers
+
+  guessLinesServices.listLeaguesWithActiveLinesService(headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
+
 module.exports = {
   setPredictions,
   addUserToGuessLine,
   listGuessesLines,
   getGuessLine,
-  userAtGuessLine
+  userAtGuessLine,
+  listLeaguesWithActiveLines
 }
