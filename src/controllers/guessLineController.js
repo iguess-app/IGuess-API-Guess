@@ -20,11 +20,11 @@ const setPredictions = (request, reply) => {
     .catch((err) => reply(err))
 }
 
-const listGuessesLines = (request, reply) => {
+const listUserGuessesLines = (request, reply) => {
   const payload = request.query
   const headers = request.headers
 
-  guessLinesServices.listGuessesLinesService(payload, headers)
+  guessLinesServices.listUserGuessesLinesService(payload, headers)
     .then((response) => reply(response))
     .catch((err) => reply(err))
 }
@@ -58,7 +58,7 @@ const listLeaguesWithActiveLines = (request, reply) => {
 module.exports = {
   setPredictions,
   addUserToGuessLine,
-  listGuessesLines,
+  listUserGuessesLines,
   getGuessLine,
   userAtGuessLine,
   listLeaguesWithActiveLines

@@ -3,21 +3,21 @@
 const guessLineController = require('../../controllers/guessLineController')
 const server = require('../../../configServer')
 const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').defaultSessionHeaderSchema
-const listGuessesLinesSchema = require('../schemas/guessLine/getGuessLine/listGuessesLinesSchema')
+const listUserGuessesLinesSchema = require('../schemas/guessLine/getGuessLine/listUserGuessesLinesSchema')
 
 server.route({
-  path: '/guessline/listGuessesLines',
+  path: '/guessline/listUserGuessesLines',
   method: 'GET',
   config: {
     handler: (request, reply) => {
-      guessLineController.listGuessesLines(request, reply)
+      guessLineController.listUserGuessesLines(request, reply)
     },
     validate: {
-      query: listGuessesLinesSchema.request,
+      query: listUserGuessesLinesSchema.request,
       headers: defaultSessionHeaderSchema
     },
     response: {
-      schema: listGuessesLinesSchema.response
+      schema: listUserGuessesLinesSchema.response
     }
   }
 })

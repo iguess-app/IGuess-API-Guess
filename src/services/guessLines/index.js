@@ -2,7 +2,7 @@
 
 const addUserToGuessLineService = require('./addUserToGuessLineService')
 const getGuessLineService = require('./getGuessLineService')
-const listGuessesLinesService = require('./listGuessesLinesService')
+const listUserGuessesLinesService = require('./listUserGuessesLinesService')
 const setPredictionsService = require('./setPredictionsService')
 const userAtGuessLineService = require('./userAtGuessLineService')
 const listLeaguesWithActiveLinesService = require('./listLeaguesWithActiveLinesService')
@@ -10,7 +10,7 @@ const listLeaguesWithActiveLinesService = require('./listLeaguesWithActiveLinesS
 module.exports = {
   addUserToGuessLineService,
   getGuessLineService,
-  listGuessesLinesService,
+  listUserGuessesLinesService,
   setPredictionsService,
   userAtGuessLineService,
   listLeaguesWithActiveLinesService

@@ -7,7 +7,7 @@ const coincidents = require('iguess-api-coincidents')
 const stubs = require('../../../lib/stubs')
 const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
-const schemaValidate = require('../../../../src/routes/schemas/guessLine/getGuessLine/listGuessesLinesSchema').response
+const schemaValidate = require('../../../../src/routes/schemas/guessLine/getGuessLine/listUserGuessesLinesSchema').response
 
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
@@ -68,17 +68,6 @@ lab.experiment('Integrated Test ==> listGuessLine', () => {
       })
   })
 
-  lab.test('listGuessLine passing flag list all', (done) => {
-    stubs.stubSessionRedis(injectedRequests.listAllGuessLine.headers.token)
-    server.inject(injectedRequests.listAllGuessLine)
-      .then((response) => {
-        const result = response.result
-        Joi.validate(result, schemaValidate, (err) => {
-          expect(err).to.be.equal(null)
-          done()
-        })
-      })
-  })
 })
 
 /*eslint no-magic-numbers: 0*/

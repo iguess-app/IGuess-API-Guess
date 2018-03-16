@@ -6,7 +6,7 @@ const queryUtils = coincidents.Utils.queryUtils
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
 
-const listGuessesLines = (request) => {
+const listUserGuessesLines = (request) => {
 
   const searchQuery = _buildSearchQuery(request)
 
@@ -28,20 +28,16 @@ const listGuessesLines = (request) => {
 }
 
 const _buildSearchQuery = (request) => {
-  const searchQuery = {}
-  
-  if (request.listAll) {
-    searchQuery.guessLineActive = true
-    return searchQuery
+  const searchQuery = {
+    usersAddedAtGuessLine: {
+      $in: [request.userRef]
+    }
   }
 
-  searchQuery.usersAddedAtGuessLine = {
-    $in: [request.userRef]
-  }
   if (request.onlyActive === true) {
     searchQuery.guessLineActive = request.onlyActive
   }
   return searchQuery
 }
 
-module.exports = listGuessesLines
+module.exports = listUserGuessesLines

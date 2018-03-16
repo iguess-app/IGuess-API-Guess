@@ -4,14 +4,14 @@ const Promise = require('bluebird')
 const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
 
 const sessionManager = require('../../managers/sessionManager')
-const { listGuessesLinesRepository, getPredictionsRepository } = require('../../repositories')
+const { listUserGuessesLinesRepository, getPredictionsRepository } = require('../../repositories')
 
-const listGuessesLines = async (request, headers) => {
+const listUserGuessesLines = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
   const session = await sessionManager.getSession(headers, dictionary)
   request.userRef = session.userRef
 
-  return listGuessesLinesRepository(request, dictionary)
+  return listUserGuessesLinesRepository(request, dictionary)
     .then((list) => _checkIfPontuationWillReturnsToo(list, request))
 }
 
@@ -34,4 +34,4 @@ const _checkIfPontuationWillReturnsToo = (list, request) => {
   })
 }
 
-module.exports = listGuessesLines
+module.exports = listUserGuessesLines
