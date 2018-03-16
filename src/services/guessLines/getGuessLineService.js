@@ -115,6 +115,7 @@ const _buildResponseObj = (promiseAllObj, language) => {
     guessLinePontuation: totalPontuation,
     matchDayPontuation,
     date: _buildMatchDayLikeHumanDate(matchDay, language),
+    weekDay: _getWeekDay(matchDay, language),
     games
   }
 
@@ -131,11 +132,13 @@ const _setPaginationOnCache = (matchDay, request, guessLine) => {
 const _buildPageCacheKey = (request, guessLine) => request.userRef + guessLine.championship.championshipRef + PAGE_KEY_SUFFIX
 
 const _buildMatchDayLikeHumanDate = (matchDay, language) => {
-  const date = dateManager.getUTCDate(matchDay.date, '', 'DD MMMM', language)
-  const weekDay = dateManager.getUTCDate(matchDay.date, '', 'dddd', language)
+  const date = dateManager.getUTCDate(matchDay.date, '', 'DD/MMMM', language)
+  const weekDay = _getWeekDay(matchDay, language)
 
   return `${date}, ${weekDay}`
 }
+
+const _getWeekDay = (matchDay, language) => dateManager.getUTCDate(matchDay.date, '', 'dddd', language)
 
 const _checkIfAllowPredict = (initTime) => 
   moment()

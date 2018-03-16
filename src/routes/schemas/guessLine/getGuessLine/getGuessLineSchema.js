@@ -17,6 +17,7 @@ const request = Joi.object({
 
 const response = Joi.object({
   date: Joi.string().required(),
+  weekDay: Joi.string().required(),
   page: Joi.object({
     hasNext: Joi.bool(),
     hasPrevious: Joi.bool()
