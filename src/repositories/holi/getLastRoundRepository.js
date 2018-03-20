@@ -3,7 +3,9 @@
 const coincidents = require('iguess-api-coincidents')
 const Boom = require('boom')
 
+const { pageAliases } = require('../../../config')
 const Round = require('../../models/holiDB/roundModel')
+
 const queryUtils = coincidents.Utils.queryUtils
 const { dateManager } = coincidents.Managers
 
@@ -24,13 +26,13 @@ const getLastRound = (request, dictionary) => {
 const _buildSearchQuery = (request) => {
   const searchQuery = {
     'championshipRef': request.championshipRef,
-    'unixDate': _getOperatorQuery(request.currentDateUserPage)[request.page ? request.page : 'near']
+    'unixDate': _getOperatorQuery(request.pageIndicator)[request.page]
   }
   return searchQuery
 }
 
 const _buildSortQuery = (request) => {
-  if (request.page === 'next') {
+  if (request.page === pageAliases.greaterPage || request.page === pageAliases.greaterEqualPage) {
     return {
       unixDate: 1
     }
@@ -41,15 +43,19 @@ const _buildSortQuery = (request) => {
 }
 
 const _getOperatorQuery = (currentDateUserPage) => ({
-  previous: {
+  [pageAliases.previousPage]: {
     $lt: currentDateUserPage
   },
-  next: {
+  [pageAliases.greaterPage]: {
     $gt: currentDateUserPage
   },
-  near: {
+  [pageAliases.previousEqualPage]: {
     $lte: dateManager.getUTCToday('X')
-  }
+  },
+  [pageAliases.greaterEqualPage]: {
+    $gte: dateManager.getUTCToday('X')
+  },
+  [pageAliases.askedPage]: currentDateUserPage
 })
 
 const _checkErrors = (lastRound, dictionary) => {

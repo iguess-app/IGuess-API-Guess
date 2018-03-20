@@ -5,15 +5,27 @@ const coincidents = require('iguess-api-coincidents')
 
 const teamEmbeddedSchema = require('../team/teamEmbeddedSchema')
 const championshipEmbeddedSchema = require('../../embeddedSchemas/championshipEmbeddedSchema')
+const { pageAliases } = require('../../../../../config')
 
 const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
 const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
 
-const request = Joi.object({
-  championshipRef: Joi.string().length(ID_SIZE),
-  page: Joi.string().valid(['previous', 'next', 'near']).default('near')
+const defaultNextNearMatchDaySchema = Joi.object({
+  championshipRef: Joi.string().length(ID_SIZE)
 })
+
+const pageAliasesList = Object.values(pageAliases)
+const paginatedMatchDaySchema = Joi.object({
+  championshipRef: Joi.string().length(ID_SIZE),
+  page: Joi.string().valid([pageAliasesList]).required(),
+  pageIndicator: Joi.number().integer().required()
+})
+
+const request = Joi.alternatives().try(
+  defaultNextNearMatchDaySchema,
+  paginatedMatchDaySchema
+)
 
 const response = Joi.object({
   date: Joi.date().required(),

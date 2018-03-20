@@ -25,7 +25,7 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
-       
+
         Joi.validate(result, schemaValidate, (err) => {
           expect(err).to.be.equal(null)
           done()
@@ -55,4 +55,5 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
 
   //TODO: Adicionar um cenario de teste que devolve um guessLine matchDay com match in live e devolva os minutes e o started=true e allowToPredict=false
   //TODO: fazer um que fixe o allowToPredict=true
+  //TODO: Testar melhor a paginação
 })
