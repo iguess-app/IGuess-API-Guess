@@ -16,9 +16,8 @@ const request = Joi.object({
 })
 
 const response = Joi.object({
-  date: Joi.string().required(),
-  weekDay: Joi.string().required(),
-  matchDayUnixDateIndicator: Joi.number().required(),
+  date: Joi.date().required(),
+  pageIndicator: Joi.number().required(),
   championship: championshipEmbeddedSchema,
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),

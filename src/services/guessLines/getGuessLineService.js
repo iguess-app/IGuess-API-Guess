@@ -7,7 +7,7 @@ const Promise = require('bluebird')
 const sessionManager = require('../../managers/sessionManager')
 const { getPredictionsRepository, getGuessLineRepository, getLastRoundRepository } = require('../../repositories')
 
-const { cacheManager, dateManager } = coincidents.Managers
+const { cacheManager } = coincidents.Managers
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
@@ -23,7 +23,7 @@ const getGuessLine = async (request, headers) => {
   return getGuessLineRepository(request, dictionary)
     .then((guessLine) => _getPontuationAndSomeMatchDay(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
-    .then((promiseAllObj) => _buildResponseObj(promiseAllObj, headers.language))
+    .then((promiseAllObj) => _buildResponseObj(promiseAllObj))
 }
 
 const _getPontuationAndSomeMatchDay = (guessLine, request, dictionary) => 
@@ -103,7 +103,7 @@ const _buildPredictionsPromiseArray = (matchDay, userRef, dictionary) =>
   })
 
 
-const _buildResponseObj = (promiseAllObj, language) => {
+const _buildResponseObj = (promiseAllObj) => {
   const games = promiseAllObj[0]
   const guessLine = promiseAllObj[1]
   const matchDay = promiseAllObj[2]
@@ -114,9 +114,8 @@ const _buildResponseObj = (promiseAllObj, language) => {
     championship: guessLine.championship.toObject(),
     guessLinePontuation: totalPontuation,
     matchDayPontuation,
-    date: _buildMatchDayLikeHumanDate(matchDay, language),
-    weekDay: _getWeekDay(matchDay, language),
-    matchDayUnixDateIndicator: matchDay.unixDate,
+    date: matchDay.date,
+    pageIndicator: matchDay.unixDate,
     games
   }
 
@@ -131,15 +130,6 @@ const _setPaginationOnCache = (matchDay, request, guessLine) => {
 }
 
 const _buildPageCacheKey = (request, guessLine) => request.userRef + guessLine.championship.championshipRef + PAGE_KEY_SUFFIX
-
-const _buildMatchDayLikeHumanDate = (matchDay, language) => {
-  const date = dateManager.getUTCDate(matchDay.date, '', 'DD/MMMM', language)
-  const weekDay = _getWeekDay(matchDay, language)
-
-  return `${date}, ${weekDay}`
-}
-
-const _getWeekDay = (matchDay, language) => dateManager.getUTCDate(matchDay.date, '', 'dddd', language)
 
 const _checkIfAllowPredict = (initTime) => 
   moment()
