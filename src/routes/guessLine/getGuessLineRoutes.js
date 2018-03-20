@@ -21,8 +21,3 @@ server.route({
     }
   }
 })
-
-
-/*
-  TODO: Schemas de req, res and header
-*/

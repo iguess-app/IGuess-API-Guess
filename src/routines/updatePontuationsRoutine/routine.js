@@ -4,7 +4,7 @@ const { log } = require('iguess-api-coincidents').Managers
 
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
-const { getAllChampionshipRepository, getLastRoundRepository } = require('../../repositories')
+const { getAllChampionshipRepository, getRoundRepository } = require('../../repositories')
 const { pageAliases } = require('../../../config')
 
 const TEN_SECONDS = 10000
@@ -22,7 +22,7 @@ const fireRoutine = () => {
           championshipRef: championship._id.toString(),
           page: PAGE_ALIAS
         }
-        return getLastRoundRepository(championshipFilter)
+        return getRoundRepository(championshipFilter)
           .then((matchDay) => getUsersPredictionsFunctions(matchDay))
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
       })

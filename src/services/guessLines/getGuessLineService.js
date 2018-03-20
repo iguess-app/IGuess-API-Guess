@@ -6,7 +6,7 @@ const Promise = require('bluebird')
 
 const { pageAliases } = require('../../../config')
 const sessionManager = require('../../managers/sessionManager')
-const { getPredictionsRepository, getGuessLineRepository, getLastRoundRepository } = require('../../repositories')
+const { getPredictionsRepository, getGuessLineRepository, getRoundRepository } = require('../../repositories')
 
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
@@ -37,7 +37,7 @@ const _getPontuationAndSomeMatchDay = (guessLine, request, dictionary) => {
   }
 
   return Promise.all([
-    getLastRoundRepository(repositoriesObj, dictionary), 
+    getRoundRepository(repositoriesObj, dictionary), 
     guessLine])
 }
 
