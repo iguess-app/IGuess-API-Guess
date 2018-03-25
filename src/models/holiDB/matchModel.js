@@ -87,3 +87,5 @@ const matchSchema = new Schema({
 }, optionsSchemas.versionKeyDisable)
 
 module.exports = db.model('matches', matchSchema)
+
+//TODO: Adicionar qual tipo de jogo (Fixture) representa a match (Se é final.. semi-final... amistoso)

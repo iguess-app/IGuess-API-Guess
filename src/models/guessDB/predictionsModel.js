@@ -59,5 +59,3 @@ const predictionsSchema = new Schema({
 }, optionsSchemas.versionKeyDisable)
 
 module.exports = db.model('predictions', predictionsSchema)
-
-//TODO: Adicionar qual tipo de jogo (Fixture) representa a match

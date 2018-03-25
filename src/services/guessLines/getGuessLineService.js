@@ -76,10 +76,10 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, requ
       ended: match.ended,
       started: match.started,
       minutes: match.minutes,
-      initTime: moment.tz(match.initTime, request.userTimezone).format(), //TODO: Usar do dateManager
+      initTime: dateManager.getDate(match.initTime, '', '', request.userTimezone),
       allowToPredict: _checkIfAllowPredict(match.initTime)
     }
-
+    
     if (prediction) {
       matchObj.awayTeamScoreGuess = prediction.guess.awayTeamScoreGuess
       matchObj.homeTeamScoreGuess = prediction.guess.homeTeamScoreGuess
