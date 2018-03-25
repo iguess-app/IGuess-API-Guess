@@ -32,7 +32,10 @@ const request = Joi.alternatives().try(
 
 const response = Joi.object({
   matchDayIsoDate: Joi.date().required(),
-  matchDayHumanified: Joi.string().required(),
+  matchDayHumanified: Joi.object({
+    mainInfoDate: Joi.string().required(),
+    subInfoDate: Joi.string().required()
+  }).required(),
   championship: championshipEmbeddedSchema,
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),

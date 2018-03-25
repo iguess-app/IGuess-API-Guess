@@ -23,7 +23,7 @@ const getGuessLine = async (request, headers) => {
   return getGuessLineRepository(request, dictionary)
     .then((guessLine) => _getMatches(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
-    .then((promiseAllObj) => _buildResponseObj(promiseAllObj, headers.language, request))
+    .then((promiseAllObj) => _buildResponseObj(promiseAllObj, dictionary, request))
 }
 
 const _getMatches = (guessLine, request, dictionary) => {
@@ -76,7 +76,7 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, requ
       ended: match.ended,
       started: match.started,
       minutes: match.minutes,
-      initTime: moment.tz(match.initTime, request.userTimezone).format(),
+      initTime: moment.tz(match.initTime, request.userTimezone).format(), //TODO: Usar do dateManager
       allowToPredict: _checkIfAllowPredict(match.initTime)
     }
 
@@ -104,7 +104,7 @@ const _buildPredictionsPromiseArray = (maches, userRef, dictionary) =>
   })
 
 
-const _buildResponseObj = (promiseAllObj, language, request) => {
+const _buildResponseObj = (promiseAllObj, dictionary, request) => {
   const games = promiseAllObj[0]
   const guessLine = promiseAllObj[1]
   const totalPontuation = promiseAllObj[2]
@@ -116,7 +116,7 @@ const _buildResponseObj = (promiseAllObj, language, request) => {
     guessLinePontuation: totalPontuation,
     matchDayPontuation,
     matchDayIsoDate,
-    matchDayHumanified: _buildMatchDayLikeHumanDate(matchDayIsoDate, language, request.userTimezone),
+    matchDayHumanified: _buildMatchDayLikeHumanDate(matchDayIsoDate, dictionary, request.userTimezone),
     games
   }
 
@@ -128,14 +128,24 @@ const _checkIfAllowPredict = (initTime) =>
     .add(MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH, MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT)
     .isBefore(moment(initTime)) 
 
-const _buildMatchDayLikeHumanDate = (matchDayIsoDate, language, userTimezone) => {
-  const date = dateManager.getDate(matchDayIsoDate, '', 'DD/MMMM', userTimezone, language)
-  const weekDay = _getWeekDay(matchDayIsoDate, language, userTimezone)
+const _buildMatchDayLikeHumanDate = (matchDayIsoDate, dictionary, userTimezone) => {
+  const date = dateManager.getDate(matchDayIsoDate, '', 'DD/MMMM', userTimezone, dictionary.language)
+  const weekDay = dateManager.getDate(matchDayIsoDate, '', 'dddd', userTimezone, dictionary.language)
 
-  return `${date}, ${weekDay}`
+  const nickname = dateManager.getNicknameDay(userTimezone, matchDayIsoDate)
+
+  if (nickname) {
+    return {
+      mainInfoDate: dictionary[nickname],
+      subInfoDate: `${date}, ${weekDay}`
+    }
+  }
+
+  return {
+    mainInfoDate: date,
+    subInfoDate: weekDay
+  }
 }
-
-const _getWeekDay = (matchDayIsoDate, language, userTimezone) => dateManager.getDate(matchDayIsoDate, '', 'ddd', userTimezone, language)
 
 module.exports = getGuessLine
 
