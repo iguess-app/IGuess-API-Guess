@@ -10,16 +10,19 @@ const { pageAliases } = require('../../../../../config')
 const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
 const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
+const UTC_TIMEZONE = 'UTC'
 
 const defaultNextNearMatchDaySchema = Joi.object({
-  championshipRef: Joi.string().length(ID_SIZE)
+  championshipRef: Joi.string().length(ID_SIZE),
+  userTimezone: Joi.string().default(UTC_TIMEZONE)
 })
 
 const pageAliasesList = Object.values(pageAliases)
 const paginatedMatchDaySchema = Joi.object({
   championshipRef: Joi.string().length(ID_SIZE),
+  userTimezone: Joi.string().default(UTC_TIMEZONE),
   page: Joi.string().valid([pageAliasesList]).required(),
-  pageIndicator: Joi.number().integer().required()
+  dateReference: Joi.date().required()
 })
 
 const request = Joi.alternatives().try(
@@ -28,8 +31,8 @@ const request = Joi.alternatives().try(
 )
 
 const response = Joi.object({
-  date: Joi.date().required(),
-  pageIndicator: Joi.number().required(),
+  matchDayIsoDate: Joi.date().required(),
+  matchDayHumanified: Joi.string().required(),
   championship: championshipEmbeddedSchema,
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
@@ -39,7 +42,7 @@ const response = Joi.object({
     minutes: Joi.string(),
     started: Joi.bool().required(),
     ended: Joi.bool().required(),
-    matchRef: Joi.string().length(ID_SIZE).required(),
+    matchRef: Joi.string().required(),
     matchPontuation: Joi.number().integer(),
     stadium: Joi.string(),
     homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),

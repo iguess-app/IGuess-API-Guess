@@ -4,14 +4,13 @@ const Promise = require('bluebird')
 
 const { getPredictionsRepository } = require('../../../repositories')
 
-const getUsersPredictionsAndSetPontuations = (matchDay) => {
+const getUsersPredictionsAndSetPontuations = (matches) => {
 
-  const matchDayPredictionArrayPromise = matchDay.games.map((matchObj) => {
+  const matchDayPredictionArrayPromise = matches.map((matchObj) => {
     const cursor = getPredictionsRepository.getPredictionByMatchRef(matchObj)
     return {
       cursor,
-      match: matchObj,
-      matchDateUnixDate: matchDay.unixDate
+      match: matchObj
     }
   })
 

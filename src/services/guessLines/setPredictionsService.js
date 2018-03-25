@@ -46,7 +46,7 @@ const _joinMatchWithGuess = (request, dictionary) => {
 }
 
 const _checkOneHourRule = (request, dictionary) => { 
-  const nowUnixDate = Number(dateManager.getUTCToday('x'))
+  const nowUnixDate = Number(dateManager.getUTCNow('x'))
   const onlyOneHourRuleAccepted = request.guesses.filter((guess) => {
     const oneHourBeforeTheMatchUnixDate = _getOneHourBeforeTheMatchInUnixDate(guess.initTime)
     return nowUnixDate < oneHourBeforeTheMatchUnixDate

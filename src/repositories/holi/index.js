@@ -1,11 +1,11 @@
 'use strict'
 
 const getAllChampionshipRepository = require('./getAllChampionshipRepository')
-const getRoundRepository = require('./getRoundRepository')
 const getMatchByRefRepository = require('./getMatchByRefRepository')
+const getMatchesRepository = require('./getMatchesRepository')
 
 module.exports= {
   getAllChampionshipRepository,
-  getRoundRepository,
-  getMatchByRefRepository
+  getMatchByRefRepository,
+  getMatchesRepository
 }

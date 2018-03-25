@@ -1,13 +1,14 @@
 'use strict'
 
 const coincidents = require('iguess-api-coincidents')
-const moment = require('moment')
+const moment = require('moment-timezone')
 const Promise = require('bluebird')
 
 const { pageAliases } = require('../../../config')
 const sessionManager = require('../../managers/sessionManager')
-const { getPredictionsRepository, getGuessLineRepository, getRoundRepository } = require('../../repositories')
+const { getPredictionsRepository, getGuessLineRepository, getMatchesRepository } = require('../../repositories')
 
+const { dateManager } = coincidents.Managers
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
 
@@ -20,52 +21,54 @@ const getGuessLine = async (request, headers) => {
   request.userRef = session.userRef
 
   return getGuessLineRepository(request, dictionary)
-    .then((guessLine) => _getPontuationAndSomeMatchDay(guessLine, request, dictionary))
+    .then((guessLine) => _getMatches(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
-    .then((promiseAllObj) => _buildResponseObj(promiseAllObj))
+    .then((promiseAllObj) => _buildResponseObj(promiseAllObj, headers.language, request))
 }
 
-const _getPontuationAndSomeMatchDay = (guessLine, request, dictionary) => {
+const _getMatches = (guessLine, request, dictionary) => {
   const repositoriesObj = {
     championshipRef: guessLine.championship.championshipRef,
     userRef: request.userRef,
-    page: pageAliases.greaterEqualPage
+    page: pageAliases.nearestPage,
+    userTimezone: request.userTimezone
   }
-  if (request.page && request.pageIndicator) {
+  
+  if (request.page && request.dateReference) {
     repositoriesObj.page = request.page
-    repositoriesObj.pageIndicator = request.pageIndicator
+    repositoriesObj.dateReference = request.dateReference
   }
 
   return Promise.all([
-    getRoundRepository(repositoriesObj, dictionary), 
+    getMatchesRepository(repositoriesObj, dictionary), 
     guessLine])
 }
 
-const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchDayAndGuessLine, request, dictionary) => {
-  const matchDay = pontuationAndMatchDayAndGuessLine[0]
-  const guessLine = pontuationAndMatchDayAndGuessLine[1]
+const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchesAndGuessLine, request, dictionary) => {
+  const matchDay = pontuationAndMatchesAndGuessLine[0].matchDay
+  const matches = pontuationAndMatchesAndGuessLine[0].matches
+  const guessLine = pontuationAndMatchesAndGuessLine[1]
 
-  const predictionsPromiseArray = _buildPredictionsPromiseArray(matchDay, request.userRef, dictionary)
-  const games = _getMatchesArrayWithPredictionsAndResults(predictionsPromiseArray)
+  const predictionsPromiseArray = _buildPredictionsPromiseArray(matches, request.userRef, dictionary)
+  const games = _getMatchesArrayWithPredictionsAndResults(predictionsPromiseArray, request)
 
   const filter = {
     userRef: request.userRef,
-    unixDate: matchDay.unixDate,
     championshipRef: guessLine.championship.championshipRef
   }
   const totalPontuation = getPredictionsRepository.getTotalPontuation(filter)
-  const matchDayPontuation = getPredictionsRepository.getPontuationByUnixDate(filter)
+  const matchesPontuation = getPredictionsRepository.getPontuationByUnixDate(filter)
 
-  return Promise.all([games, guessLine, matchDay, totalPontuation, matchDayPontuation])
+  return Promise.all([games, guessLine, totalPontuation, matchesPontuation, matchDay])
 }
 
-const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) => 
+const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, request) => 
   Promise.map(predictionsPromiseArray, (matchAndPrediction) => {
     const prediction = matchAndPrediction[0]
     const match = matchAndPrediction[1]
 
      const matchObj = {
-      matchRef: match._id.toString(),
+      matchRef: match.matchRef,
       homeTeamScore: match.homeTeamScore,
       awayTeamScore: match.awayTeamScore,
       homeTeam: match.homeTeam,
@@ -73,7 +76,7 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
       ended: match.ended,
       started: match.started,
       minutes: match.minutes,
-      initTime: match.initTime,
+      initTime: moment.tz(match.initTime, request.userTimezone).format(),
       allowToPredict: _checkIfAllowPredict(match.initTime)
     }
 
@@ -88,11 +91,11 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray) =>
     return matchObj
   })
 
-const _buildPredictionsPromiseArray = (matchDay, userRef, dictionary) => 
-  matchDay.games.map((match) => {
+const _buildPredictionsPromiseArray = (maches, userRef, dictionary) => 
+  maches.map((match) => {
     const obj = {
       userRef,
-      matchRef: match._id.toString()
+      matchRef: match.matchRef
     }
     return Promise.all([
       getPredictionsRepository.getPredictions(obj, dictionary),
@@ -101,19 +104,19 @@ const _buildPredictionsPromiseArray = (matchDay, userRef, dictionary) =>
   })
 
 
-const _buildResponseObj = (promiseAllObj) => {
+const _buildResponseObj = (promiseAllObj, language, request) => {
   const games = promiseAllObj[0]
   const guessLine = promiseAllObj[1]
-  const matchDay = promiseAllObj[2]
-  const totalPontuation = promiseAllObj[3]
-  const matchDayPontuation = promiseAllObj[4]
+  const totalPontuation = promiseAllObj[2]
+  const matchDayPontuation = promiseAllObj[3]
+  const matchDayIsoDate = promiseAllObj[4]
 
   const responseObj = {
     championship: guessLine.championship.toObject(),
     guessLinePontuation: totalPontuation,
     matchDayPontuation,
-    date: matchDay.date,
-    pageIndicator: matchDay.unixDate,
+    matchDayIsoDate,
+    matchDayHumanified: _buildMatchDayLikeHumanDate(matchDayIsoDate, language, request.userTimezone),
     games
   }
 
@@ -124,6 +127,15 @@ const _checkIfAllowPredict = (initTime) =>
   moment()
     .add(MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH, MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT)
     .isBefore(moment(initTime)) 
+
+const _buildMatchDayLikeHumanDate = (matchDayIsoDate, language, userTimezone) => {
+  const date = dateManager.getDate(matchDayIsoDate, '', 'DD/MMMM', userTimezone, language)
+  const weekDay = _getWeekDay(matchDayIsoDate, language, userTimezone)
+
+  return `${date}, ${weekDay}`
+}
+
+const _getWeekDay = (matchDayIsoDate, language, userTimezone) => dateManager.getDate(matchDayIsoDate, '', 'ddd', userTimezone, language)
 
 module.exports = getGuessLine
 

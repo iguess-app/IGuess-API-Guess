@@ -5,10 +5,9 @@ const coincidentsConfig = coincidents.Config
 
 const guessConfig = {
   pageAliases: {
-    greaterPage: 'next',
+    nextPage: 'next',
     previousPage: 'previous',
-    greaterEqualPage: 'nearNext',
-    previousEqualPage: 'nearPrev',
+    nearestPage: 'nearNext',
     askedPage: 'askedPage'
   }
 }

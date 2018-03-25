@@ -28,6 +28,7 @@
     "lab": "^14.2.1",
     "md5": "2.2.1",
     "moment": "^2.18.1",
+    "moment-timezone": "^0.5.14",
     "mongoose": "4.7.6",
     "request-promise": "4.2.1",
     "sinon": "^4.1.2"

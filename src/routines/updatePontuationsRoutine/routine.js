@@ -1,30 +1,34 @@
 'use strict'
 
-const { log } = require('iguess-api-coincidents').Managers
+const coincidents = require('iguess-api-coincidents')
 
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
-const { getAllChampionshipRepository, getRoundRepository } = require('../../repositories')
+const { getAllChampionshipRepository, getMatchesRepository } = require('../../repositories')
 const { pageAliases } = require('../../../config')
 
+const { log, dateManager } = coincidents.Managers
+const forcedDate = coincidents.Config.updatePontuationRoutine
+const dictionary = coincidents.Translate.gate.selectLanguage()
 const TEN_SECONDS = 10000
-const PAGE_ALIAS = pageAliases.previousEqualPage
 
 const fireRoutine = () => {
   log.info('==================> ROUTINE STARTED: update Pontuations <==================')
-  const filter = {
+  const championshipsFilter = {
     onlyActive: true
   }
-  getAllChampionshipRepository(filter)
+  getAllChampionshipRepository(championshipsFilter)
     .then((championships) =>
       championships.map((championship) => {
-        const championshipFilter = {
+        const matchesFilter = {
           championshipRef: championship._id.toString(),
-          page: PAGE_ALIAS
+          dateReference: forcedDate.dayForced || dateManager.getISODateInitDay(),
+          page: pageAliases.askedPage
         }
-        return getRoundRepository(championshipFilter)
-          .then((matchDay) => getUsersPredictionsFunctions(matchDay))
+        return getMatchesRepository(matchesFilter, dictionary)
+          .then((matchDay) => getUsersPredictionsFunctions(matchDay.matches))
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
+          .catch((err) => log.error(err))
       })
     )
     .catch((err) => log.error(err))
