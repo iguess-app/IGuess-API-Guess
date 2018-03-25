@@ -22,9 +22,9 @@ const setPredictions = async (request, headers) => {
   request.userRef = session.userRef
 
   return _joinMatchWithGuess(request, dictionary)
-  .then((guessJoinedWithMatch) => { request.guesses = guessJoinedWithMatch })
-  .then(() => _checkOneHourRule(request, dictionary))
-  .then((predictionsRequestFiltered) => setPredictionsRepository(predictionsRequestFiltered, dictionary))
+    .then((guessJoinedWithMatch) => { request.guesses = guessJoinedWithMatch })
+    .then(() => _checkOneHourRule(request, dictionary))
+    .then((predictionsRequestFiltered) => setPredictionsRepository(predictionsRequestFiltered, dictionary))
 }
 
 const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {

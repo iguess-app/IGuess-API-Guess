@@ -8,7 +8,6 @@ const mongo = coincidents.Config.mongo
 const serverErrors = coincidents.Utils.errorUtils.serverErrors
 const Schema = mongoose.Schema
 
-const matchUserRefValidator = require('../subValidations/matchUserKey')
 const optionsSchemas = require('../optionsSchemas/optionsSchemas')
 
 const guessSchema = new Schema({
@@ -26,8 +25,7 @@ const predictionsSchema = new Schema({
   matchUserRef: {
     type: String,
     required: true,
-    unique: true,
-    validate: [matchUserRefValidator, String(serverErrors.notMatchUserKeyValid)]
+    unique: true
   },
   userRef: {
     type: String,
@@ -36,8 +34,7 @@ const predictionsSchema = new Schema({
   },
   matchRef: {
     type: String,
-    required: true,
-    validate: [mongo.checkObjectId, String(serverErrors.notMongoIdValid)]
+    required: true
   },
   championshipRef: {
     type: String,
@@ -52,7 +49,7 @@ const predictionsSchema = new Schema({
     required: true
   },
   matchInitTime: {
-    type: Number,
+    type: Date,
     required: true
   },
   guess: {

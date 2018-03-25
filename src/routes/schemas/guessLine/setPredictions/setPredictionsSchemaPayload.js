@@ -10,7 +10,7 @@ const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
 const setPredictionsSchemaPayload = Joi.object({
   championshipRef: Joi.string().length(ID_SIZE).required(),
   guesses: Joi.array().items({
-    matchRef: Joi.string().length(ID_SIZE).required(),
+    matchRef: Joi.string().required(),
     homeTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required(),
     awayTeamScoreGuess: Joi.number().min(MIN_POSSIBLE_SCORE).integer().required()
   }).required()

@@ -1,29 +1,18 @@
 'use strict'
 
-const coincidents = require('iguess-api-coincidents')
 const Boom = require('boom')
 
-const Round = require('../../models/holiDB/roundModel')
-
-const queryUtils = coincidents.Utils.queryUtils
+const Match = require('../../models/holiDB/matchModel')
 
 const getMatchByRefRepository = (request, dictionary) => {
   const searchQuery = {
-    'championshipRef': request.championshipRef,
-    'games._id': queryUtils.makeObjectId(request.matchRef)
+    matchRef: request.matchRef
   }
 
-  return Round.findOne(searchQuery)
-    .then((matchDay) => {
-      _treatErrors(matchDay, dictionary, request.matchRef)
-      return matchDay
-    })
-    .then((matchDay) => {
-      let match = matchDay.games.find((game) => game.id === request.matchRef)
+  return Match.findOne(searchQuery)
+    .then((match) => {
       _treatErrors(match, dictionary, request.matchRef)
-      match = match.toJSON()
-      match.initTimeUnixDate = matchDay.unixDate
-      return match
+      return match.toJSON()
     })
 }
 

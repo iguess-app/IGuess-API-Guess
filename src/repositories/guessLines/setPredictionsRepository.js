@@ -17,7 +17,7 @@ const setPredictions = (request) => {
         if (matchPredictionFound) {
           matchPredictionFound.guess.homeTeamScoreGuess = guess.homeTeamScoreGuess
           matchPredictionFound.guess.awayTeamScoreGuess = guess.awayTeamScoreGuess
-          matchPredictionFound.matchInitTime = guess.initTimeUnixDate
+          matchPredictionFound.matchInitTime = guess.initTime
           matchPredictionFound.predictionSentDate = dateManager.getUTCNow()
 
           return matchPredictionFound.save()
@@ -28,7 +28,7 @@ const setPredictions = (request) => {
           userRef: request.userRef,
           matchRef: guess.matchRef,
           championshipRef: request.championshipRef,
-          matchInitTime: guess.initTimeUnixDate,
+          matchInitTime: guess.initTime,
           predictionSentDate: dateManager.getUTCNow(),
           guess: {
             homeTeamScoreGuess: guess.homeTeamScoreGuess,
