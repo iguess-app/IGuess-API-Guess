@@ -10,53 +10,54 @@ const { queryUtils } = coincidents.Utils
 const { dateManager } = coincidents.Managers
 
 const getMatches = (request, dictionary) => {
-  //TODO: Primeiro encontrar qual o NEXT matchDAY depois fazer a query com o range
-  const sortQuery = _buildSortQuery(request)
-
   if (!request.dateReference) {
     request.dateReference = dateManager.getISODateInitDay(request.userTimezone)
   }
+  
+  return _getMatchDayDate(request)
+    .then((matchDay) => _checkMatchDayDateErrors(matchDay, request, dictionary))
+    .then((matchDay) => _getMatchesFromSomeMatchDay(matchDay, request, dictionary))
+}
 
-  //Pegando proximo MatchDay
-  const queryGG = {
-    championshipRef: request.championshipRef,
-    initTime: _getOperatorQuery(request.dateReference, request.userTimezone)[request.page]
-  }
-
-  const projectionGG = { _id: 0, initTime: 1 }
+const _getMatchDayDate = (request) => {
+  const sortMatchesQuery = _buildSortQuery(request)
+  const getMatchDayQuery = _buildGetMatchDayQuery(request)
+  const getMatchDayProjectionQuery = _onlyInitTimeProjection()
 
   return Match
-    .findOne(queryGG, projectionGG)
-    .sort(sortQuery)
-    .then((nextMatchDay) => {
-      if (nextMatchDay) {
-        request.dateReference = nextMatchDay.toJSON().initTime
+    .findOne(getMatchDayQuery, getMatchDayProjectionQuery)
+    .sort(sortMatchesQuery)
+}
 
-        const searchQuery = _buildSearchQuery(request)
+const _getMatchesFromSomeMatchDay = (matchDay, request, dictionary) => {
+  const matchDayDateObj = matchDay.initTime
+  const searchQuery = _buildSearchQuery(request, matchDayDateObj)
 
-        return Match.find(searchQuery)
-          .sort(sortQuery)
-          .then((matches) => {
-            _checkErrors(matches, dictionary)
+  return Match.find(searchQuery)
+    .sort(_buildSortQuery(request))
+    .then((matches) => {
+      _checkMatchesErrors(matches, dictionary)
 
-            return {
-              matches: matches.map((match) => queryUtils.makeObject(match)),
-              matchDay: dateManager.getISODateInitDay(request.userTimezone, request.dateReference) //Nao inserir o dateRefence no request.. nao pode da impressao que isso veio do front.. tem q ser algo q ta na cara q é manipulacao do back
-            }
-          })
-          .catch((err) => Boom.badData(err))
-
+      return {
+        matches: matches.map((match) => queryUtils.makeObject(match)),
+        matchDay: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj)
       }
-      throw Boom.notFound(dictionary.matchesNotFound)
     })
 }
 
-const _buildSearchQuery = (request) => {
+const _onlyInitTimeProjection = () => ({ _id: 0, initTime: 1 })
+
+const _buildGetMatchDayQuery = (request) => ({
+  championshipRef: request.championshipRef,
+  initTime: _getOperatorQuery(request.dateReference, request.userTimezone)[request.page]
+})
+
+const _buildSearchQuery = (request, matchDayDateObj) => {
   const searchQuery = {
     championshipRef: request.championshipRef,
     initTime: {
-      $gte: dateManager.getISODateInitDay(request.userTimezone, request.dateReference),
-      $lte: dateManager.getISODateFinalDay(request.userTimezone, request.dateReference)
+      $gte: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj),
+      $lte: dateManager.getISODateFinalDay(request.userTimezone, matchDayDateObj)
     }
   }
   return searchQuery
@@ -81,7 +82,7 @@ const _getOperatorQuery = (dateReference, userTimezone) => ({
     $gt: dateManager.getISODateFinalDay(userTimezone, dateReference) 
   },
   [pageAliases.nearestPage]: {
-    $gte: dateReference
+    $gte: dateManager.getISODateInitDay(userTimezone, dateReference)
   },
   [pageAliases.askedPage]: {
     $gte: dateManager.getISODateInitDay(userTimezone, dateReference),
@@ -89,7 +90,17 @@ const _getOperatorQuery = (dateReference, userTimezone) => ({
   }
 })
 
-const _checkErrors = (matches, dictionary) => {
+const _checkMatchDayDateErrors = (matchDay, request, dictionary) => {
+  if (!matchDay && !request.routine) {
+    throw Boom.notFound(dictionary.matchesNotFound)
+  }
+  if (!matchDay && request.routine) {
+    throw Error(`championshipRef[${request.championshipRef}] at date[${request.dateReference}] does not have any match`)
+  }
+  return matchDay
+}
+
+const _checkMatchesErrors = (matches, dictionary) => {
   if (!matches.length) {
     throw Boom.notFound(dictionary.matchesNotFound)
   }

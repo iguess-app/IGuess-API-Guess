@@ -23,7 +23,8 @@ const fireRoutine = () => {
         const matchesFilter = {
           championshipRef: championship._id.toString(),
           dateReference: forcedDate.dayForced || dateManager.getISODateInitDay(),
-          page: pageAliases.askedPage
+          page: pageAliases.askedPage,
+          routine: true
         }
         return getMatchesRepository(matchesFilter, dictionary)
           .then((matchDay) => getUsersPredictionsFunctions(matchDay.matches))
