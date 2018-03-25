@@ -2,17 +2,15 @@
 
 const moment = require('moment')
 
-const Round = require('../../../../../src/models/holiDB/roundModel')
+const Match = require('../../../../../src/models/holiDB/matchModel')
 
 const updateMatchInitTimeToPredictionGoWell = () => 
-  Round.findById('59d1475c70dc031ae0973f54')
-  .then((matchDay) => {
-    const fakeMatchInitTimeAcceptedByTheRule = moment().add('2', 'hour').format()
-    matchDay.games.map((match) => {
-      match.initTime = fakeMatchInitTimeAcceptedByTheRule
-      return match
+  Match.findOne({matchRef: 'OneHourLessRef'})
+    .then((match) => {
+      const fakeMatchInitTimeNotAcceptedByTheRule = moment().subtract('30', 'minutes').format()
+      match.initTime = fakeMatchInitTimeNotAcceptedByTheRule
+
+      return match.save()
     })
-    return matchDay.save()
-  })
 
 module.exports = updateMatchInitTimeToPredictionGoWell

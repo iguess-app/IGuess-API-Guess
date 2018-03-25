@@ -53,22 +53,22 @@ const matchRefDuplicated = {
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
     guesses: [{
-        matchRef: '5872a51a4db3fb378bc7ee17',
+        matchRef: '59d1475c70dc031ae0973f5b',
         homeTeamScoreGuess: 1,
         awayTeamScoreGuess: 4
       },
       {
-        matchRef: '5872a51a4db3fb378bc7ee18',
+        matchRef: '59d1475c70dc031ae0973f59',
         homeTeamScoreGuess: 3,
         awayTeamScoreGuess: 0
       },
       {
-        matchRef: '5872a51a4db3fb378bc7ee18',
+        matchRef: '59d1475c70dc031ae0973f59',
         homeTeamScoreGuess: 0,
         awayTeamScoreGuess: 1
       },
       {
-        matchRef: '5872a51a4db3fb378bc7ee20',
+        matchRef: '59d1475c70dc031ae0973f5a',
         homeTeamScoreGuess: 4,
         awayTeamScoreGuess: 1
       }
@@ -94,12 +94,12 @@ const someMatchOneHourLess = {
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
     guesses: [{
-        matchRef: '59d1475c70dc031ae0973f53',
+        matchRef: 'OneHourLessRef',
         homeTeamScoreGuess: 1,
         awayTeamScoreGuess: 4
       },
       {
-        matchRef: '59d1475c70dc031ae0973f58',
+        matchRef: '59d1475c70dc031ae0973f59',
         homeTeamScoreGuess: 3,
         awayTeamScoreGuess: 0
       }
@@ -125,14 +125,9 @@ const allMatchOneHourLess = {
   payload: {
     championshipRef: '5872a8d2ed1b02314e088291',
     guesses: [{
-        matchRef: '59d1475c70dc031ae0973f53',
+        matchRef: 'OneHourLessRef',
         homeTeamScoreGuess: 1,
         awayTeamScoreGuess: 4
-      },
-      {
-        matchRef: '59d1475c70dc031ae0973f51',
-        homeTeamScoreGuess: 3,
-        awayTeamScoreGuess: 0
       }
     ]
   }
