@@ -15,7 +15,7 @@ The Guess Microservice have a user to guessDB Read and Write and to the holiDB r
 ## Pre-established pattern 
 * Env variables are always called at config, with Capitalize and Underscore
 * Enums are used with Capitalize
-* The function are accessed by module.exports, there are no dependencia injected
+* The function are accessed by module.exports, there are no dependency injection
 * The file index.js is a pattern to export file
 * There are no console.log or console.error, all console used is from Pino, a NPM installed
 * The requires libs and variables at top file mandatorily need to follow the sequence: NPM modules, localFiles, Global Variables, Variables
