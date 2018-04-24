@@ -13,7 +13,7 @@ lab.experiment('Routine Unit Test ==> calculate Pontuation', () => {
     const guessExample = guessAndGamesObj.homeTeamWinHitScoreboard
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.HIT_THE_SCOREBOARD)
+    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW)
     done()
   })
   
@@ -21,7 +21,7 @@ lab.experiment('Routine Unit Test ==> calculate Pontuation', () => {
     const guessExample = guessAndGamesObj.awayTeamWinHitScoreboard
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.HIT_THE_SCOREBOARD)
+    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW)
     done()
   })
   
@@ -29,31 +29,31 @@ lab.experiment('Routine Unit Test ==> calculate Pontuation', () => {
     const guessExample = guessAndGamesObj.tieWinHitScoreboard
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.HIT_THE_SCOREBOARD)
+    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW)
     done()
   })
   
-  lab.test('calculate Pontuation home team winner (Hit only the Winner)', (done) => {
+  lab.test('calculate Pontuation home team winner (Hit only the Winner With 2 Goals miss)', (done) => {
     const guessExample = guessAndGamesObj.homeTeamWinHitWinner
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.HIT_ONLY_THE_WINNER)
+    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW - 2)
     done()
   })
   
-  lab.test('calculate Pontuation away team winner (Hit only the Winner)', (done) => {
+  lab.test('calculate Pontuation away team winner (Hit only the Winner With 4 Goals miss)', (done) => {
     const guessExample = guessAndGamesObj.awayTeamWinHitWinner
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.HIT_ONLY_THE_WINNER)
+    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW - 4)
     done()
   })
 
-  lab.test('calculate Pontuation tie (Hit only the Winner)', (done) => {
+  lab.test('calculate Pontuation tie (Hit only the Winner With 4 Goals miss)', (done) => {
     const guessExample = guessAndGamesObj.tieWinHitWinner
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.HIT_ONLY_THE_WINNER)
+    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW - 4)
     done()
   })
 

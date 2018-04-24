@@ -76,7 +76,8 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, requ
       ended: match.ended,
       started: match.started,
       minutes: match.minutes,
-      initTime: dateManager.getDate(match.initTime, '', '', request.userTimezone),
+      initTimeIsoDate: dateManager.getDate(match.initTime, '', '', request.userTimezone),
+      initTimeHumanified: _getInitTimeHumanified(match.initTime, request.userTimezone),
       allowToPredict: _checkIfAllowPredict(match.initTime)
     }
     
@@ -146,6 +147,8 @@ const _buildMatchDayLikeHumanDate = (matchDayIsoDate, dictionary, userTimezone) 
     subInfoDate: weekDay
   }
 }
+
+const _getInitTimeHumanified = (initTime, userTimezone) => `${dateManager.getDate(initTime, '', 'HH', userTimezone)}H ${dateManager.getDate(initTime, '', 'mm', userTimezone)}M`
 
 module.exports = getGuessLine
 
