@@ -1,11 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
 const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
-const queryUtils = coincidents.Utils.queryUtils
+const { errorCode, errorUtils, queryUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const QUANTITY_TO_REMOVE = 1
 const NOT_AT_ARRAY = -1
@@ -32,13 +32,13 @@ const quitGuessLeague = (request, dictionary) => {
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.notFound(dictionary.noGuessLeagueFound)
+    throw boom('notFound', dictionary.noGuessLeagueFound, errorCode.noGuessLeagueFound)
   }
   if (guessLeagueFound.captains.includes(request.userRef) && guessLeagueFound.players.length > LAST_PLAYER_AT_GUESS_LEAGUE) {
-    throw Boom.notAcceptable(dictionary.admNotQuitGle)
+    throw boom('notAcceptable', dictionary.admNotQuitGle, errorCode.admNotQuitGle)
   }
   if (!guessLeagueFound.players.includes(request.userRef)) {
-    throw Boom.notAcceptable(dictionary.notAtGuessLeague)
+    throw boom('notAcceptable', dictionary.notAtGuessLeague, errorCode.notAtGuessLeague)
   }
 }
 

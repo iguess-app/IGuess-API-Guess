@@ -1,13 +1,13 @@
 'use strict'
 
 const coincidents = require('iguess-api-coincidents')
-const Boom = require('boom')
 
 const { pageAliases } = require('../../../config')
 const Match = require('../../models/holiDB/matchModel')
 
-const { queryUtils } = coincidents.Utils
 const { dateManager } = coincidents.Managers
+const { errorCode, errorUtils, queryUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const getMatches = (request, dictionary) => {
   if (!request.dateReference) {
@@ -92,7 +92,7 @@ const _getOperatorQuery = (dateReference, userTimezone) => ({
 
 const _checkMatchDayDateErrors = (matchDay, request, dictionary) => {
   if (!matchDay && !request.routine) {
-    throw Boom.notFound(dictionary.matchesNotFound)
+    throw boom('notFound', dictionary.matchesNotFound, errorCode.matchesNotFound)
   }
   if (!matchDay && request.routine) {
     throw Error(`championshipRef[${request.championshipRef}] at date[${request.dateReference}] does not have any match`)
@@ -102,7 +102,7 @@ const _checkMatchDayDateErrors = (matchDay, request, dictionary) => {
 
 const _checkMatchesErrors = (matches, dictionary) => {
   if (!matches.length) {
-    throw Boom.notFound(dictionary.matchesNotFound)
+    throw boom('notFound', dictionary.matchesNotFound, errorCode.matchesNotFound)
   }
 }
 

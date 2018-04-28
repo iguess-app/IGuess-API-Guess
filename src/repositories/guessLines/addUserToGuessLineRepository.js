@@ -1,9 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
+
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const MAX_GUESSLINES_FREE_ALLOW = coincidents.Config.guess.maxGuessLinesFreeAllow
 
@@ -43,7 +45,7 @@ const _countHowManyGuessLineActivatedTheUserHas = (request) => {
 
 const _verifyIfIsAllowToAddTheUserToAnotherGuessLine = (userGuessLineActivatedNumber, request, dictionary) => {
   if (userGuessLineActivatedNumber >= MAX_GUESSLINES_FREE_ALLOW && _userNotPremium(request)) {
-    throw Boom.forbidden(dictionary.noMoreGuessLineAllowed)
+    throw boom('forbidden', dictionary.noMoreGuessLineAllowed, errorCode.noMoreGuessLineAllowed)
   }
 }
 
@@ -55,15 +57,15 @@ const _userNotPremium = () => {
 
 const _checkErrors = (guessLineFound, request, dictionary) => {
   if (!guessLineFound) {
-    throw Boom.notFound(dictionary.guessLineNotFound)
+    throw boom('notFound', dictionary.guessLineNotFound, errorCode.guessLineNotFound)
   }
 
   if (guessLineFound.usersAddedAtGuessLine.includes(request.userRef)) {
-    throw Boom.unauthorized(dictionary.alreadyAdd)
+    throw boom('unauthorized', dictionary.alreadyAdd, errorCode.alreadyAdd)
   }
 
   if (!guessLineFound.guessLineActive) {
-    throw Boom.unauthorized(dictionary.guessLineInactive)
+    throw boom('unauthorized', dictionary.guessLineInactive, errorCode.guessLineInactive)
   }
 }
 

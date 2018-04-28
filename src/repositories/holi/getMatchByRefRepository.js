@@ -1,8 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
 
 const Match = require('../../models/holiDB/matchModel')
+
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const getMatchByRefRepository = (request, dictionary) => {
   const searchQuery = {
@@ -11,14 +14,14 @@ const getMatchByRefRepository = (request, dictionary) => {
 
   return Match.findOne(searchQuery)
     .then((match) => {
-      _treatErrors(match, dictionary, request.matchRef)
+      _treatErrors(match, dictionary)
       return match.toJSON()
     })
 }
 
-const _treatErrors = (matchDay, dictionary, matchRef) => {
+const _treatErrors = (matchDay, dictionary) => {
   if (!matchDay) {
-    throw Boom.notFound(dictionary.matchNotFound, {matchRef})
+    throw boom('notFound', dictionary.matchNotFound, errorCode.matchNotFound)
   }
 }
 

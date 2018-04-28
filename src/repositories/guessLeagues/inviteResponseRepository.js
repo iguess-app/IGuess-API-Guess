@@ -1,11 +1,10 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
-const statusUtils = coincidents.Utils.statusUtils
-const queryUtils = coincidents.Utils.queryUtils
+const { errorCode, errorUtils, queryUtils } = coincidents.Utils
+const { boom } = errorUtils
 const MAX_GUESSLEAGUES_FREE_ALLOW = coincidents.Config.guess.maxGuessLeagueFreeAllow
 
 const QUANTITY_TO_REMOVE = 1
@@ -53,13 +52,13 @@ const _countHowManyGuessLeaguesTheUserIsPlayer = (request) => {
 
 const _verifyIsIfAllowCreateAnotherGuessLeague = (userGuessLeagueArePlayerNumber, request, dictionary) => {
   if (userGuessLeagueArePlayerNumber >= MAX_GUESSLEAGUES_FREE_ALLOW && _userNotPremium(request)) {
-    throw Boom.forbidden(dictionary.noMoreGuessLeagueAllowed)
+    throw boom('forbidden', dictionary.noMoreGuessLeagueAllowed, errorCode.noMoreGuessLeagueAllowed)
   }
 }
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.create(statusUtils.forbidden, dictionary.someWrongAtInvite, request)
+    throw boom('forbidden', dictionary.someWrongAtInvite, errorCode.someWrongAtInvite)
   }
 }
 

@@ -1,11 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
 const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
-const queryUtils = coincidents.Utils.queryUtils
+const { errorCode, errorUtils, queryUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const MINIMUM_NUMBER_OF_ADM_ALLOW = 1
 
@@ -39,10 +39,11 @@ const quitCaptain = (request, dictionary) => {
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.notFound(dictionary.noGuessLeagueFound)
+    throw boom('notFound', dictionary.noGuessLeagueFound, errorCode.noGuessLeagueFound)
+    
   }
   if (guessLeagueFound.captains.length <= MINIMUM_NUMBER_OF_ADM_ALLOW) {
-    throw Boom.notFound(dictionary.tooFewAdms)
+    throw boom('notFound', dictionary.tooFewAdms, errorCode.tooFewAdms)
   }
 }
 

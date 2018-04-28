@@ -1,11 +1,10 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 
-const queryUtils = coincidents.Utils.queryUtils
-const statusUtils = coincidents.Utils.statusUtils
+const { errorCode, errorUtils, queryUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const inviteToGuessLeagueRepository = (request, dictionary) => {
 
@@ -43,7 +42,7 @@ const inviteToGuessLeagueRepository = (request, dictionary) => {
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.create(statusUtils.forbidden, dictionary.someWrongAtInvite, request)
+    throw boom('forbidden', dictionary.someWrongAtInvite, errorCode.someWrongAtInvite)
   }
   //TODO: tornar esse erro mais intuitivo para o front
 }

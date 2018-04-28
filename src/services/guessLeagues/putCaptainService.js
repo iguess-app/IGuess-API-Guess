@@ -1,10 +1,13 @@
 'use strict'
 
-const Boom = require('boom')
-const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
+const coincidents = require('iguess-api-coincidents')
 
 const sessionManager = require('../../managers/sessionManager')
 const putCaptainRepository = require('../../repositories/guessLeagues/putCaptainRepository')
+
+const selectLanguage = coincidents.Translate.gate.selectLanguage
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const putCaptain = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -12,7 +15,7 @@ const putCaptain = async (payload, headers) => {
   payload.userRef = session.userRef
 
   if (payload.userRef === payload.userRefToCaptain) {
-    throw Boom.conflict(dictionary.youCantBeTheUserAndUserAdm)
+    throw boom('conflict', dictionary.youCantBeTheUserAndUserAdm, errorCode.youCantBeTheUserAndUserAdm)
   }
 
   return putCaptainRepository(payload, dictionary)

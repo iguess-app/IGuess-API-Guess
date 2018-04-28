@@ -1,12 +1,15 @@
 'use strict'
 
-const Boom = require('boom')
-const selectLanguage = require('iguess-api-coincidents').Translate.gate.selectLanguage
+const coincidents = require('iguess-api-coincidents')
 
 const sessionManager = require('../../managers/sessionManager')
 const { verifyUserAtGuessLineRepository, getChampionshipAtGuessLineRepository, createGuessLeagueRepository } = require('../../repositories')
 const getUsersPontuationsByGuessLeague = require('./commonFunctions/getUsersPontuationsByGuessLeague')
 const orderUsersArrayByPontuation = require('./commonFunctions/orderUsersArrayByPontuation')
+
+const selectLanguage = coincidents.Translate.gate.selectLanguage
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const createGuessLeague = async (payload, headers) => {
   const dictionary = selectLanguage(headers.language)  
@@ -26,7 +29,7 @@ const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary, 
   const thereAreDuplicated = userRefInviteads.some((userRefInvited, currentIndex) => userRefInviteads.indexOf(userRefInvited) !== currentIndex)
   const admInvitingHimself = userRefInviteads.some((userRefInvited) => userRefInvited === userRefCreator)
   if (thereAreDuplicated || admInvitingHimself) {
-    throw Boom.notAcceptable(dictionary.userRefDuplicated)
+    throw boom('notAcceptable', dictionary.userRefDuplicated, errorCode.userRefDuplicated)
   }
 }
 

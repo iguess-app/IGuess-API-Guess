@@ -1,7 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
+
 const League = require('../../models/holiDB/leagueModel')
+
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const listLeaguesWithActiveLines = (dictionary) => {
   const searchQuery = {
@@ -21,7 +25,7 @@ const listLeaguesWithActiveLines = (dictionary) => {
 
 const _treatErrors = (leagues, dictionary) => {
   if (!leagues.length) {
-    throw Boom.notFound(dictionary.notFoundLeagues)
+    throw boom('notFound', dictionary.notFoundLeagues, errorCode.notFoundLeagues)
   }
   return leagues
 }

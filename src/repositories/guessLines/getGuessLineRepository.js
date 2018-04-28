@@ -1,8 +1,11 @@
 'use strict'
 
-const Boom = require('boom')
+const coincidents = require('iguess-api-coincidents')
 
 const GuessLine = require('../../models/guessDB/guessesLinesModel')
+
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 
 const getGuessLineByUserRef = (request, dictionary) => {
   const searchQuery = _buildSearchQuery(request)
@@ -31,7 +34,7 @@ const _buildSearchQuery = (request) => {
 
 const _checkErrors = (guessLineFound, dictionary) => {
   if (!guessLineFound) {
-    throw Boom.notFound(dictionary.guessLineNotFound)
+    throw boom('notFound', dictionary.guessLineNotFound, errorCode.guessLineNotFound)
   }
 }
 

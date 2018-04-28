@@ -1,6 +1,5 @@
 'use strict';
 
-const Boom = require('boom')
 const Promise = require('bluebird')
 const moment = require('moment')
 const coincidents = require('iguess-api-coincidents')
@@ -8,6 +7,8 @@ const coincidents = require('iguess-api-coincidents')
 const sessionManager = require('../../managers/sessionManager')
 const { getMatchByRefRepository, setPredictionsRepository } = require('../../repositories')
 
+const { errorCode, errorUtils } = coincidents.Utils
+const { boom } = errorUtils
 const { dateManager } = coincidents.Managers
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const config = coincidents.Config
@@ -31,7 +32,7 @@ const _checkIfThereAreDuplicatedMatchRef = (guesses, dictionary) => {
   const matchRefArray = guesses.map((guess) => guess.matchRef)
   const thereAreDuplicated = matchRefArray.some((matchRef, currentIndex) => matchRefArray.indexOf(matchRef) !== currentIndex)
   if (thereAreDuplicated) {
-    throw Boom.notAcceptable(dictionary.matchDuplicated)
+    throw boom('notAcceptable', dictionary.matchDuplicated, errorCode.matchDuplicated)
   }
 }
 
@@ -53,7 +54,7 @@ const _checkOneHourRule = (request, dictionary) => {
   })
 
   if (!onlyOneHourRuleAccepted.length) {
-    throw Boom.unauthorized(dictionary.allMatchesoneHourOff)
+    throw boom('unauthorized', dictionary.allMatchesoneHourOff, errorCode.allMatchesoneHourOff)
   }
 
   if (request.guesses.length !== onlyOneHourRuleAccepted.length) {
