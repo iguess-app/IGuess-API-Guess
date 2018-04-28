@@ -1,9 +1,10 @@
 'use strict'
 
-const Boom = require('boom')
 const coincidents = require('iguess-api-coincidents')
 
-const cacheManager = coincidents.Managers.cacheManager
+const { errorCode, errorUtils } = coincidents.Utils
+const { cacheManager } = coincidents.Managers
+const { boom } = errorUtils
 
 const getSession = async (headers, dictionary) => {    
   const session = await cacheManager.get(headers.token)
@@ -11,7 +12,7 @@ const getSession = async (headers, dictionary) => {
     return session
   }
 
-  return Promise.reject(Boom.unauthorized(dictionary.sessionExpired))
+  return Promise.reject(boom('unauthorized', dictionary.sessionExpired, errorCode.sessionExpired))
 }
 
 module.exports = {

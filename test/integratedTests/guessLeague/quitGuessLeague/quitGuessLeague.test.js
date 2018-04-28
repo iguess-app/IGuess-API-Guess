@@ -61,7 +61,7 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
     server.inject(injectedRequests.guessLeagueRefnotFound)
       .then((response) => {
         const result = response.result
-        expect(result.message).to.be.equal(dictionary.anyGuessLeagueFound)
+        expect(result.message).to.be.equal(dictionary.noGuessLeagueFound)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })
@@ -72,7 +72,7 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
     server.inject(injectedRequests.userRefIsNotAtGuessLeague)
       .then((response) => {
         const result = response.result
-        expect(result.message).to.be.equal(dictionary.anyGuessLeagueFound)
+        expect(result.message).to.be.equal(dictionary.noGuessLeagueFound)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })

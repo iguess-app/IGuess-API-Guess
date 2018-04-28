@@ -32,7 +32,7 @@ const quitGuessLeague = (request, dictionary) => {
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.notFound(dictionary.anyGuessLeagueFound)
+    throw Boom.notFound(dictionary.noGuessLeagueFound)
   }
   if (guessLeagueFound.captains.includes(request.userRef) && guessLeagueFound.players.length > LAST_PLAYER_AT_GUESS_LEAGUE) {
     throw Boom.notAcceptable(dictionary.admNotQuitGle)

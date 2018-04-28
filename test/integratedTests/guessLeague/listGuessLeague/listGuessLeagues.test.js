@@ -33,13 +33,13 @@ lab.experiment('Integrated Test ==> listGuessLeague', () => {
       })
   })
 
-  lab.test('listGuessLeague anyGuessLeagueFound', (done) => {
-    stubs.stubSessionRedis(injectedRequests.anyGuessLeagueFound.headers.token)    
-    server.inject(injectedRequests.anyGuessLeagueFound)
+  lab.test('listGuessLeague noGuessLeagueFound', (done) => {
+    stubs.stubSessionRedis(injectedRequests.noGuessLeagueFound.headers.token)    
+    server.inject(injectedRequests.noGuessLeagueFound)
       .then((response) => {
         const result = response.result
         expect(response.statusCode).to.be.equal(statusCode.notFound)
-        expect(result.message).to.be.equal(dictionary.anyGuessLeagueFound)
+        expect(result.message).to.be.equal(dictionary.noGuessLeagueFound)
         done()
       })
   })

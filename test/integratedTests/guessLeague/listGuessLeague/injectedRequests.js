@@ -15,7 +15,7 @@ const happyPathRequest = {
   }
 }
 
-const anyGuessLeagueFound = {
+const noGuessLeagueFound = {
   method: 'GET',
   url: '/guessleague/listGuessesLeagues',
   headers: {
@@ -32,5 +32,5 @@ const anyGuessLeagueFound = {
 
 module.exports = {
   happyPathRequest,
-  anyGuessLeagueFound
+  noGuessLeagueFound
 }

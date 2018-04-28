@@ -39,7 +39,7 @@ const quitCaptain = (request, dictionary) => {
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.notFound(dictionary.anyGuessLeagueFound)
+    throw Boom.notFound(dictionary.noGuessLeagueFound)
   }
   if (guessLeagueFound.captains.length <= MINIMUM_NUMBER_OF_ADM_ALLOW) {
     throw Boom.notFound(dictionary.tooFewAdms)

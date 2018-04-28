@@ -31,7 +31,7 @@ const listGuessLeagues = (request, dictionary) => {
 
 const _checkErrors = (guessesLeaguesFound, request, dictionary) => {
   if (!guessesLeaguesFound.length) {
-    throw Boom.notFound(dictionary.anyGuessLeagueFound)
+    throw Boom.notFound(dictionary.noGuessLeagueFound)
   }
 }
 

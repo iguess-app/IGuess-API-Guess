@@ -37,7 +37,7 @@ const putCaptain = (request, dictionary) => {
 
 const _checkErrors = (guessLeagueFound, request, dictionary) => {
   if (!guessLeagueFound) {
-    throw Boom.notFound(dictionary.anyGuessLeagueFound)
+    throw Boom.notFound(dictionary.noGuessLeagueFound)
   }
 }
 
