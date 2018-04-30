@@ -10,6 +10,7 @@ const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/addUserToGuessLine/addUserToGuessLineSchemaResponse').schema
 const removeUserFromGuessLineList = require('./lib/removeUserFromGuessLineList')
 
+const { errorCode } = coincidents.Utils
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const statusCode = coincidents.Utils.statusUtils
@@ -48,6 +49,7 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
         const result = response.result
         expect(result.statusCode).to.be.equal(statusCode.forbidden)
         expect(result.message).to.be.equal(dictionary.noMoreGuessLineAllowed)
+        expect(result.errorCode).to.be.equal(errorCode.noMoreGuessLineAllowed)
         done()
       })
   })
@@ -59,6 +61,7 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
         const result = response.result
         expect(result.statusCode).to.be.equal(statusCode.unauthorized)
         expect(result.message).to.be.equal(dictionary.alreadyAdd)
+        expect(result.errorCode).to.be.equal(errorCode.alreadyAdd)
         done()
       })
   })
@@ -70,6 +73,7 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
         const result = response.result
         expect(result.statusCode).to.be.equal(statusCode.unauthorized)
         expect(result.message).to.be.equal(dictionary.guessLineInactive)
+        expect(result.errorCode).to.be.equal(errorCode.guessLineInactive)
         done()
       })
   })

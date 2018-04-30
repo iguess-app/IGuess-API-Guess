@@ -10,6 +10,7 @@ const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/inviteToGuessLeague/inviteToGuessLeagueSchema').response
 const removeHappyPathUserFromInvitedList = require('./lib/removeHappyPathUserFromInvitedList')
 
+const { errorCode } = coincidents.Utils
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const statusCode = coincidents.Utils.statusUtils
@@ -55,6 +56,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.notAtGuessLine)
+        expect(result.errorCode).to.be.equal(errorCode.notAtGuessLine)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })
@@ -71,6 +73,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(result.errorCode).to.be.equal(errorCode.someWrongAtInvite)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -87,6 +90,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(result.errorCode).to.be.equal(errorCode.someWrongAtInvite)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -105,6 +109,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(result.errorCode).to.be.equal(errorCode.someWrongAtInvite)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -117,6 +122,7 @@ lab.experiment('Integrated Test ==> inviteToGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.userRefDuplicated)
+        expect(result.errorCode).to.be.equal(errorCode.userRefDuplicated)
         expect(response.statusCode).to.be.equal(statusCode.notAcceptable)
         done()
       })

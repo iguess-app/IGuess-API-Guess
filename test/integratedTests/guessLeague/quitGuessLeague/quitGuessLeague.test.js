@@ -11,6 +11,7 @@ const schemaValidate = require('../../../../src/routes/schemas/guessLeague/quitG
 const GuessLeague = require('../../../../src/models/guessDB/guessesLeaguesModel')
 const createGuessLeagueAndGetQuitRequest = require('./lib/createGuessLeagueBeforeTest')
 
+const { errorCode } = coincidents.Utils
 const statusCode = coincidents.Utils.statusUtils
 const dictionary = coincidents.Translate.gate.selectLanguage()
 const lab = exports.lab = Lab.script()
@@ -51,6 +52,7 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.admNotQuitGle)
+        expect(result.errorCode).to.be.equal(errorCode.admNotQuitGle)
         expect(response.statusCode).to.be.equal(statusCode.notAcceptable)
         done()
       })
@@ -62,6 +64,7 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.noGuessLeagueFound)
+        expect(result.errorCode).to.be.equal(errorCode.noGuessLeagueFound)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })
@@ -73,6 +76,7 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.noGuessLeagueFound)
+        expect(result.errorCode).to.be.equal(errorCode.noGuessLeagueFound)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })

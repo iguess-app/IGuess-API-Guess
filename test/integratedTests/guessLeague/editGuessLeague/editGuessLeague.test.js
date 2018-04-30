@@ -10,6 +10,7 @@ const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/editGuessLeague/editGuessLeagueSchema').response
 const generateString = require('./lib/generateString')
 
+const { errorCode } = coincidents.Utils
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const statusCode = coincidents.Utils.statusUtils
@@ -47,6 +48,7 @@ lab.experiment('Integrated Test ==> editGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.guessLeagueNotFound)
+        expect(result.errorCode).to.be.equal(errorCode.guessLeagueNotFound)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })

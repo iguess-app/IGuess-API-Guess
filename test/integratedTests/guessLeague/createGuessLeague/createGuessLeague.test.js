@@ -10,6 +10,7 @@ const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/createGuessLeague/createGuessLeagueSchema').response
 const GuessLeague = require('../../../../src/models/guessDB/guessesLeaguesModel')
 
+const { errorCode } = coincidents.Utils
 const statusCode = coincidents.Utils.statusUtils
 const dictionary = coincidents.Translate.gate.selectLanguage()
 const lab = exports.lab = Lab.script()
@@ -50,6 +51,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.noMoreGuessLeagueAllowed)
+        expect(result.errorCode).to.be.equal(errorCode.noMoreGuessLeagueAllowed)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -61,6 +63,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.userRefDuplicated)
+        expect(result.errorCode).to.be.equal(errorCode.userRefDuplicated)
         expect(response.statusCode).to.be.equal(statusCode.notAcceptable)
         done()
       })
@@ -72,6 +75,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.userRefDuplicated)
+        expect(result.errorCode).to.be.equal(errorCode.userRefDuplicated)
         expect(response.statusCode).to.be.equal(statusCode.notAcceptable)
         done()
       })
@@ -83,6 +87,7 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.notAtGuessLine)
+        expect(result.errorCode).to.be.equal(errorCode.notAtGuessLine)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })

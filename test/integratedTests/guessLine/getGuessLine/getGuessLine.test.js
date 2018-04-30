@@ -9,6 +9,7 @@ const injectedRequests = require('./injectedRequests')
 const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/getGuessLine/getGuessLineSchema').response
 
+const { errorCode } = coincidents.Utils
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const dictionary = coincidents.Translate.gate.selectLanguage()
@@ -39,6 +40,7 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.guessLineNotFound)
+        expect(result.errorCode).to.be.equal(errorCode.guessLineNotFound)
         done()
       })
   })
@@ -49,6 +51,7 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.guessLineNotFound)
+        expect(result.errorCode).to.be.equal(errorCode.guessLineNotFound)
         done()
       })
   })

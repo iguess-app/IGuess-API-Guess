@@ -10,6 +10,7 @@ const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLeague/inviteResponse/inviteResponseSchema').response
 const preTestLogic = require('./lib/preTestLogic')
 
+const { errorCode } = coincidents.Utils
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const statusCode = coincidents.Utils.statusUtils
@@ -72,6 +73,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.notAtGuessLine)
+        expect(result.errorCode).to.be.equal(errorCode.notAtGuessLine)
         expect(response.statusCode).to.be.equal(statusCode.notFound)
         done()
       })
@@ -88,6 +90,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(result.errorCode).to.be.equal(errorCode.someWrongAtInvite)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -104,6 +107,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(result.errorCode).to.be.equal(errorCode.someWrongAtInvite)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -121,6 +125,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.noMoreGuessLeagueAllowed)
+        expect(result.errorCode).to.be.equal(errorCode.noMoreGuessLeagueAllowed)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })
@@ -136,6 +141,7 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
       .then((response) => {
         const result = response.result
         expect(result.message).to.be.equal(dictionary.someWrongAtInvite)
+        expect(result.errorCode).to.be.equal(errorCode.someWrongAtInvite)
         expect(response.statusCode).to.be.equal(statusCode.forbidden)
         done()
       })

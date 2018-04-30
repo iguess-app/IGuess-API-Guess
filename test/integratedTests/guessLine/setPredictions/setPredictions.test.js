@@ -10,6 +10,7 @@ const server = require('../../../../app')
 const schemaValidate = require('../../../../src/routes/schemas/guessLine/setPredictions/setPredictionsSchemaResponse')
 const updateMatchInitTimeToPredictionGoWell = require('./lib/updateMatchInitTimeToPredictionGoWell')
 
+const { errorCode } = coincidents.Utils
 const statusCode = coincidents.Utils.statusUtils
 const dictionary = coincidents.Translate.gate.selectLanguage()
 const lab = exports.lab = Lab.script()
@@ -47,6 +48,7 @@ lab.experiment('Integrated Test ==> setPredictions', () => {
         const result = response.result
         expect(result.statusCode).to.be.equal(statusCode.notAcceptable)
         expect(result.message).to.be.equal(dictionary.matchDuplicated)
+        expect(result.errorCode).to.be.equal(errorCode.matchDuplicated)
         done()
       })
   })
@@ -57,6 +59,7 @@ lab.experiment('Integrated Test ==> setPredictions', () => {
       .then((response) => {
         const result = response.result
         expect(result.alertMessage).to.be.equal(dictionary.someMatchesoneHourOff)
+        expect(response.statusCode).to.be.equal(statusCode.ok)        
         done()
       })
   })
@@ -68,6 +71,7 @@ lab.experiment('Integrated Test ==> setPredictions', () => {
         const result = response.result
         expect(result.statusCode).to.be.equal(statusCode.unauthorized)
         expect(result.message).to.be.equal(dictionary.allMatchesoneHourOff)
+        expect(result.errorCode).to.be.equal(errorCode.allMatchesoneHourOff)
         done()
       })
   })
