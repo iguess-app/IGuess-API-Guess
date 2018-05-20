@@ -12,8 +12,15 @@ const listUserGuessesLines = async (request, headers) => {
   request.userRef = session.userRef
 
   return listUserGuessesLinesRepository(request, dictionary)
-    .then((list) => _checkIfPontuationWillReturnsToo(list, request))
+    .then((guessLineList) => _translateTheChampionshipName(guessLineList, dictionary))
+    .then((guessLineList) => _checkIfPontuationWillReturnsToo(guessLineList, request))
 }
+
+const _translateTheChampionshipName = (guessLineList, dictionary) => 
+  guessLineList.map((guessLine) => {
+    guessLine.championship.championship = dictionary[guessLine.championship.translateFlag]
+    return guessLine
+  })
 
 const _checkIfPontuationWillReturnsToo = (list, request) => {
   if (request.showPontuation === false) {

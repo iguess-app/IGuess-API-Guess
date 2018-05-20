@@ -4,7 +4,8 @@
       "championshipRef": "5872a8d2ed1b02314e088291",
       "league": "5872467bed1b02314e08828a",
       "season": "2016",
-      "championship": "Campeonato Brasileiro"
+      "championship": "Campeonato Brasileiro",
+      "translateFlag" : "brazilian"
     },
     "guessLineActive": true,
     "usersAddedAtGuessLine": [
@@ -37,7 +38,8 @@
       "championshipRef": "5872a8d2ed1b02314e088291",
       "league": "5872467bed1b02314e08828a",
       "season": "2016",
-      "championship": "Campeonato Brasileiro"
+      "championship": "Campeonato Brasileiro",
+      "translateFlag" : "brazilian"
     },
     "usersAddedAtGuessLine": [
       "591df6c78d1fdc0bb4eba371"
@@ -48,7 +50,8 @@
     "championship": {
       "championshipRef": "notObjectID",
       "league": "5872467bed1b02314e08828a",
-      "championship": "Campeonato Brasileiro"
+      "championship": "Campeonato Brasileiro",
+      "translateFlag" : "brazilian"
     },
     "guessLineActive": false,
     "usersAddedAtGuessLine": [

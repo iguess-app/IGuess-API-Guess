@@ -42,6 +42,10 @@ const championshipSchema = new Schema({
   date: {
     type: datePeriodSchema,
     required: true
+  },
+  translateFlag: {
+    type: String,
+    required: true
   }
 }, optionsSchemas.versionKeyDisable)
 

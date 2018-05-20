@@ -13,6 +13,7 @@ const { errorCode } = coincidents.Utils
 const lab = exports.lab = Lab.script()
 const expect = Lab.expect
 const dictionary = coincidents.Translate.gate.selectLanguage()
+const portugueseDictionary = coincidents.Translate.gate.selectLanguage('pt-br')
 
 lab.experiment('Integrated Test ==> getGuessLine', () => {
   
@@ -26,7 +27,20 @@ lab.experiment('Integrated Test ==> getGuessLine', () => {
     server.inject(injectedRequests.happyPathRequest)
       .then((response) => {
         const result = response.result
+        expect(result.championship.championship).to.be.equal(dictionary.brazilian)
+        Joi.validate(result, schemaValidate, (err) => {
+          expect(err).to.be.equal(null)
+          done()
+        })
+      })
+  })
 
+  lab.test('getGuessLine HappyPath - Translating Championship Name', (done) => {
+    stubs.stubSessionRedis(injectedRequests.happyPathRequest.headers.token)
+    server.inject(injectedRequests.happyPathWithTranslateChampionshipRequest)
+      .then((response) => {
+        const result = response.result
+        expect(result.championship.championship).to.be.equal(portugueseDictionary.brazilian)
         Joi.validate(result, schemaValidate, (err) => {
           expect(err).to.be.equal(null)
           done()

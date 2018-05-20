@@ -10,7 +10,8 @@ const championshipEmbeddedSchema = Joi.object({
   championshipRef: Joi.string().length(ID_SIZE).required(),
   league: Joi.string().length(ID_SIZE).required(),
   season: Joi.string().required(),
-  championship: Joi.string().required()
+  championship: Joi.string().required(),
+  translateFlag: Joi.string()
 })
 
 module.exports = championshipEmbeddedSchema

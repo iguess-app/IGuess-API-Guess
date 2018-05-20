@@ -45,6 +45,7 @@ lab.experiment('Integrated Test ==> Routine - Add New GuessLine and Update Activ
         expect(someGuessLine.championship.league).to.exists()
         expect(someGuessLine.championship.season).to.exists()
         expect(someGuessLine.championship.championship).to.exists()
+        expect(someGuessLine.championship.translateFlag).to.exists()
         expect(someGuessLine.guessLineActive).to.be.a.boolean()
         expect(someGuessLine.usersAddedAtGuessLine).to.be.a.array()
         done()

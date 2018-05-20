@@ -21,9 +21,15 @@ const getGuessLine = async (request, headers) => {
   request.userRef = session.userRef
 
   return getGuessLineRepository(request, dictionary)
+    .then((guessLine) => _translateTheChampionshipName(guessLine, dictionary))
     .then((guessLine) => _getMatches(guessLine, request, dictionary))
     .then((pontuationAndMatchDayAndGuessLine) => _getPredictionPerMatchAndBuildMatchObj(pontuationAndMatchDayAndGuessLine, request, dictionary))
     .then((promiseAllObj) => _buildResponseObj(promiseAllObj, dictionary, request))
+}
+
+const _translateTheChampionshipName = (guessLine, dictionary) => {
+  guessLine.championship.championship = dictionary[guessLine.championship.translateFlag]
+  return guessLine
 }
 
 const _getMatches = (guessLine, request, dictionary) => {
