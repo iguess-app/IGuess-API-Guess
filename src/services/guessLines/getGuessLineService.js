@@ -82,6 +82,7 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, requ
       ended: match.ended,
       started: match.started,
       minutes: match.minutes,
+      percentageCompleted: match.percentageCompleted,
       initTimeIsoDate: dateManager.getDate(match.initTime, '', '', request.userTimezone),
       initTimeHumanified: _getInitTimeHumanified(match.initTime, request.userTimezone),
       allowToPredict: _checkIfAllowPredict(match.initTime)

@@ -44,6 +44,7 @@ const response = Joi.object({
     initTimeHumanified: Joi.string().required(),
     allowToPredict: Joi.bool().required(),
     minutes: Joi.string(),
+    percentageCompleted: Joi.number(),
     started: Joi.bool().required(),
     ended: Joi.bool().required(),
     matchRef: Joi.string().required(),
