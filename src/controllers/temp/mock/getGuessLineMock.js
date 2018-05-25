@@ -180,9 +180,9 @@ const mock = {
         'fullName': 'Sport Club Corinthians Paulista',
         'shortName': 'Corinthians',
         'logo': {
-          'normal': 'https://storage.googleapis.com/iguess-static-files/conmebol/brazil_normal/',
-          'small': 'https://storage.googleapis.com/iguess-static-files/conmebol/brazil_small/',
-          'mini': 'https://storage.googleapis.com/iguess-static-files/conmebol/brazil_mini/'
+          'normal': 'https://storage.googleapis.com/iguess-static-files/conmebol/brazil_normal/corinthians.png',
+          'small': 'https://storage.googleapis.com/iguess-static-files/conmebol/brazil_small/corinthians.png',
+          'mini': 'https://storage.googleapis.com/iguess-static-files/conmebol/brazil_mini/corinthians.png'
         },
         'apiFootballName': 'Corinthians',
         'teamRef': '5872a51a4db3fb378bc7ee1a'
