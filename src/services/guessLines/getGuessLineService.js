@@ -169,10 +169,17 @@ const _getSubInfoDate = (matchDayIsoDate, dictionary, userTimezone) => {
 }
 
 const _getHowManyDaysLeftToMatchDay = (matchDayIsoDate, dictionary) => {
-  const daysLeftToMatchDay = moment(matchDayIsoDate).diff(moment(), 'days') + 1
+  const diffFromMatchDaytoToday = moment(matchDayIsoDate).diff(moment(), 'days') + 1
   
-  return dictionary.daysLeftForTheMatchDay.replace('{{days}}', daysLeftToMatchDay)
+  if (_matchDayIsOnTheFuture(diffFromMatchDaytoToday)) {
+    return dictionary.daysLeftForTheMatchDay.replace('{{days}}', diffFromMatchDaytoToday)
+  }
+
+  const numberOfDaysAgo = Math.abs(diffFromMatchDaytoToday)
+  return dictionary.daysAgoOnTheMatchDay.replace('{{days}}', numberOfDaysAgo)
 }
+
+const _matchDayIsOnTheFuture = (days) => days > 0
 
 const _getTranslatedNameIfExists = (teamObj, dictionary) => {
   const translatedName = dictionary[teamObj.translateFlag]

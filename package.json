@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "gg": "set MONGO_DB=guessDB&&set SERVER_PORT=9003&&set REDIS_HOST=35.199.64.70&&set REDIS_KEY=wAMK4Hig&&set MONGO_PERSONALDB_ADDRESS=&&set MONGO_HOLIDB_ADDRESS=&&set MONGO_GUESSDB_ADDRESS=&&node app.js",
+    "gg": "set MONGO_DB=guessDB&&set ENV=local&&set SERVER_PORT=9003&&set REDIS_HOST=35.199.64.70&&set REDIS_KEY=wAMK4Hig&&set MONGO_PERSONALDB_ADDRESS=&&set MONGO_HOLIDB_ADDRESS=&&set MONGO_GUESSDB_ADDRESS=&&node app.js",
     "test": "set MONGO_DB=guessDBtest&&set HOLI_DB=holiDBtest&&set ENV=test&&set MONGO_PERSONALDB_ADDRESS=&&set MONGO_HOLIDB_ADDRESS=&&set MONGO_GUESSDB_ADDRESS=&&lab -v",
     "test-cov": "set MONGO_DB=guessDBtest&&set HOLI_DB=holiDBtest&&set ENV=test&&set MONGO_PERSONALDB_ADDRESS=&&set MONGO_HOLIDB_ADDRESS=&&set MONGO_GUESSDB_ADDRESS=&&lab -v -t 70",
     "test-cov-html": "set MONGO_DB=guessDBtest&&set HOLI_DB=holiDBtest&&set ENV=test&&set MONGO_PERSONALDB_ADDRESS=&&set MONGO_HOLIDB_ADDRESS=&&set MONGO_GUESSDB_ADDRESS=&&lab -r html -o test/coverage.html"
