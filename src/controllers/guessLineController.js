@@ -29,17 +29,9 @@ const listUserGuessesLines = (request, reply) => {
     .catch((err) => reply(err))
 }
 
-//TODO: REMOVER O MOCK DEPOIS DOS TESTES DO FRONT
-const getGuessLineMock = require('./temp/mock/getGuessLineMock')
-
 const getGuessLine = (request, reply) => {
   const payload = request.query
   const headers = request.headers
-
-  //TODO: REMOVER O MOCK DEPOIS DOS TESTES DO FRONT
-  if (headers.mock) {
-    reply(getGuessLineMock)
-  }
 
   guessLinesServices.getGuessLineService(payload, headers)
     .then((response) => reply(response))

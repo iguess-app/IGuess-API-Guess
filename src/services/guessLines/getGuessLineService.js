@@ -137,25 +137,40 @@ const _checkIfAllowPredict = (initTime) =>
     .isBefore(moment(initTime)) 
 
 const _buildMatchDayLikeHumanDate = (matchDayIsoDate, dictionary, userTimezone) => {
-  const date = dateManager.getDate(matchDayIsoDate, '', 'DD/MMMM', userTimezone, dictionary.language)
-  const weekDay = dateManager.getDate(matchDayIsoDate, '', 'dddd', userTimezone, dictionary.language)
-
+  const subInfoDate = _getSubInfoDate(matchDayIsoDate, dictionary, userTimezone)
   const nickname = dateManager.getNicknameDay(userTimezone, matchDayIsoDate)
 
   if (nickname) {
     return {
       mainInfoDate: dictionary[nickname],
-      subInfoDate: `${date}, ${weekDay}`
+      subInfoDate
     }
   }
-
+  
   return {
-    mainInfoDate: date,
-    subInfoDate: weekDay
+    mainInfoDate: _getHowManyDaysLeftToMatchDay(matchDayIsoDate, dictionary),
+    subInfoDate
   }
 }
 
 const _getInitTimeHumanified = (initTime, userTimezone) => `${dateManager.getDate(initTime, '', 'HH', userTimezone)}H ${dateManager.getDate(initTime, '', 'mm', userTimezone)}M`
+
+const _getSubInfoDate = (matchDayIsoDate, dictionary, userTimezone) => {
+  const day = dateManager.getDate(matchDayIsoDate, '', 'DD', userTimezone, dictionary.language)
+  const month = dateManager.getDate(matchDayIsoDate, '', 'MMMM', userTimezone, dictionary.language)
+  const weekDay = dateManager.getDate(matchDayIsoDate, '', 'dddd', userTimezone, dictionary.language)
+
+  return dictionary.subInfoDateAtMatchDay
+    .replace('{{day}}', day)
+    .replace('{{month}}', month)
+    .replace('{{weekDay}}', weekDay)
+}
+
+const _getHowManyDaysLeftToMatchDay = (matchDayIsoDate, dictionary) => {
+  const daysLeftToMatchDay = moment(matchDayIsoDate).diff(moment(), 'days') + 1
+  
+  return dictionary.daysLeftForTheMatchDay.replace('{{days}}', daysLeftToMatchDay)
+}
 
 module.exports = getGuessLine
 
