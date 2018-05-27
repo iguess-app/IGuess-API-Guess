@@ -15,7 +15,8 @@ const teamEmbbededSchema = Joi.object({
     mini: Joi.string().allow(''),
     small: Joi.string().allow(''),
     normal: Joi.string().allow('')
-  })
+  }),
+  translateFlag: Joi.string()
 })
 
 module.exports = teamEmbbededSchema

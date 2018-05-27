@@ -56,7 +56,7 @@ const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchesAndGuessLine
   const guessLine = pontuationAndMatchesAndGuessLine[1]
 
   const predictionsPromiseArray = _buildPredictionsPromiseArray(matches, request.userRef, dictionary)
-  const games = _getMatchesArrayWithPredictionsAndResults(predictionsPromiseArray, request)
+  const games = _getMatchesArrayWithPredictionsAndResults(predictionsPromiseArray, request, dictionary)
 
   const filter = {
     userRef: request.userRef,
@@ -68,10 +68,12 @@ const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchesAndGuessLine
   return Promise.all([games, guessLine, totalPontuation, matchesPontuation, matchDay])
 }
 
-const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, request) => 
+const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, request, dictionary) => 
   Promise.map(predictionsPromiseArray, (matchAndPrediction) => {
     const prediction = matchAndPrediction[0]
     const match = matchAndPrediction[1]
+    match.homeTeam.shortName = _getTranslatedNameIfExists(match.homeTeam, dictionary)
+    match.awayTeam.shortName = _getTranslatedNameIfExists(match.awayTeam, dictionary)
 
      const matchObj = {
       matchRef: match.matchRef,
@@ -172,6 +174,15 @@ const _getHowManyDaysLeftToMatchDay = (matchDayIsoDate, dictionary) => {
   return dictionary.daysLeftForTheMatchDay.replace('{{days}}', daysLeftToMatchDay)
 }
 
+const _getTranslatedNameIfExists = (teamObj, dictionary) => {
+  const translatedName = dictionary[teamObj.translateFlag]
+  if (translatedName) {
+    return translatedName
+  }
+  return teamObj.shortName
+}
+
 module.exports = getGuessLine
 
 /*eslint no-magic-numbers: 0*/
+/*eslint max-statements: 0*/

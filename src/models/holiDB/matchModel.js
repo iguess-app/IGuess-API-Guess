@@ -37,6 +37,9 @@ const teamSchema = new Schema({
   apiFootballName: {
     type: String,
     required: true
+  },
+  translateFlag: {
+    type: String
   }
 }, optionsSchemas._idAndVersionKeyDisable)
 
