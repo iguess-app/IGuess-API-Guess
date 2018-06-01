@@ -12,24 +12,17 @@ const MAX_GUESSLINES_FREE_ALLOW = coincidents.Config.guess.maxGuessLinesFreeAllo
 const addUserToGuessLine = (request, dictionary) => {
 
   const searchQuery = {
-    'championship.championshipRef': request.championshipRef
+    'championship.championshipRef': request.championshipRef,
+    guessLineActive: true
   }
 
   return _countHowManyGuessLineActivatedTheUserHas(request)
     .then((userGuessLineActivatedNumber) => _verifyIfIsAllowToAddTheUserToAnotherGuessLine(userGuessLineActivatedNumber, request, dictionary))
-    .then(() => GuessLine.findOne(searchQuery))
-    .then((guessLineFound) => {
-      _checkErrors(guessLineFound, request, dictionary)
-      guessLineFound.usersAddedAtGuessLine.push(request.userRef)
-
-      return guessLineFound.save()
-        .then(() => ({
-          userAddedToGuessLine: true
-        }))
-        .catch(() => ({
-          userAddedToGuessLine: false
-        }))
-    })
+    .then(() => _updateGuessline(request, searchQuery))
+    .then((dbResponse) => _checkErrors(dbResponse, request, dictionary))
+    .then(() => ({
+      userAddedToGuessLine: true
+    }))
 }
 
 const _countHowManyGuessLineActivatedTheUserHas = (request) => {
@@ -49,24 +42,35 @@ const _verifyIfIsAllowToAddTheUserToAnotherGuessLine = (userGuessLineActivatedNu
   }
 }
 
+const _updateGuessline = (request, searchQuery) => { 
+  const updateQuery = {
+    '$addToSet': {
+      usersAddedAtGuessLine: request.userRef
+    }
+  }
+
+  const optionsQuery = {
+    runValidators: true
+  }
+
+  return GuessLine.update(searchQuery, updateQuery, optionsQuery)
+}
+
 const _userNotPremium = () => {
   //TODO: Get dynamically if the user is premium or not
   const TEMP_RESPONSE_UNTIL_DOES_NOT_HAVE_THE_DATE = true
   return TEMP_RESPONSE_UNTIL_DOES_NOT_HAVE_THE_DATE
 }
 
-const _checkErrors = (guessLineFound, request, dictionary) => {
-  if (!guessLineFound) {
+const _checkErrors = (dbResponse, request, dictionary) => {
+  if (!dbResponse.n) {
     throw boom('notFound', dictionary.guessLineNotFound, errorCode.guessLineNotFound)
   }
 
-  if (guessLineFound.usersAddedAtGuessLine.includes(request.userRef)) {
+  if (!dbResponse.nModified) {
     throw boom('unauthorized', dictionary.alreadyAdd, errorCode.alreadyAdd)
   }
 
-  if (!guessLineFound.guessLineActive) {
-    throw boom('unauthorized', dictionary.guessLineInactive, errorCode.guessLineInactive)
-  }
 }
 
 module.exports = addUserToGuessLine

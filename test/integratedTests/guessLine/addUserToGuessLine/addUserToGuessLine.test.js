@@ -66,15 +66,4 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
       })
   })
 
-  lab.test('addUserToGuessLine Failed - GuessLine Inactive', (done) => {
-    stubs.stubSessionRedis(injectedRequests.guessLineInactive.headers.token)
-    server.inject(injectedRequests.guessLineInactive)
-      .then((response) => {
-        const result = response.result
-        expect(result.statusCode).to.be.equal(statusCode.unauthorized)
-        expect(result.message).to.be.equal(dictionary.guessLineInactive)
-        expect(result.errorCode).to.be.equal(errorCode.guessLineInactive)
-        done()
-      })
-  })
 })
