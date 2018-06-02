@@ -14,6 +14,7 @@ const config = coincidents.Config
 
 const MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH = config.guess.maxTimeToSendPredictBeforeTheMatch.value
 const MAX_TIME_TO_SEND_PREDICT_BEFORE_THE_MATCH_UNIT = config.guess.maxTimeToSendPredictBeforeTheMatch.unit
+const DEFAULT_ZERO = 0
 
 const getGuessLine = async (request, headers) => {
   const dictionary = selectLanguage(headers.language)
@@ -87,7 +88,8 @@ const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, requ
       percentageCompleted: match.percentageCompleted,
       initTimeIsoDate: dateManager.getDate(match.initTime, '', '', request.userTimezone),
       initTimeHumanified: _getInitTimeHumanified(match.initTime, request.userTimezone),
-      allowToPredict: _checkIfAllowPredict(match.initTime)
+      allowToPredict: _checkIfAllowPredict(match.initTime),
+      matchPontuation: DEFAULT_ZERO
     }
     
     if (prediction) {

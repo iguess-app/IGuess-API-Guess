@@ -11,8 +11,6 @@ const Config = coincidents.Config
 const ID_SIZE = Config.mongo.idStringSize
 const MIN_POSSIBLE_SCORE = Config.guess.minPossibleScore
 const UTC_TIMEZONE = 'UTC'
-const DEFAULT_ZERO = 0
-
 
 const defaultNextNearMatchDaySchema = Joi.object({
   championshipRef: Joi.string().length(ID_SIZE),
@@ -50,7 +48,7 @@ const response = Joi.object({
     started: Joi.bool().required(),
     ended: Joi.bool().required(),
     matchRef: Joi.string().required(),
-    matchPontuation: Joi.number().integer().default(DEFAULT_ZERO),
+    matchPontuation: Joi.number().integer(),
     stadium: Joi.string(),
     homeTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
     awayTeamScore: Joi.number().min(MIN_POSSIBLE_SCORE).integer(),
