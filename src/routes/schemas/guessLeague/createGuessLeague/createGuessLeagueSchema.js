@@ -23,6 +23,7 @@ const response = Joi.object({
   guessLeagueName: Joi.string().required(),
   championship: championshipEmbeddedSchema.required().unknown(),
   loggedUserIsCaptain: Joi.bool().required(),
+  allInviteadsAdded: Joi.bool().required(),
   inviteads: Joi.array().items(
     Joi.string().length(ID_SIZE)
   ),

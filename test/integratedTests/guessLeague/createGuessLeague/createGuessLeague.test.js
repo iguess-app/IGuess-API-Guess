@@ -63,9 +63,11 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
     stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplodeAtInviteads.headers.token)    
     server.inject(injectedRequests.maxGuessLeagueExplodeAtInviteads)
       .then((response) => {
+        const result = response.result
         expect(response.statusCode).to.be.equal(statusCode.created)
-        Joi.validate(response.result, schemaValidate, (err) => {
-          response.result.players.forEach((player) => expect('59b54e44a7631d433470fee7').to.be.not.equal(player))
+        result.players.forEach((player) => expect('59b54e44a7631d433470fee7').to.be.not.equal(player))
+        expect(result.allInviteadsAdded).to.be.equal(false)
+        Joi.validate(result, schemaValidate, (err) => {
           expect(err).to.be.equal(null)
           done()
         })
