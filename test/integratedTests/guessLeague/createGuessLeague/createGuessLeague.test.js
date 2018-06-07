@@ -56,6 +56,21 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
         done()
       })
   })
+  
+  /*This test depends of userRef '5b10bd714a20c05484ed81e5' to be at guessline with championshipRef 5872a8d2ed1b02314e088291 */
+  /*This test depends of userRef '59b54e44a7631d433470fee7' to be at least on five guessLeagues like player */
+  lab.test('createGuessLeague max guessLeague allowed at inviteads', (done) => {
+    stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplodeAtInviteads.headers.token)    
+    server.inject(injectedRequests.maxGuessLeagueExplodeAtInviteads)
+      .then((response) => {
+        expect(response.statusCode).to.be.equal(statusCode.created)
+        Joi.validate(response.result, schemaValidate, (err) => {
+          response.result.players.forEach((player) => expect('59b54e44a7631d433470fee7').to.be.not.equal(player))
+          expect(err).to.be.equal(null)
+          done()
+        })
+      })
+  })
 
   lab.test('createGuessLeague Twice Invited (Adm inviting himself)', (done) => {
     stubs.stubSessionRedis(injectedRequests.admInvitingHimself.headers.token)    

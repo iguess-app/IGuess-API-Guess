@@ -19,20 +19,23 @@ const request = Joi.object({
 
 const response = Joi.object({
   _id: Joi.object().required(),
+  guessLeagueRef: Joi.string().required(),
   guessLeagueName: Joi.string().required(),
   championship: championshipEmbeddedSchema.required().unknown(),
+  loggedUserIsCaptain: Joi.bool().required(),
   inviteads: Joi.array().items(
     Joi.string().length(ID_SIZE)
   ),
-  players: Joi.array().items(Joi.object({
-    userRef: Joi.string().length(ID_SIZE).required(),
-    totalPontuation: Joi.number()
-  })
+  players: Joi.array().items(
+    Joi.object({
+      userRef: Joi.string().length(ID_SIZE).required(),
+      totalPontuation: Joi.number()
+    })
   ),
   captains: Joi.array().items(
     Joi.string().length(ID_SIZE).required()
   )
-}).unknown()
+})
 
 module.exports = {
   request,

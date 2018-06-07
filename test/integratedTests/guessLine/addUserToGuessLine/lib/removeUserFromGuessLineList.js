@@ -3,25 +3,14 @@
 const GuessLine = require('../../../../../src/models/guessDB/guessesLinesModel')
 const happyPathRequest = require('../injectedRequests').happyPathRequest
 
-const QUANTITY_TO_REMOVE = 1
-
 const removeUserFromGuessLineList = () => {
-  const searchQuery = {
+  const updateQuery = {
     'championship.championshipRef': happyPathRequest.payload.championshipRef,
-    'usersAddedAtGuessLine': {
-      '$in': [happyPathRequest.headers.token]
+    '$pull': {
+      'usersAddedAtGuessLine': happyPathRequest.headers.token
     }
   }
-  return GuessLine.findOne(searchQuery)
-  .then((guessLineFound) => {
-    if (!guessLineFound) {
-      return Promise.resolve()
-    }
-    guessLineFound.usersAddedAtGuessLine.splice(
-      guessLineFound.usersAddedAtGuessLine.indexOf(happyPathRequest.payload.userRef), QUANTITY_TO_REMOVE
-    )
-    return guessLineFound.save()
-  })
+  return GuessLine.update(updateQuery)
 }
 
 module.exports = removeUserFromGuessLineList
