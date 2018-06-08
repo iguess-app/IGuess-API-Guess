@@ -63,8 +63,10 @@ const _checkAllUsersGuessLeagueLimit = async (request) => {
 
 const _addNewUsersToTheLeague = async (searchQuery, request, usersFiltered) => {
   const addUsersUpdateQuery = {
-    $pushAll: {
-      players: usersFiltered
+    $addToSet: {
+      players: {
+        $each: usersFiltered
+      }
     }
   }
   const addUsersResponseQuery = await GuessLeague.update(searchQuery, addUsersUpdateQuery)
