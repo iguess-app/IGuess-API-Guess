@@ -8,6 +8,7 @@ const ID_SIZE = Config.mongo.idStringSize
 
 const request = Joi.object({
   guessLeagueRef: Joi.string().length(ID_SIZE).required(),
+  championshipRef: Joi.string().length(ID_SIZE).required(),
   userRefsToAdd: Joi.array().items(
     Joi.string().length(ID_SIZE)
   ).required()

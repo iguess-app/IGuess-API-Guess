@@ -30,6 +30,9 @@ const _buildSearchQuery = (request) => {
   if (request.userRefInviteads && request.userRefInviteads.length) {
     searchQuery.usersAddedAtGuessLine.$all = request.userRefInviteads
   }
+  if (request.userRefsToAdd && request.userRefsToAdd.length) {
+    searchQuery.usersAddedAtGuessLine.$all = request.userRefsToAdd
+  }
 
   return searchQuery
 }
