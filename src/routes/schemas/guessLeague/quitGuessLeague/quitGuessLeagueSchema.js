@@ -11,7 +11,8 @@ const request = Joi.object({
 })
 
 const response = Joi.object({
-  removed: Joi.bool().required()
+  removed: Joi.bool().required(),
+  someOtherCapSetted: Joi.bool().required()
 })
 
 module.exports = {

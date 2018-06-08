@@ -46,18 +46,6 @@ lab.experiment('Integrated Test ==> quitGuessLeague', () => {
       })
   })
 
-  lab.test('quitGuessLeague adm Cant Quit', (done) => {
-    stubs.stubSessionRedis(injectedRequests.admCantQuit.headers.token)    
-    server.inject(injectedRequests.admCantQuit)
-      .then((response) => {
-        const result = response.result
-        expect(result.message).to.be.equal(dictionary.admNotQuitGle)
-        expect(result.errorCode).to.be.equal(errorCode.admNotQuitGle)
-        expect(response.statusCode).to.be.equal(statusCode.notAcceptable)
-        done()
-      })
-  })
-
   lab.test('quitGuessLeague Twice Invited (Duplicated Inviteads)', (done) => {
     stubs.stubSessionRedis(injectedRequests.guessLeagueRefnotFound.headers.token)    
     server.inject(injectedRequests.guessLeagueRefnotFound)
