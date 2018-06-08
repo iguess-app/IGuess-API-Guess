@@ -7,6 +7,8 @@ const GuessLeague = require('../../models/guessDB/guessesLeaguesModel')
 const { errorCode, errorUtils, queryUtils } = coincidents.Utils
 const { boom } = errorUtils
 
+const MAX_GUESSLEAGUES_FREE_ALLOW = coincidents.Config.guess.maxGuessLeagueFreeAllow
+
 const listGuessLeagues = (request, dictionary) => {
 
   const searchQuery = {
@@ -25,7 +27,12 @@ const listGuessLeagues = (request, dictionary) => {
     .then((guessesLeaguesFound) => {
       _checkErrors(guessesLeaguesFound, request, dictionary)
       
-      return guessesLeaguesFound.map((guessLineFound) => queryUtils.makeObject(guessLineFound))
+      const guessLeaguesList = guessesLeaguesFound.map((guessLineFound) => queryUtils.makeObject(guessLineFound))
+
+      return {
+        allowToAddMoreLeague: guessesLeaguesFound.length < MAX_GUESSLEAGUES_FREE_ALLOW,
+        guessLeaguesList
+      }
     })
 }
 
