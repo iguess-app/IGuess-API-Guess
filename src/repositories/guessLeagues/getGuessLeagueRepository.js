@@ -25,8 +25,10 @@ const getGuessLeague = (request, dictionary) => {
   return GuessLeague.findOne(searchQuery, projectionQuery)
     .then((guessLeagueFound) => {
       _checkErrors(guessLeagueFound, request, dictionary)
-
-      return queryUtils.makeObject(guessLeagueFound)
+      const guessLeagueCleanObj = queryUtils.makeObject(guessLeagueFound)  
+      guessLeagueCleanObj.isCaptain = guessLeagueCleanObj.captains.includes(request.userRef)
+    
+      return guessLeagueCleanObj
     })
 }
 

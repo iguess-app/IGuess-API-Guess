@@ -14,6 +14,7 @@ const request = Joi.object({
 
 const response = Joi.object({
   _id: Joi.object().required(),
+  isCaptain: Joi.bool().required(),
   guessLeagueName: Joi.string().allow('').required(),
   championship: championshipEmbbededSchema.required(),
   players: Joi.array().items(Joi.object({
