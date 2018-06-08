@@ -9,6 +9,7 @@ const putCaptainService = require('./putCaptainService')
 const quitCaptainService = require('./quitCaptainService')
 const quitGuessLeagueService = require('./quitGuessLeagueService')
 const editGuessLeague = require('./editGuessLeagueService')
+const addToGuessLeagueService = require('./addToGuessLeagueService')
 
 module.exports = {
   createGuessLeagueService,
@@ -19,5 +20,6 @@ module.exports = {
   putCaptainService,
   quitCaptainService,
   quitGuessLeagueService,
-  editGuessLeague
+  editGuessLeague,
+  addToGuessLeagueService
 }

@@ -8,6 +8,7 @@ const invitesGuessLeagueRoutes = require('./invitesGuessLeagueRoutes')
 const listGuessLeagueRoutes = require('./listGuessLeagueRoutes')
 const quitGuessLeagueRoutes = require('./quitGuessLeagueRoutes')
 const editGuessLeagueRoutes = require('./editGuessLeagueRoutes')
+const addToGuessLeagueRoutes = require('./addToGuessLeagueRoutes')
 
 module.exports = {
   captainRoutes,
@@ -17,5 +18,6 @@ module.exports = {
   invitesGuessLeagueRoutes,
   listGuessLeagueRoutes,
   quitGuessLeagueRoutes,
-  editGuessLeagueRoutes
+  editGuessLeagueRoutes,
+  addToGuessLeagueRoutes
 }
