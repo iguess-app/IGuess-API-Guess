@@ -29,20 +29,20 @@ const _getMatchDayDate = (request) => {
     .sort(sortMatchesQuery)
 }
 
-const _getMatchesFromSomeMatchDay = (matchDay, request, dictionary) => {
+const _getMatchesFromSomeMatchDay = async (matchDay, request, dictionary) => {
   const matchDayDateObj = matchDay.initTime
   const searchQuery = _buildSearchQuery(request, matchDayDateObj)
 
-  return Match.find(searchQuery)
-    .sort(_buildSortQuery(request))
-    .then((matches) => {
-      _checkMatchesErrors(matches, dictionary)
+  const matches = await Match.find(searchQuery).sort(_buildSortQuery(request))
+  _checkMatchesErrors(matches, dictionary)
 
-      return {
-        matches: matches.map((match) => queryUtils.makeObject(match)),
-        matchDay: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj)
-      }
-    })
+  const hasPastMatchDays = await _getIfHasPastMatchDay(request, matchDayDateObj)
+
+  return {
+    hasPastMatchDays,
+    matches: matches.map((match) => queryUtils.makeObject(match)),
+    matchDay: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj)
+  }
 }
 
 const _onlyInitTimeProjection = () => ({ _id: 0, initTime: 1 })
@@ -61,6 +61,17 @@ const _buildSearchQuery = (request, matchDayDateObj) => {
     }
   }
   return searchQuery
+}
+
+const _getIfHasPastMatchDay = async (request, matchDayDateObj) => {
+  const searchQuery = {
+    championshipRef: request.championshipRef,
+    initTime: {
+      $lt: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj)
+    }
+  }
+  const pastMatches = await Match.find(searchQuery).count()
+  return Boolean(pastMatches)
 }
 
 const _buildSortQuery = (request) => {

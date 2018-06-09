@@ -37,6 +37,7 @@ const response = Joi.object({
     subInfoDate: Joi.string().required()
   }).required(),
   championship: championshipEmbeddedSchema,
+  hasPastMatchDays: Joi.bool().required(),
   guessLinePontuation: Joi.number().integer().required(),
   matchDayPontuation: Joi.number().integer().required(),
   games: Joi.array().items({

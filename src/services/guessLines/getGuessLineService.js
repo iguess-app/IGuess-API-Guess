@@ -53,6 +53,7 @@ const _getMatches = (guessLine, request, dictionary) => {
 
 const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchesAndGuessLine, request, dictionary) => {
   const matchDay = pontuationAndMatchesAndGuessLine[0].matchDay
+  const hasPastMatchDays = pontuationAndMatchesAndGuessLine[0].hasPastMatchDays
   const matches = pontuationAndMatchesAndGuessLine[0].matches
   const guessLine = pontuationAndMatchesAndGuessLine[1]
 
@@ -66,7 +67,7 @@ const _getPredictionPerMatchAndBuildMatchObj = (pontuationAndMatchesAndGuessLine
   const totalPontuation = getPredictionsRepository.getTotalPontuation(filter)
   const matchesPontuation = getPredictionsRepository.getPontuationByUnixDate(filter)
 
-  return Promise.all([games, guessLine, totalPontuation, matchesPontuation, matchDay])
+  return Promise.all([games, guessLine, totalPontuation, matchesPontuation, matchDay, hasPastMatchDays])
 }
 
 const _getMatchesArrayWithPredictionsAndResults = (predictionsPromiseArray, request, dictionary) => 
@@ -122,14 +123,16 @@ const _buildResponseObj = (promiseAllObj, dictionary, request) => {
   const totalPontuation = promiseAllObj[2]
   const matchDayPontuation = promiseAllObj[3]
   const matchDayIsoDate = promiseAllObj[4]
+  const hasPastMatchDays = promiseAllObj[5]
 
   const responseObj = {
-    championship: guessLine.championship.toObject(),
-    guessLinePontuation: totalPontuation,
+    games,
+    hasPastMatchDays,
     matchDayPontuation,
     matchDayIsoDate,
-    matchDayHumanified: _buildMatchDayLikeHumanDate(matchDayIsoDate, dictionary, request.userTimezone),
-    games
+    championship: guessLine.championship.toObject(),
+    guessLinePontuation: totalPontuation,
+    matchDayHumanified: _buildMatchDayLikeHumanDate(matchDayIsoDate, dictionary, request.userTimezone)
   }
 
   return responseObj
