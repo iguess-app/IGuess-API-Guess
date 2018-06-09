@@ -19,7 +19,6 @@ const listGuessLeagues = (request, dictionary) => {
 
   const projectionQuery = {
     inviteads: 0,
-    players: 0,
     captains: 0
   }
 
@@ -27,7 +26,12 @@ const listGuessLeagues = (request, dictionary) => {
     .then((guessesLeaguesFound) => {
       _checkErrors(guessesLeaguesFound, request, dictionary)
       
-      const guessLeaguesList = guessesLeaguesFound.map((guessLineFound) => queryUtils.makeObject(guessLineFound))
+      const guessLeaguesList = guessesLeaguesFound.map((guessLineFound) => {
+        const guessLeagueCleanObj = queryUtils.makeObject(guessLineFound)
+        guessLeagueCleanObj.numberOfUsersAtLeague = guessLeagueCleanObj.players.length
+        Reflect.deleteProperty(guessLeagueCleanObj, 'players')
+        return guessLeagueCleanObj
+      })
 
       return {
         allowToAddMoreLeague: guessesLeaguesFound.length < MAX_GUESSLEAGUES_FREE_ALLOW,
