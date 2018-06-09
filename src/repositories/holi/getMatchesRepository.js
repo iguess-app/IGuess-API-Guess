@@ -64,6 +64,7 @@ const _buildSearchQuery = (request, matchDayDateObj) => {
 }
 
 const _getIfHasPastMatchDay = async (request, matchDayDateObj) => {
+  //TODO: Make integrated tests for this case
   const searchQuery = {
     championshipRef: request.championshipRef,
     initTime: {
