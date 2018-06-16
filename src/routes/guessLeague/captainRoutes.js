@@ -5,6 +5,7 @@ const server = require('../../../configServer')
 const defaultSessionHeaderSchema = require('../schemas/defaultSessionHeaderSchema').defaultSessionHeaderSchema
 const putCaptainSchema = require('../schemas/guessLeague/captain/putCaptainSchema')
 const quitCaptainSchema = require('../schemas/guessLeague/captain/quitCaptainSchema')
+const kickUserFromGuessLeagueSchema = require('../schemas/guessLeague/captain/kickUserFromGuessLeagueSchema')
 
 server.route({
   path: '/guessleague/putCaptain',
@@ -38,6 +39,24 @@ server.route({
     },
     response: {
       schema: quitCaptainSchema.response
+    }
+  }
+})
+
+server.route({
+  path: '/guessleague/kickUserFromGuessLeague',
+  method: 'DELETE',
+  config: {
+    handler: (request, reply) => {
+
+      guessLeagueController.kickUserFromGuessLeague(request, reply)
+    },
+    validate: {
+      payload: kickUserFromGuessLeagueSchema.request,
+      headers: defaultSessionHeaderSchema
+    },
+    response: {
+      schema: kickUserFromGuessLeagueSchema.response
     }
   }
 })

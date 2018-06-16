@@ -10,6 +10,7 @@ const quitCaptainService = require('./quitCaptainService')
 const quitGuessLeagueService = require('./quitGuessLeagueService')
 const editGuessLeague = require('./editGuessLeagueService')
 const addToGuessLeagueService = require('./addToGuessLeagueService')
+const kickUserFromGuessLeagueService = require('./kickUserFromGuessLeagueService')
 
 module.exports = {
   createGuessLeagueService,
@@ -21,5 +22,6 @@ module.exports = {
   quitCaptainService,
   quitGuessLeagueService,
   editGuessLeague,
-  addToGuessLeagueService
+  addToGuessLeagueService,
+  kickUserFromGuessLeagueService
 }

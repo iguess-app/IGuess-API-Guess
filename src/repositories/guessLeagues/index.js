@@ -9,6 +9,7 @@ const putCaptainRepository = require('./putCaptainRepository')
 const quitCaptainRepository = require('./quitCaptainRepository')
 const quitGuessLeagueRepository = require('./quitGuessLeagueRepository')
 const addToGuessLeagueRepository = require('./addToGuessLeagueRepository')
+const kickUserFromGuessLeagueRepository = require('./kickUserFromGuessLeagueRepository')
 
 module.exports= {
   createGuessLeagueRepository,
@@ -19,5 +20,6 @@ module.exports= {
   putCaptainRepository,
   quitCaptainRepository,
   quitGuessLeagueRepository,
-  addToGuessLeagueRepository
+  addToGuessLeagueRepository,
+  kickUserFromGuessLeagueRepository
 }

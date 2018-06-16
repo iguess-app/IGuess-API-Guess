@@ -93,6 +93,15 @@ const addToGuessLeague = (request, reply) => {
     .catch((err) => reply(err))
 }
 
+const kickUserFromGuessLeague = (request, reply) => {
+  const payload = request.payload
+  const headers = request.headers
+
+  guessLeaguesServices.kickUserFromGuessLeagueService(payload, headers)
+    .then((response) => reply(response))
+    .catch((err) => reply(err))
+}
+
 module.exports = {
   createGuessLeague,
   listGuessLeagues,
@@ -103,5 +112,6 @@ module.exports = {
   quitGuessLeague,
   inviteResponse,
   editGuessLeague,
-  addToGuessLeague
+  addToGuessLeague,
+  kickUserFromGuessLeague
 }
