@@ -25,9 +25,10 @@ const _checkErrors = (guessLeagueFound, dictionary) => {
   return guessLeagueFound
 }
 
-const _modifyGuessLeagueAndSave = (guessLeagueObj, request) => {
+const _modifyGuessLeagueAndSave = async (guessLeagueObj, request) => {
   guessLeagueObj.guessLeagueName = request.newName
-  return guessLeagueObj.save()
+  const editedGuessLeague = await guessLeagueObj.save()
+  return queryUtils.makeObject(editedGuessLeague)
 }
 
 module.exports = editGuessLeague

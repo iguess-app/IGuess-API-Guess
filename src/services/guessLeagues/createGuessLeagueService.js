@@ -6,6 +6,7 @@ const sessionManager = require('../../managers/sessionManager')
 const { verifyUserAtGuessLineRepository, getChampionshipAtGuessLineRepository, createGuessLeagueRepository } = require('../../repositories')
 const getUsersPontuationsByGuessLeague = require('./commonFunctions/getUsersPontuationsByGuessLeague')
 const orderUsersArrayByPontuation = require('./commonFunctions/orderUsersArrayByPontuation')
+const translateChampionship = require('./commonFunctions/translateChampionship')
 
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const { errorCode, errorUtils } = coincidents.Utils
@@ -21,6 +22,7 @@ const createGuessLeague = async (payload, headers) => {
   return verifyUserAtGuessLineRepository(payload, dictionary)
     .then(() => getChampionshipAtGuessLineRepository(payload, dictionary))
     .then((championship) => createGuessLeagueRepository(payload, championship, dictionary))
+    .then((guessesLeagues) => translateChampionship(guessesLeagues, dictionary))
     .then((guessesLeagues) => getUsersPontuationsByGuessLeague(guessesLeagues))
     .then((guessesLeagues) => orderUsersArrayByPontuation(guessesLeagues))
 }

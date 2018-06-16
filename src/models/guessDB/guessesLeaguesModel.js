@@ -29,6 +29,10 @@ const championshipSchema = new Schema({
   championship: {
     type: String,
     required: true
+  },
+  translateFlag: {
+    type: String,
+    required: true
   }
 }, optionsSchemas._idAndVersionKeyDisable)
 

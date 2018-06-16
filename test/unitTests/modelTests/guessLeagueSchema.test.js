@@ -14,7 +14,8 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
         'championshipRef': '5872a8d2ed1b02314e088291',
         'league': '5872467bed1b02314e08828a',
         'season': '2016',
-        'championship': 'Campeonato Brasileiro'
+        'championship': 'Campeonato Brasileiro',
+        'translateFlag': 'brazilian'
       },
       'inviteads': [
         '59bddedee7c8a12658c0c08c'
@@ -59,7 +60,8 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
         'championshipRef': '5872a8d2ed1b02314e088291',
         'league': '5872467bed1b02314e08828a',
         'season': '2016',
-        'championship': 'Campeonato Brasileiro'
+        'championship': 'Campeonato Brasileiro',
+        'translateFlag': 'brazilian'
       },
       'players': [
         '59b54e44a7631d433470fee7'
@@ -79,7 +81,8 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
         'championshipRef': '5872a8d2ed1b02314e088291',
         'league': '5872467bed1b02314e08828a',
         'season': '2016',
-        'championship': 'Campeonato Brasileiro'
+        'championship': 'Campeonato Brasileiro',
+        'translateFlag': 'brazilian'
       },
       'inviteads': [
         '59bddedee7c8a12658c0c08c'
@@ -104,7 +107,8 @@ lab.experiment('Model Test ==> GuessLeagueSchema Validator', () => {
       'championship': {
         'championshipRef': '5872a8d2ed1b02314e088291',
         'league': 'notObjectID',
-        'championship': 'Campeonato Brasileiro'
+        'championship': 'Campeonato Brasileiro',
+        'translateFlag': 'brazilian'
       },
       'players': [{
         'userName': 'cristianoRonaldo'
