@@ -118,8 +118,9 @@ lab.experiment('Integrated Test ==> inviteResponse', () => {
    * IO Test
    * This test need to 59b54e44a7631d433470fee7 be at championship guessLine 5872a8d2ed1b02314e088291 
    * This test need to 59b54e44a7631d433470fee7 be at guessLeague ObjectId("59c05e253feecf1e2898a3fb") player list  
+   * SKIPING WHILE THE MAX NUMBER IT IS MORE THAN 5 (DURING THE WORLD CUP)
    */
-  lab.test('[IO] inviteResponse user has more than max allowed guessLeague and are not premium', (done) => {
+  lab.test.skip('[IO] inviteResponse user has more than max allowed guessLeague and are not premium', (done) => {
     stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplode.headers.token)    
     server.inject(injectedRequests.maxGuessLeagueExplode)
       .then((response) => {

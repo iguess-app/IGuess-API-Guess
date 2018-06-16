@@ -44,8 +44,10 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
       })
   })
 
-  /*This test depends of userRef '59b54e44a7631d433470fee7' to be at least on five guessLeagues like player */
-  lab.test('createGuessLeague max guessLeague allowed explode', (done) => {
+  /*This test depends of userRef '59b54e44a7631d433470fee7' to be at least on five guessLeagues like player
+  * SKIPING WHILE THE MAX NUMBER IT IS MORE THAN 5 (DURING THE WORLD CUP)
+  */
+  lab.test.skip('createGuessLeague max guessLeague allowed explode', (done) => {
     stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplode.headers.token)    
     server.inject(injectedRequests.maxGuessLeagueExplode)
       .then((response) => {
@@ -58,8 +60,10 @@ lab.experiment('Integrated Test ==> createGuessLeague', () => {
   })
   
   /*This test depends of userRef '5b10bd714a20c05484ed81e5' to be at guessline with championshipRef 5872a8d2ed1b02314e088291 */
-  /*This test depends of userRef '59b54e44a7631d433470fee7' to be at least on five guessLeagues like player */
-  lab.test('createGuessLeague max guessLeague allowed at inviteads', (done) => {
+  /*This test depends of userRef '59b54e44a7631d433470fee7' to be at least on five guessLeagues like player 
+  * SKIPING WHILE THE MAX NUMBER IT IS MORE THAN 5 (DURING THE WORLD CUP)  
+  */
+  lab.test.skip('createGuessLeague max guessLeague allowed at inviteads', (done) => {
     stubs.stubSessionRedis(injectedRequests.maxGuessLeagueExplodeAtInviteads.headers.token)    
     server.inject(injectedRequests.maxGuessLeagueExplodeAtInviteads)
       .then((response) => {
