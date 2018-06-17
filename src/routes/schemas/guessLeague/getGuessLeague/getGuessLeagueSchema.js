@@ -20,7 +20,8 @@ const response = Joi.object({
   players: Joi.array().items(Joi.object({
     userRef: Joi.string().required().length(ID_SIZE),
     totalPontuation: Joi.number().required(),
-    rankingPosition: Joi.number().required()
+    rankingPosition: Joi.number().required(),
+    loggedUser: Joi.bool().required()
   })),
   captains: Joi.array().items(Joi.string().length(ID_SIZE))
 })

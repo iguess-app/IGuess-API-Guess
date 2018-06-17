@@ -7,6 +7,7 @@ const { verifyUserAtGuessLineRepository, getChampionshipAtGuessLineRepository, c
 const getUsersPontuationsByGuessLeague = require('./commonFunctions/getUsersPontuationsByGuessLeague')
 const orderUsersArrayByPontuation = require('./commonFunctions/orderUsersArrayByPontuation')
 const translateChampionship = require('./commonFunctions/translateChampionship')
+const getLoggedUserFlag = require('./commonFunctions/getLoggedUserFlag')
 
 const selectLanguage = coincidents.Translate.gate.selectLanguage
 const { errorCode, errorUtils } = coincidents.Utils
@@ -25,6 +26,7 @@ const createGuessLeague = async (payload, headers) => {
     .then((guessesLeagues) => translateChampionship(guessesLeagues, dictionary))
     .then((guessesLeagues) => getUsersPontuationsByGuessLeague(guessesLeagues))
     .then((guessesLeagues) => orderUsersArrayByPontuation(guessesLeagues))
+    .then((guessesLeagues) => getLoggedUserFlag(guessesLeagues, payload))
 }
 
 const _checkIfThereAreDuplicatedUserRefInvited = (userRefInviteads, dictionary, userRefCreator) => {

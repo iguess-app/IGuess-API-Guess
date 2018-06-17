@@ -31,7 +31,8 @@ const response = Joi.object({
     Joi.object({
       userRef: Joi.string().length(ID_SIZE).required(),
       totalPontuation: Joi.number().required(),
-      rankingPosition: Joi.number().required()
+      rankingPosition: Joi.number().required(),
+      loggedUser: Joi.bool().required()
     })
   ),
   captains: Joi.array().items(
