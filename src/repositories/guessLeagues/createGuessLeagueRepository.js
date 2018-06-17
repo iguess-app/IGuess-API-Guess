@@ -67,7 +67,7 @@ const _buildGuessLeagueObj = (request, championship) => ({
 const _buildResponseObj = (request, guessLeagueCreated) => {
   const guessLeagueObjResponse = queryUtils.makeObject(guessLeagueCreated)
   guessLeagueObjResponse.guessLeagueRef = guessLeagueObjResponse._id.toString()
-  guessLeagueObjResponse.loggedUserIsCaptain = true
+  guessLeagueObjResponse.isCaptain = true
   guessLeagueObjResponse.allInviteadsAdded = request.userRefInviteads.length === request.userRefInviteadsFiltered.length
 
   return guessLeagueObjResponse
