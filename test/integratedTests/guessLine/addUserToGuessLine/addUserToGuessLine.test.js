@@ -42,7 +42,8 @@ lab.experiment('Integrated Test ==> addUserToGuessLine', () => {
   })
 
   /*This test depends of userRef '591e5c21a8634f1f9880e8b4' to be at least on three guessLine actives */
-  lab.test('addUserToGuessLine Failed - Max number of guessLine allowed explode', (done) => {
+  /*Skiping while the rule it is not running at production */
+  lab.test.skip('addUserToGuessLine Failed - Max number of guessLine allowed explode', (done) => {
     stubs.stubSessionRedis(injectedRequests.maxAllowedExplode.headers.token)
     server.inject(injectedRequests.maxAllowedExplode)
       .then((response) => {
