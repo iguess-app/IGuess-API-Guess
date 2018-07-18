@@ -10,6 +10,8 @@ const _drawMatch = (game, guess) => game.homeTeamScore === game.awayTeamScore &&
 
 const _hitTheWinnerOrTheDraw = (game, guess) => _homeTeamVictory(game, guess) || _awayTeamVictory(game, guess) || _drawMatch(game, guess)
 
+const DIFF_ZERO = 0
+
 const returnPontuation = (game, guess) => {
   if (_matchAlreadyStarted(game)) {
     const homeTeamGoalsDiff = Math.abs(game.homeTeamScore - guess.homeTeamScoreGuess)
@@ -17,10 +19,16 @@ const returnPontuation = (game, guess) => {
     const matchGoalsDiff = homeTeamGoalsDiff + awayTeamGoalsDiff
 
     if (_hitTheWinnerOrTheDraw(game, guess)) {
+      
+      if (matchGoalsDiff === DIFF_ZERO) {
+        return pontuationRules.PONTUATION_HITTING_EXACTLY_THE_SCOREBOARD
+      }
+
       const pontuation = pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW - matchGoalsDiff
       if (pontuation < pontuationRules.MIN_PONTUATION_HITTING_THE_WINNER_OR_DRAW) {
         return pontuationRules.MIN_PONTUATION_HITTING_THE_WINNER_OR_DRAW
       }
+      
       return pontuation
     }
   }
@@ -29,3 +37,5 @@ const returnPontuation = (game, guess) => {
 }
 
 module.exports = returnPontuation
+
+/*eslint max-statements: 0*/

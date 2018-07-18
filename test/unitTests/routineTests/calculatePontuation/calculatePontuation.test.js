@@ -13,7 +13,7 @@ lab.experiment('Routine Unit Test ==> calculate Pontuation', () => {
     const guessExample = guessAndGamesObj.homeTeamWinHitScoreboard
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW)
+    ).to.be.equal(pontuationRules.PONTUATION_HITTING_EXACTLY_THE_SCOREBOARD)
     done()
   })
   
@@ -21,7 +21,7 @@ lab.experiment('Routine Unit Test ==> calculate Pontuation', () => {
     const guessExample = guessAndGamesObj.awayTeamWinHitScoreboard
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW)
+    ).to.be.equal(pontuationRules.PONTUATION_HITTING_EXACTLY_THE_SCOREBOARD)
     done()
   })
   
@@ -29,7 +29,7 @@ lab.experiment('Routine Unit Test ==> calculate Pontuation', () => {
     const guessExample = guessAndGamesObj.tieWinHitScoreboard
     expect(
       calculatePontuation(guessExample.game, guessExample.guess)
-    ).to.be.equal(pontuationRules.MAX_PONTUATION_HITTING_THE_WINNER_OR_DRAW)
+    ).to.be.equal(pontuationRules.PONTUATION_HITTING_EXACTLY_THE_SCOREBOARD)
     done()
   })
   
