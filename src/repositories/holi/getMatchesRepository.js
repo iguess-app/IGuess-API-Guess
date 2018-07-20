@@ -53,11 +53,13 @@ const _buildGetMatchDayQuery = (request) => ({
 })
 
 const _buildSearchQuery = (request, matchDayDateObj) => {
+  const initOfTheDay = dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj)
+  const finalOfTheDay = dateManager.getISODateFinalDay(request.userTimezone, matchDayDateObj)
   const searchQuery = {
     championshipRef: request.championshipRef,
     initTime: {
-      $gte: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj),
-      $lte: dateManager.getISODateFinalDay(request.userTimezone, matchDayDateObj)
+      $gte: request.routine ? dateManager.setOneDayLess(initOfTheDay) : initOfTheDay,
+      $lte: request.routine ? dateManager.addOneDayMore(finalOfTheDay) : finalOfTheDay
     }
   }
   return searchQuery
