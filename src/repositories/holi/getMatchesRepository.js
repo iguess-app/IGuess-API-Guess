@@ -53,13 +53,11 @@ const _buildGetMatchDayQuery = (request) => ({
 })
 
 const _buildSearchQuery = (request, matchDayDateObj) => {
-  const initOfTheDay = dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj)
-  const finalOfTheDay = dateManager.getISODateFinalDay(request.userTimezone, matchDayDateObj)
   const searchQuery = {
     championshipRef: request.championshipRef,
     initTime: {
-      $gte: request.routine ? dateManager.setOneDayLess(initOfTheDay) : initOfTheDay,
-      $lte: request.routine ? dateManager.addOneDayMore(finalOfTheDay) : finalOfTheDay
+      $gte: dateManager.getISODateInitDay(request.userTimezone, matchDayDateObj),
+      $lte: dateManager.getISODateFinalDay(request.userTimezone, matchDayDateObj)
     }
   }
   return searchQuery
@@ -105,11 +103,8 @@ const _getOperatorQuery = (dateReference, userTimezone) => ({
 })
 
 const _checkMatchDayDateErrors = (matchDay, request, dictionary) => {
-  if (!matchDay && !request.routine) {
+  if (!matchDay) {
     throw boom('notFound', dictionary.matchesNotFound, errorCode.matchesNotFound)
-  }
-  if (!matchDay && request.routine) {
-    throw Error(`championshipRef[${request.championshipRef}] at date[${request.dateReference}] does not have any match`)
   }
   return matchDay
 }

@@ -4,8 +4,7 @@ const coincidents = require('iguess-api-coincidents')
 
 const getUsersPredictionsFunctions = require('./functions/getUsersPredictionsFunctions')
 const compareScoreWithPredictionAndSave = require('./functions/compareScoreWithPredictionAndSave')
-const { getAllChampionshipRepository, getMatchesRepository } = require('../../repositories')
-const { pageAliases } = require('../../../config')
+const { getAllChampionshipRepository, getMatchesToRoutineRepository } = require('../../repositories')
 
 const { log, dateManager } = coincidents.Managers
 const forcedDate = coincidents.Config.updatePontuationRoutine
@@ -22,11 +21,9 @@ const fireRoutine = () => {
       championships.map((championship) => {
         const matchesFilter = {
           championshipRef: championship._id.toString(),
-          dateReference: forcedDate.dayForced || dateManager.getISODateInitDay(),
-          page: pageAliases.askedPage,
-          routine: true
+          dateReference: forcedDate.dayForced || dateManager.getISODateInitDay()
         }
-        return getMatchesRepository(matchesFilter, dictionary)
+        return getMatchesToRoutineRepository(matchesFilter, dictionary)
           .then((matchDay) => getUsersPredictionsFunctions(matchDay.matches))
           .then((predictionsCursorAndMatchDayObj) => compareScoreWithPredictionAndSave(predictionsCursorAndMatchDayObj))
           .catch((err) => log.error(err))
