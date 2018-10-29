@@ -14,3 +14,18 @@ server.register(plugins, () => {
 })
 
 module.exports = server
+
+/*const Prediction = require('./src/models/guessDB/predictionsModel')
+const Match = require('./src/models/holiDB/matchModel')
+
+
+Prediction.find({matchRef: 'MATCH_FROM'})
+.then((matches) => {
+  matches.forEach((match) => {
+    match.matchUserRef = `MATCH_TO_${match.userRef}`
+    match.matchRef = 'MATCH_TO'
+    match.save()
+  })
+})
+
+Match.remove({matchRef: 'MATCH_FROM'}) */
